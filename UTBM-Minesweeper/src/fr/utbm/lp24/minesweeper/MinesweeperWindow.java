@@ -81,18 +81,18 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		
 		if( event.getSource() == menuGameItem1 ){
-           System.out.println("New game event");
-        } else if( event.getSource() == menuGameItem2 ){
-        	System.out.println("Statistics event");
-        } else if( event.getSource() == menuGameItem3 ){
-        	System.out.println("Options event");
-        } else if( event.getSource() == menuGameItem4 ){
-        	System.out.println("Change appearance event");
-        } else if( event.getSource() == menuGameItem5 ){
-        	System.exit(0);
-        } else if( event.getSource() == menuHelpItem1 ){
-        	new AboutWindow();
-        }
+			System.out.println("New game event");
+		} else if( event.getSource() == menuGameItem2 ){
+			System.out.println("Statistics event");
+		} else if( event.getSource() == menuGameItem3 ){
+			System.out.println("Options event");
+		} else if( event.getSource() == menuGameItem4 ){
+			System.out.println("Change appearance event");
+		} else if( event.getSource() == menuGameItem5 ){
+			System.exit(0);
+		} else if( event.getSource() == menuHelpItem1 ){
+			new AboutWindow();
+		}
 		
 	}
 

@@ -50,7 +50,7 @@ public class AboutWindow extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		if( event.getSource() == bouton ){
 			this.setVisible(false);
-	    }
+		}
 	}
 	
 
