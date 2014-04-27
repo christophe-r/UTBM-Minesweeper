@@ -1,17 +1,22 @@
 package fr.utbm.lp24.minesweeper;
 
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
+import javax.swing.UIManager;
+
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		JFrame myFrame = new JFrame("Minesweeper");
-		myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		myFrame.setSize(300,400);
-		myFrame.setLocationRelativeTo(null); // Center the window on the screen
-		myFrame.setVisible(true);
+		// Set the Windows UI theme
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Exception e){
+			System.out.println("Unable to load Windows look and feel");
+		}
+		
+		
+		new MinesweeperWindow();
+		
 
 	}
 
