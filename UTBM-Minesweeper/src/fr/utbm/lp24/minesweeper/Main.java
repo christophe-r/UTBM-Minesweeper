@@ -16,9 +16,19 @@ public class Main {
 		} catch (Exception e){
 			System.out.println("Unable to load Windows look and feel");
 		}
+	
 		
 		
+		BoardController myBoard = new BoardController(30, 16);	
+		myBoard.populateMines(99, 15, 8);
+		
+		System.out.println("Generated board:\r\n"+myBoard);
+			
+
+
 		new MinesweeperWindow();
+		
+		
 		
 
 	}
