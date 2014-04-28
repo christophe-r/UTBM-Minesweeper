@@ -12,7 +12,7 @@ public class BoardController extends Board {
 	}
 	
 	/**
-	 * This method could reset the game: New CLEAN tiles.
+	 * This method is used in order to reset the game: New CLEAN tiles.
 	 */
 	public void resetBoard(){
 		super.setDimension(super.width, super.height);
@@ -79,7 +79,7 @@ public class BoardController extends Board {
 		
 		for(Tile[] lineTile : super.board ){
 			for(Tile tile : lineTile ){
-				// If a tile appeared to be undiscovered (undiscovered, flagged or question mark), and not mined, the play is not still won 
+				// If a tile appeared to be undiscovered (undiscovered, flagged or question mark), and not mined, the player has not still won 
 				if( tile.getState() != TileState.DISCOVERED && tile.getContent() != TileContent.MINE ){
 					won = false;
 				}
@@ -90,10 +90,10 @@ public class BoardController extends Board {
 	}
 
 	/**
-	 * This method reveal the tiles recursively thanks to the coordinates given as X and Y.
+	 * This method reveals the tiles recursively thanks to the coordinates given as X and Y.
 	 * The recursion stops when a non-blank (CLEAR0) tile is encountered.
-	 * @param x
-	 * @param y
+	 * @param x The X coordinate
+	 * @param y The Y coordinate
 	 * @author Vincent
 	 */
 	public void revealTilesRecursively(int x, int y){
@@ -101,7 +101,7 @@ public class BoardController extends Board {
 	}
 	
 	/**
-	 * This method is called when a left-click happens
+	 * This method is called when a left-click happens.
 	 * @param x The X coordinate where the click happens
 	 * @param y The Y coordinate where the click happens
 	 * @author Vincent
@@ -113,7 +113,7 @@ public class BoardController extends Board {
 	
 	
 	/**
-	 * This method is called when a right-click happens
+	 * This method is called when a right-click happens.
 	 * @param x The X coordinate where the click happens
 	 * @param y The Y coordinate where the click happens
 	 * @author Vincent
