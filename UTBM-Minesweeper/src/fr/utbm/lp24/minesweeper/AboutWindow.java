@@ -10,14 +10,20 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
+/**
+ * @author Christophe
+ */
 public class AboutWindow extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	
 
-	JButton bouton;
+	JButton boutonOk;
 
+	/**
+	 * Class to manage the "About" window accessible by the menu Help > About
+	 * @author Christophe
+	 */
 	public AboutWindow(){
 
 		this.setTitle("About UTBM Minesweeper");
@@ -33,9 +39,9 @@ public class AboutWindow extends JFrame implements ActionListener {
 		 
 			JPanel panel = new JPanel();
 			panel.setLayout(new FlowLayout());
-			bouton = new JButton("OK");
-			bouton.addActionListener(this);
-			panel.add(bouton);
+			boutonOk = new JButton("OK");
+			boutonOk.addActionListener(this);
+			panel.add(boutonOk);
 			
 			this.add(panel);
 
@@ -46,10 +52,10 @@ public class AboutWindow extends JFrame implements ActionListener {
 	}
 
 	
- 
+	
 	public void actionPerformed(ActionEvent event) {
-		if( event.getSource() == bouton ){
-			this.setVisible(false);
+		if( event.getSource() == boutonOk ){
+			this.setVisible(false); // Quit the About window
 		}
 	}
 	

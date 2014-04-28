@@ -10,6 +10,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+/**
+ * @author Christophe
+ */
 public class MinesweeperWindow extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
@@ -28,7 +31,11 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	private JMenu menuHelp = new JMenu("Help");
 	private JMenuItem menuHelpItem1 = new JMenuItem("About UTBM Minesweeper");
 	
-
+	
+	/**
+	 * Class to manage the Minesweeper (main) window.
+	 * @author Christophe
+	 */
 	public MinesweeperWindow(){
 
 		this.setTitle("Minesweeper");
@@ -41,39 +48,36 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		ImageIcon icon = new ImageIcon(iconURL);
 		this.setIconImage(icon.getImage());
 		 
-		 
-		 this.menuGame.add(menuGameItem1);
-		 menuGameItem1.addActionListener(this);
-		 
-		 this.menuGame.addSeparator();
-		 
-		 this.menuGame.add(menuGameItem2);
-		 menuGameItem2.addActionListener(this);
-		 
-		 this.menuGame.add(menuGameItem3);
-		 menuGameItem3.addActionListener(this);
-		 
-		 this.menuGame.add(menuGameItem4);
-		 menuGameItem4.addActionListener(this);
-		 
-		 this.menuGame.addSeparator();
-		 
-		 this.menuGame.add(menuGameItem5);
-		 menuGameItem5.addActionListener(this);
-		 
-
-		 
-		 this.menuHelp.add(menuHelpItem1);
-		 menuHelpItem1.addActionListener(this);
+ 
+		this.menuGame.add(menuGameItem1);
+		menuGameItem1.addActionListener(this);
+		
+		this.menuGame.addSeparator();
+		
+		this.menuGame.add(menuGameItem2);
+		menuGameItem2.addActionListener(this);
+		
+		this.menuGame.add(menuGameItem3);
+		menuGameItem3.addActionListener(this);
+		
+		this.menuGame.add(menuGameItem4);
+		menuGameItem4.addActionListener(this);
+		
+		this.menuGame.addSeparator();
+		
+		this.menuGame.add(menuGameItem5);
+		menuGameItem5.addActionListener(this);
+		
+		
+		this.menuHelp.add(menuHelpItem1);
+		menuHelpItem1.addActionListener(this);
 		 
 			
 		this.menuBar.add(menuGame);
-	    this.menuBar.add(menuHelp);
-	    
-	    
+		this.menuBar.add(menuHelp);
+		
 		this.setJMenuBar(menuBar);
-		this.setVisible(true);
-			
+		this.setVisible(true);	
 	
 	}
 

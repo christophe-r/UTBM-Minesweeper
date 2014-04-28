@@ -2,7 +2,10 @@ package fr.utbm.lp24.minesweeper;
 
 import javax.swing.UIManager;
 
-
+/**
+ * Main class
+ * @author Christophe
+ */
 public class Main {
 
 	public static void main(String[] args) {
