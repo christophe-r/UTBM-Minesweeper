@@ -10,7 +10,7 @@ public class BoardController extends Board {
 	public BoardController(int width, int height) {
 		super(width, height);
 	}
-	
+
 	/**
 	 * This method is used in order to reset the game: New CLEAN tiles.
 	 */
@@ -97,30 +97,67 @@ public class BoardController extends Board {
 	 * @author Vincent
 	 */
 	public void revealTilesRecursively(int x, int y){
-		// TODO
+		
+		switch( board[x][y].getState() ){ // Do nothing if state is : FLAGGED, QUESTION_MARK, DISCOVERED
+		case FLAGGED	:  break;
+		case QUESTION_MARK: break;
+		case DISCOVERED: break;
+		case UNDISCOVERED:  {
+			board[x][y].setState(TileState.DISCOVERED);
+			if(board[x][y].getContent() == TileContent.CLEAR0 ){
+				revealTilesRecursively(x-1,y);
+				revealTilesRecursively(x+1,y);
+				revealTilesRecursively(x,y-1);
+				revealTilesRecursively(x,y+1);
+			}
+		break;}
+			
+		default: break;
+        }
 	}
 	
-	/**
-	 * This method is called when a left-click happens.
-	 * @param x The X coordinate where the click happens
-	 * @param y The Y coordinate where the click happens
-	 * @author Vincent
+	/*
+	 * for the time being this algorithm return the content ,not the state of the tile
 	 */
-	public void leftClickOnTile(int x, int y){
-		// TODO
-		// In this part, it will by necessary to use the "revealTilesRecursively" method.
+	public TileContent[][] displayBoard(){
+		TileContent stateboard[][] = new TileContent[height][width];
+		for( int i=0; i<width ; i++ ){
+			for( int j=0; j<height ; j++ ){
+				
+				stateboard[j][i] = board[j][i].getContent();
+				}
+			}
+		return stateboard;
 	}
-	
-	
-	/**
-	 * This method is called when a right-click happens.
-	 * @param x The X coordinate where the click happens
-	 * @param y The Y coordinate where the click happens
-	 * @author Vincent
+	/*
+	 	public TileState[][] displayBoard(){
+		TileState stateboard[][] = new TileState[height][width];
+		for( int i=0; i<height ; i++ ){
+			for( int j=0; j<width ; j++ ){
+				
+				stateboard[i][j] = board[i][j].getState();
+				}
+			}
+		return stateboard;
+	}
 	 */
-	public void rightClickOnTile(int x, int y){
-		// TODO
+	
+	
+	public String toString(){
+		
+		String charBoard = "";
+		
+		for(Tile[] lineTile : this.board ){
+			for(Tile tile : lineTile ){
+				charBoard += ""+tile;
+			}
+			charBoard += "\r\n";
+		}
+		
+		return charBoard;
 	}
+
+	
 	
 	
 
