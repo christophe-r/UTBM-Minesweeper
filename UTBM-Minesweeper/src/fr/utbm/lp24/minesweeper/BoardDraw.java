@@ -23,9 +23,9 @@ public class BoardDraw extends JPanel {
 	     * for the time being this algorithm display the content ,not the state
 	     * @author Vincent
 	     */
-		for( int i=0; i<stateboard.length ; i++ ){
-			for( int j=0; j<stateboard[0].length ; j++ ){
-				switch( stateboard[i][j] ){
+		for( int i=0; i<stateboard[0].length ; i++ ){
+			for( int j=0; j<stateboard.length ; j++ ){
+				switch( stateboard[j][i] ){
 				case CLEAR0: g.drawString(" ", 1+i*10, 1+j*10); break;			
 				case MINE: g.drawString("@", 1+i*10, 1+j*10); break;	
 				case CLEAR1: g.drawString("1", 1+i*10, 1+j*10); break;	
