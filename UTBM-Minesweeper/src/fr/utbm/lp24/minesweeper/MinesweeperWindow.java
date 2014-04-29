@@ -9,6 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+import java.awt.event.KeyEvent;
+import javax.swing.UIManager;
 
 /**
  * @author Christophe
@@ -37,6 +40,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	 * @author Christophe
 	 */
 	public MinesweeperWindow(){
+		getContentPane().setBackground(UIManager.getColor("inactiveCaption"));
 
 		this.setTitle("Minesweeper");
 		this.setSize(300, 400);
@@ -47,18 +51,22 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		URL iconURL = getClass().getResource("/resources/icon64.png");
 		ImageIcon icon = new ImageIcon(iconURL);
 		this.setIconImage(icon.getImage());
+		menuGameItem1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		 
  
 		this.menuGame.add(menuGameItem1);
 		menuGameItem1.addActionListener(this);
 		
 		this.menuGame.addSeparator();
+		menuGameItem2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
 		
 		this.menuGame.add(menuGameItem2);
 		menuGameItem2.addActionListener(this);
+		menuGameItem3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
 		
 		this.menuGame.add(menuGameItem3);
 		menuGameItem3.addActionListener(this);
+		menuGameItem4.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
 		
 		this.menuGame.add(menuGameItem4);
 		menuGameItem4.addActionListener(this);
@@ -89,7 +97,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		} else if( event.getSource() == menuGameItem2 ){
 			System.out.println("Statistics event");
 		} else if( event.getSource() == menuGameItem3 ){
-			System.out.println("Options event");
+			new OptionsWindow();
 		} else if( event.getSource() == menuGameItem4 ){
 			System.out.println("Change appearance event");
 		} else if( event.getSource() == menuGameItem5 ){
