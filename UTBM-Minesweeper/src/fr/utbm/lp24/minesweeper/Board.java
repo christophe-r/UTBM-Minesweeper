@@ -9,6 +9,7 @@ public class Board {
 	protected int width;
 	protected int height;
 	protected int nbMines;
+	protected int nbFlags;
 	
 	protected Tile board[][];
 	
@@ -30,15 +31,15 @@ public class Board {
 		this.width = width;
 		this.height = height;
 		this.nbMines = 0;
+		this.nbFlags = 0;
 		
 		// Setting the bounds
 		this.board = new Tile[height][width];
 		
 		// Creating all tiles of the board
-		for( int i=0 ; i<height ; i++ ){
-			for( int j=0 ; j<width ; j++ ){
-				//System.out.println(""+i+","+j);
-				this.board[i][j] = new Tile();
+		for( int j=0 ; j<height ; j++ ){
+			for( int i=0 ; i<width ; i++ ){
+				this.board[j][i] = new Tile();
 			}
 		}
 	}
@@ -66,7 +67,7 @@ public class Board {
 	 */
 	public void setTile(int x, int y, TileContent tileContent, TileState tileState){
 		if( this.tileInBounds(x, y) ){
-			this.board[x][y] = new Tile(tileContent, tileState);
+			this.board[y][x] = new Tile(tileContent, tileState);
 		}
 	}
 
@@ -77,21 +78,21 @@ public class Board {
 	 * @return True or False
 	 */
 	public boolean tileInBounds(int x, int y){
-		return ( x >= 0 && x < width && y >= 0 && y < height );
+		return (x >= 0 && x < width) && (y >= 0 && y < height);
 	}
 	
 	/**
 	 * Get the adjacent tile.
-	 * (x,y) : coordinates of the tile in the board
-	 * 
+	 * (x,y) : coordinates of the tile in the board.
+	 * (i, j) : the offset.
 	 * @param x The x coordinate of the tile in the board
 	 * @param y The y coordinate of the tile in the board
-	 * @param i With -1 <= i <= 1
-	 * @param j With -1 <= j <= 1
+	 * @param i The x offset, with -1 <= i <= 1
+	 * @param j The y offset, with -1 <= j <= 1
 	 * @return Tile
 	 */
 	public Tile getAdjacentTile(int x, int y, int i, int j){
-		if( (i>=-1 && i<=1) && (j>=-1 && j<=1) && this.tileInBounds(x+i, y+j) ){
+		if( (i>=-1 && i<=1) && (j>=-1 && j<=1) ){ // getTile tests if the tile is in bounds
 			return this.getTile(x+i, y+j);
 		} else {
 			return null;

@@ -4,6 +4,7 @@
 |  - width : int                                                                 |
 |  - height : int                                                                |
 |  - nbMines : int                                                               |
+|  - nbFlags : int                                                               |
 |  - board[][] : Tile                                                            |
 +--------------------------------------------------------------------------------+
 |  + Board(int width, int height) : void                                         |

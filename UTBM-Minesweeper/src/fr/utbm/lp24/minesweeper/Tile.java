@@ -61,27 +61,21 @@ public class Tile {
 	}
 	
 	/**
-	 * This method increment the content (number of mines around) of a tile only if it does not contain a mine.
+	 * This method increments the content (number of mines around) of a tile only if it does not contain a mine.
 	 */
 	public void setContentIncrement() {
-		TileContent currentContent = this.getContent();
 		
-		if( currentContent == TileContent.CLEAR0 ){
-			this.setContent(TileContent.CLEAR1);
-		} else if( currentContent == TileContent.CLEAR1 ){
-			this.setContent(TileContent.CLEAR2);
-		} else if( currentContent == TileContent.CLEAR2 ){
-			this.setContent(TileContent.CLEAR3);
-		} else if( currentContent == TileContent.CLEAR3 ){
-			this.setContent(TileContent.CLEAR4);
-		} else if( currentContent == TileContent.CLEAR4 ){
-			this.setContent(TileContent.CLEAR5);
-		} else if( currentContent == TileContent.CLEAR5 ){
-			this.setContent(TileContent.CLEAR6);
-		} else if( currentContent == TileContent.CLEAR6 ){
-			this.setContent(TileContent.CLEAR7);
-		} else if( currentContent == TileContent.CLEAR7 ){
-			this.setContent(TileContent.CLEAR8);
+		switch( this.getContent() ){
+			case CLEAR0: this.setContent(TileContent.CLEAR1); break;
+			case CLEAR1: this.setContent(TileContent.CLEAR2); break;
+			case CLEAR2: this.setContent(TileContent.CLEAR3); break;
+			case CLEAR3: this.setContent(TileContent.CLEAR4); break;
+			case CLEAR4: this.setContent(TileContent.CLEAR5); break;
+			case CLEAR5: this.setContent(TileContent.CLEAR6); break;
+			case CLEAR6: this.setContent(TileContent.CLEAR7); break;
+			case CLEAR7: this.setContent(TileContent.CLEAR8); break;
+			
+			default: break;
 		}
 		
 	}
@@ -122,6 +116,5 @@ public class Tile {
 		return character;
 		
 	}
-	
 	
 }
