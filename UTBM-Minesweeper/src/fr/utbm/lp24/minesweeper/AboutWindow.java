@@ -7,17 +7,16 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 /**
  * @author Christophe
  */
-public class AboutWindow extends JFrame implements ActionListener {
+public class AboutWindow extends JDialog implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	
-
 	JButton boutonOk;
 
 	/**
@@ -29,8 +28,9 @@ public class AboutWindow extends JFrame implements ActionListener {
 		this.setTitle("About UTBM Minesweeper");
 		this.setSize(300, 200);
 		this.setResizable(false);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
+		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		
 		URL iconURL = getClass().getResource("/resources/icon64.png");
 		ImageIcon icon = new ImageIcon(iconURL);
