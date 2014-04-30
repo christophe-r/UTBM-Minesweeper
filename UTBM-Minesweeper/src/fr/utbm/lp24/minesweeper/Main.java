@@ -8,8 +8,9 @@ package fr.utbm.lp24.minesweeper;
 public class Main {
 
 	public static void main(String[] args) {
-		// start the game
-		MinesweeperGame game = new MinesweeperGame();
+		
+		// Launching the game
+		new MinesweeperGame();
 		
 	}
 

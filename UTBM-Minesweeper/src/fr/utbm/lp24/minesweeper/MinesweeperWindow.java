@@ -10,10 +10,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
-import java.text.NumberFormat;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -59,8 +57,8 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 
 	/**
-	* Initialise the main windows and display the first view
-	* @author vincent
+	* Initialize the main windows and display the first view
+	* @author Vincent
 	*/	
 	public MinesweeperWindow(final MinesweeperGame controller){ 
 
@@ -80,20 +78,27 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	    container.setLayout(new BorderLayout());
 	    
 		// add listener for menu
-	    menuGameItem1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
+	    
 		this.menuGame.add(menuGameItem1);
 		menuGameItem1.addActionListener(this);
-		menuGameItem2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
+		menuGameItem1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
+		
 		this.menuGame.addSeparator();
+		
 		this.menuGame.add(menuGameItem2);
 		menuGameItem2.addActionListener(this);
-		menuGameItem3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
+		menuGameItem2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
+		
 		this.menuGame.add(menuGameItem3);
 		menuGameItem3.addActionListener(this);
-		menuGameItem4.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
+		menuGameItem3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
+		
 		this.menuGame.add(menuGameItem4);
 		menuGameItem4.addActionListener(this);
+		menuGameItem4.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
+		
 		this.menuGame.addSeparator();
+		
 		this.menuGame.add(menuGameItem5);
 		menuGameItem5.addActionListener(this);
 
@@ -126,10 +131,9 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	        public void mousePressed(MouseEvent e){
 	        	Point containerlocate =  container.getLocation();
 		     	switch( e.getButton() ){
-				case 1: controller.leftClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
-				case 3: controller.rightClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
-				
-				default: break;
+		     		case 1: controller.leftClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
+		     		case 3: controller.rightClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
+		     		default: break;
 		        }
 	        }
 	     });
@@ -164,7 +168,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * event for the menu
+	 * Event handlers for the JMenu
 	 */
 	public void actionPerformed(ActionEvent event) {
 
