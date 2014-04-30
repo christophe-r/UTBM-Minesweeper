@@ -11,7 +11,7 @@ import javax.swing.UIManager;
 
 public class MinesweeperGame {
 	
-	private boolean gameInProgress = false;
+	private GameState gameState = GameState.STOPED;
 	private int nbMines;
 	private int width;
 	private int height;	
@@ -36,11 +36,13 @@ public class MinesweeperGame {
 		}
 		this.Majpreferences();
 		// Launch the windows
-		System.out.println("largueur : " + width + "   hauteur  : " +  height);
-		myBoard = new BoardController(width, height);	
+		
+		
+			
 		
 		window = new MinesweeperWindow(this);
-		window.drawBoard(myBoard.displayBoard());
+		this.newGame();
+		gameState = GameState.PAUSED;
 	}
 
 	
@@ -61,29 +63,41 @@ public class MinesweeperGame {
 		y = ((y-21)/window.getsquaresize())-1;
 		
 		if(myBoard.getTile(x,y) != null){
-			if(gameInProgress == false){ // if the game does not start we gendered a new board
-				myBoard = new BoardController(width, height);	
-				myBoard.populateMines(nbMines, x, y);
-				System.out.println("Generated board:\r\n"+myBoard);
-				gameInProgress = true;
-			}	
-			window.updateMsgPanel("");
-			myBoard.revealTilesRecursively(y,x);
-			System.out.println("content : "+ myBoard.getTile(x,y).getContent());
-			if(myBoard.getTile(x,y).getContent() == TileContent.MINE){
-				window.updateMsgPanel("Sorry but you lose");
-				System.out.println("Lose : "+ myBoard.getTile(y,x).getContent());
-				gameInProgress = false;
+			switch(gameState){
+				case STOPED: 
+					this.newGame();//to restart the game
+					gameState = GameState.PAUSED;
+					System.out.println("stoped");
+				break;	
+				case PAUSED:
+					System.out.println("paused");
+					myBoard.populateMines(nbMines, x, y);
+					System.out.println("Generated board:\r\n"+myBoard);
+					myBoard.revealTilesRecursively(y,x);
+					window.drawBoard(myBoard.displayBoard());
+					gameState = GameState.RUN;
+				break;
+				case RUN:
+					if(myBoard.getTile(x,y).getContent() == TileContent.MINE){
+						window.updateMsgPanel("Sorry but you lose");
+						gameState = GameState.STOPED;						
+					}
+					
+					if(myBoard.isWon()){
+						window.updateMsgPanel("Great you have won the game");
+						gameState = GameState.STOPED;
+					}
+					
+					myBoard.revealTilesRecursively(y,x);
+					window.drawBoard(myBoard.displayBoard());
+				break;
+				default: break;
 			}
-			if(myBoard.isWon()){
-				window.updateMsgPanel("Great you have won the game");
-
-				gameInProgress = false;
-			}
-			window.drawBoard(myBoard.displayBoard());
+			
 		}
 		// use to debug
 		System.out.println("Click gauche");
+		System.out.println("content : "+ myBoard.getTile(x,y).getContent());
 		System.out.println("Corrd X : " + x);
 		System.out.println("Corrd Y : " + y);
 		System.out.println("");
@@ -131,11 +145,6 @@ public class MinesweeperGame {
 	}
 	
 	
-	public BoardController getBoardController(){
-		return myBoard;
-	}
-	
-	
 	/**
 	 * Update the preferences
 	 * 
@@ -161,6 +170,18 @@ public class MinesweeperGame {
 			this.width = this.height = 9;
 			this.nbMines = 10;
 		} 
+		
 	}
 
+	public void newGame(){
+		System.out.println("newgame");
+		this.Majpreferences();
+		myBoard = new BoardController(width, height);// gen a new board
+		window.drawBoard(myBoard.displayBoard()); // display the new board
+		gameState = GameState.PAUSED;
+	}
+	public void loseGame(){
+		
+	}
+	
 }

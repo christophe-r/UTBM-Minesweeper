@@ -52,6 +52,8 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	private JLabel label = new JLabel(msg);
 	private BoardDraw boardDraw = new BoardDraw();
 	private int square_size = 20;
+	
+	private MinesweeperGame controller;
 
 	/**
 	* Initialize the main windows and display the first view
@@ -59,6 +61,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	*/	
 	public MinesweeperWindow(final MinesweeperGame controller){ 
 
+		this.controller = controller;
 		getContentPane().setBackground(UIManager.getColor("inactiveCaption"));
 		boardDraw.loadImages();
 		this.setTitle("Minesweeper");
@@ -143,7 +146,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
      * @author Vincent
      */
 	public void drawBoard(Tile stateboard[][]){
-		System.out.println("largueur : " + stateboard.length*square_size + "   hauteur  : " +  stateboard[0].length*square_size);
 		this.setSize(stateboard[0].length*square_size + 100 , stateboard.length*square_size + 150);
 		boardDraw.setNewBoard(stateboard, square_size);
 		boardDraw.repaint();
@@ -173,7 +175,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 		if( event.getSource() == menuGameItem1 ){
 			System.out.println("New game event");
-			
+			controller.newGame();
 			
 		} else if( event.getSource() == menuGameItem2 ){
 			System.out.println("Statistics event");

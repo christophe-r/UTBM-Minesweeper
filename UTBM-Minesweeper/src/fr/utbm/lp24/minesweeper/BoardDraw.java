@@ -69,23 +69,24 @@ public class BoardDraw extends JPanel {
 						g.setColor(Color.BLACK);
 						//g.drawRect(cordX,cordY-10, 10, 10); 
 						//g.drawString(" F", cordX, cordY); 
+						g.drawImage(image_tile, cordX, cordY,square_size,square_size, this); 
 						g.drawImage(image_flag, cordX, cordY,square_size,square_size, this); 
 						
 						break;	
 					case QUESTION_MARK:
 						g.setColor(Color.BLACK); 
 						//g.drawString(" ?", cordX-10,cordY); 
+						g.drawImage(image_tile, cordX, cordY,square_size,square_size, this); 
 						g.drawImage(question_mark, cordX, cordY,square_size,square_size, this); 
 						break;	
 						
 					case DISCOVERED :{
 						//g.drawRect(cordX,cordY, 10, 10);
 						g.setColor(Color.blue);
-						
+						g.drawImage(image_tile_clear, cordX, cordY,square_size,square_size, this); 
 						switch( stateboard[i][j].getContent() ){
 							case CLEAR0: 
 								//g.drawString(" ",  cordX, cordY+10);
-								g.drawImage(image_tile_clear, cordX, cordY,square_size,square_size, this); 
 								break;			
 							case MINE:  
 								g.setColor(Color.red); 
@@ -161,7 +162,7 @@ public class BoardDraw extends JPanel {
 				System.out.println("load : /resources/tile_clear.png");
 				image_tile_clear = ImageIO.read(getClass().getResourceAsStream("/resources/tile_clear.png"));
 				
-				System.out.println("load : /resources/nine.png");
+				System.out.println("load : /resources/mine.png");
 				image_mine = ImageIO.read(getClass().getResourceAsStream("/resources/mine.png"));
 				
 				System.out.println("load : /resources/image_flag.png");
