@@ -165,6 +165,7 @@ public class OptionsWindow extends JDialog {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				textFieldCustomIntInRange(textField_custom_height, 9, 24);
+				textFieldCustomIntInRangeMines();
 			}
 		});
 		textField_custom_height.addKeyListener(new KeyAdapter() {
@@ -187,6 +188,7 @@ public class OptionsWindow extends JDialog {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				textFieldCustomIntInRange(textField_custom_width, 9, 30);
+				textFieldCustomIntInRangeMines();
 			}
 		});
 		textField_custom_width.addKeyListener(new KeyAdapter() {
@@ -208,7 +210,7 @@ public class OptionsWindow extends JDialog {
 		textField_custom_mines.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				textFieldCustomIntInRange(textField_custom_mines, 10, 668);
+				textFieldCustomIntInRangeMines();
 			}
 		});
 		textField_custom_mines.addKeyListener(new KeyAdapter() {
@@ -250,6 +252,20 @@ public class OptionsWindow extends JDialog {
 			textField.setText(""+max);
 		}
 		
+	}
+	
+	/**
+	 * Function to check that the number of mines entered (in the custom case) is not to high, relative
+	 * to the width and the height
+	 */
+	private void textFieldCustomIntInRangeMines(){
+		int maxMines = Integer.parseInt(textField_custom_width.getText())*Integer.parseInt(textField_custom_height.getText())-10;
+		
+		if( Integer.parseInt(textField_custom_mines.getText()) < 10 ){
+			textField_custom_mines.setText("10");
+		} else if( Integer.parseInt(textField_custom_mines.getText()) > maxMines ){
+			textField_custom_mines.setText(""+maxMines);
+		}
 	}
 	
 	private void optionWindowInit(){
