@@ -1,0 +1,123 @@
+package fr.utbm.lp24.minesweeper;
+
+import java.awt.BorderLayout;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+public class LostWindow extends JDialog {
+
+	private static final long serialVersionUID = 1L;
+	private final JPanel contentPanel = new JPanel();
+
+
+	/**
+	 * Create the dialog.
+	 */
+	public LostWindow() {
+		setTitle("Game Lost");
+		setResizable(false);
+		setModal(true);
+		setBounds(100, 100, 410, 260);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(null);
+		{
+			JButton exitButton = new JButton("Exit");
+			exitButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					System.exit(0);
+				}
+			});
+			exitButton.setBounds(10, 201, 120, 23);
+			contentPanel.add(exitButton);
+			exitButton.setActionCommand("Exit");
+			getRootPane().setDefaultButton(exitButton);
+		}
+		{
+			JButton playAgainButton = new JButton("Play again");
+			playAgainButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					playAgain();
+				}
+			});
+			playAgainButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
+			playAgainButton.setBounds(274, 201, 120, 23);
+			contentPanel.add(playAgainButton);
+			playAgainButton.setActionCommand("Play again");
+		}
+		
+		
+		this.addWindowListener(new WindowAdapter() {
+			   public void windowClosing(WindowEvent evt) {
+				   playAgain();
+			   }
+		});
+		
+		
+		JLabel lblSorry = new JLabel("Sorry, you lost this game. Better luck next time!");
+		lblSorry.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblSorry.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSorry.setBounds(10, 21, 384, 23);
+		contentPanel.add(lblSorry);
+		
+		JLabel lblTime = new JLabel("Time:");
+		lblTime.setBounds(10, 78, 26, 14);
+		contentPanel.add(lblTime);
+		
+		JLabel lblSeconds = new JLabel("9999 seconds");
+		lblSeconds.setBounds(40, 78, 89, 14);
+		contentPanel.add(lblSeconds);
+		
+		JLabel lblDate = new JLabel("Date:");
+		lblDate.setBounds(179, 78, 27, 14);
+		contentPanel.add(lblDate);
+		
+		JLabel lblTDate = new JLabel("00-Mon-00");
+		lblTDate.setBounds(212, 78, 73, 14);
+		contentPanel.add(lblTDate);
+		
+		JButton btnRestartThisGame = new JButton("Restart this game");
+		btnRestartThisGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				restartGame();
+			}
+		});
+		btnRestartThisGame.setBounds(142, 201, 120, 23);
+		contentPanel.add(btnRestartThisGame);
+		
+		
+		setVisible(true);
+		
+	}
+	
+	private void playAgain(){
+		// TODO
+		//controller.newGame();
+
+		// Close the window
+		this.dispose();
+	}
+	
+	private void restartGame(){
+		// TODO
+		// Restart THE SAME game (do not re-generate a new grid)
+
+		// Close the window
+		this.dispose();
+	}
+	
+}
