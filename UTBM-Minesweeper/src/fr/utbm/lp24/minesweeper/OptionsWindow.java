@@ -9,13 +9,22 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.TitledBorder;
 import javax.swing.ButtonGroup;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+
 import java.awt.Component;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class OptionsWindow extends JDialog {
 
@@ -31,6 +40,14 @@ public class OptionsWindow extends JDialog {
 	private JTextField textField_custom_height;
 	private JTextField textField_custom_width;
 	private JTextField textField_custom_mines;
+	
+	private JRadioButton rdbtn_beginner;
+	private JRadioButton rdbtn_intermediate;
+	private JRadioButton rdbtn_advanced;
+	
+	private JRadioButton rdbtn_custom;
+	
+	private PreferencesManager userPreferences;
 
 
 	/**
@@ -48,8 +65,7 @@ public class OptionsWindow extends JDialog {
 			okButton.setActionCommand("OK");
 			okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					// Save settings here
-					setVisible(false);
+					optionWindowOK();
 				}
 			});
 			getRootPane().setDefaultButton(okButton);
@@ -94,31 +110,69 @@ public class OptionsWindow extends JDialog {
 		);
 		panel.setLayout(null);
 		
-		JRadioButton rdbtn_intermediate = new JRadioButton("<html>Intermediate<br>\r\n40 mines<br>\r\n16 x 16 tile grid");
+		
+		rdbtn_beginner = new JRadioButton("<html>Beginner<br>\r\n10 mines<br>\r\n9 x 9 tile grid");
+		rdbtn_beginner.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				radioButtonCustom();
+			}
+		});
+		
+		buttonGroup.add(rdbtn_beginner);		
+		rdbtn_beginner.setBounds(12, 28, 109, 43);
+		panel.add(rdbtn_beginner);
+		
+		rdbtn_intermediate = new JRadioButton("<html>Intermediate<br>\r\n40 mines<br>\r\n16 x 16 tile grid");
+		rdbtn_intermediate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				radioButtonCustom();
+			}
+		});
 		buttonGroup.add(rdbtn_intermediate);
 		rdbtn_intermediate.setBounds(12, 80, 109, 43);
 		panel.add(rdbtn_intermediate);
 		
-		JRadioButton rdbtn_advanced = new JRadioButton("<html>Advanced<br>\r\n99 mines<br>\r\n16 x 30 tile grid");
+		rdbtn_advanced = new JRadioButton("<html>Advanced<br>\r\n99 mines<br>\r\n16 x 30 tile grid");
+		rdbtn_advanced.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				radioButtonCustom();
+			}
+		});
 		buttonGroup.add(rdbtn_advanced);
 		rdbtn_advanced.setBounds(12, 132, 109, 43);
 		panel.add(rdbtn_advanced);
 		
-		JRadioButton rdbtn_custom = new JRadioButton("Custom");
+		
+		
+		rdbtn_custom = new JRadioButton("Custom");
+		rdbtn_custom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				radioButtonCustom();
+			}
+		});
+
 		buttonGroup.add(rdbtn_custom);
 		rdbtn_custom.setBounds(170, 28, 71, 23);
 		panel.add(rdbtn_custom);
 		
-		JRadioButton rdbtn_beginner = new JRadioButton("<html>Beginner<br>\r\n10 mines<br>\r\n9 x 9 tile grid");
-		buttonGroup.add(rdbtn_beginner);
-		rdbtn_beginner.setBounds(12, 28, 109, 43);
-		panel.add(rdbtn_beginner);
 		
 		JLabel lbl_custom_height = new JLabel("Height (9-24):");
 		lbl_custom_height.setBounds(196, 50, 71, 14);
 		panel.add(lbl_custom_height);
 		
 		textField_custom_height = new JTextField();
+		textField_custom_height.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				textFieldCustomIntInRange(textField_custom_height, 9, 24);
+			}
+		});
+		textField_custom_height.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				textFieldMaxLength(textField_custom_height, 2);
+			}
+		});
 		lbl_custom_height.setLabelFor(textField_custom_height);
 		textField_custom_height.setBounds(286, 47, 53, 20);
 		panel.add(textField_custom_height);
@@ -129,6 +183,18 @@ public class OptionsWindow extends JDialog {
 		panel.add(lbl_custom_width);
 		
 		textField_custom_width = new JTextField();
+		textField_custom_width.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				textFieldCustomIntInRange(textField_custom_width, 9, 30);
+			}
+		});
+		textField_custom_width.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				textFieldMaxLength(textField_custom_width, 2);
+			}
+		});
 		lbl_custom_width.setLabelFor(textField_custom_width);
 		textField_custom_width.setBounds(286, 77, 53, 20);
 		panel.add(textField_custom_width);
@@ -139,6 +205,18 @@ public class OptionsWindow extends JDialog {
 		panel.add(lbl_custom_mines);
 		
 		textField_custom_mines = new JTextField();
+		textField_custom_mines.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				textFieldCustomIntInRange(textField_custom_mines, 10, 668);
+			}
+		});
+		textField_custom_mines.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				textFieldMaxLength(textField_custom_mines, 3);
+			}
+		});
 		lbl_custom_mines.setLabelFor(textField_custom_mines);
 		textField_custom_mines.setBounds(286, 108, 53, 20);
 		panel.add(textField_custom_mines);
@@ -148,6 +226,8 @@ public class OptionsWindow extends JDialog {
 		getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPanel, panel, rdbtn_beginner, rdbtn_intermediate, rdbtn_advanced, rdbtn_custom, lbl_custom_height, textField_custom_height, lbl_custom_width, textField_custom_width, lbl_custom_mines, textField_custom_mines, okButton, cancelButton}));
 		
 		
+		optionWindowInit();
+		
 		
 			setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			setLocationRelativeTo(null);
@@ -155,4 +235,87 @@ public class OptionsWindow extends JDialog {
 			setVisible(true);
 		
 	}
+	
+	
+	private void textFieldMaxLength(JTextField textField, int length){
+		if(textField.getText().length()>length){
+			textField.setText(textField.getText().substring(0, length));
+		}
+	}
+	
+	private void textFieldCustomIntInRange(JTextField textField, int min, int max){
+		if( Integer.parseInt(textField.getText()) < min ){
+			textField.setText(""+min);
+		} else if( Integer.parseInt(textField.getText()) > max ){
+			textField.setText(""+max);
+		}
+		
+	}
+	
+	private void optionWindowInit(){
+		// Retrieving user preferences
+		userPreferences = new PreferencesManager();
+		String difficulty = userPreferences.getPref("difficulty", "beginner");
+		
+		if( difficulty.equals("beginner") ){
+			rdbtn_beginner.setSelected(true);
+		} else if( difficulty.equals("intermediate") ){
+			rdbtn_intermediate.setSelected(true);
+		} else if( difficulty.equals("advanced") ){
+			rdbtn_advanced.setSelected(true);
+		} else if( difficulty.equals("custom") ){
+			rdbtn_custom.setSelected(true);
+		}
+		
+		radioButtonCustom();
+		
+		textField_custom_height.setText(userPreferences.getPref("difficulty_custom_height", "20"));
+		textField_custom_width.setText(userPreferences.getPref("difficulty_custom_width", "25"));
+		textField_custom_mines.setText(userPreferences.getPref("difficulty_custom_mines", "300"));
+		
+	}
+	
+	private void optionWindowOK(){
+		userPreferences = new PreferencesManager();
+		
+		String difficulty = "beginner";
+		
+		if( rdbtn_beginner.isSelected() ){
+			difficulty = "beginner";
+		} else if( rdbtn_intermediate.isSelected() ){
+			difficulty = "intermediate";
+		} else if( rdbtn_advanced.isSelected() ){
+			difficulty = "advanced";
+		} else if( rdbtn_custom.isSelected() ){
+			difficulty = "custom";
+		}
+		
+		
+		userPreferences.setPref("difficulty", difficulty);
+		
+		userPreferences.setPref("difficulty_custom_height", textField_custom_height.getText());
+		userPreferences.setPref("difficulty_custom_width", textField_custom_width.getText());
+		userPreferences.setPref("difficulty_custom_mines", textField_custom_mines.getText());
+				
+		
+		setVisible(false);
+		
+	}
+	
+	
+	private void radioButtonCustom(){
+		if( rdbtn_custom.isSelected() ){
+			System.out.println("selected");
+			textField_custom_height.setEnabled(true);
+			textField_custom_width.setEnabled(true);
+			textField_custom_mines.setEnabled(true);
+		} else {
+			textField_custom_height.setEnabled(false);
+			textField_custom_width.setEnabled(false);
+			textField_custom_mines.setEnabled(false);
+		}
+		
+	}
+	
+	
 }
