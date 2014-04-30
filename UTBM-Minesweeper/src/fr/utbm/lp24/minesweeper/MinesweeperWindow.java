@@ -47,28 +47,25 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	private JMenuItem menuHelpItem1 = new JMenuItem("About UTBM Minesweeper");
 	
 	// container
-	private JPanel container = new JPanel(); // main container container
+	private JPanel container = new JPanel(); // main container
 	private JPanel begin = new JPanel();
-	/*private JPanel cards = new JPanel();  // center no-used for the time being
-	String[] listContent = {"CARD_1", "CARD_2"};*/
 	
-	private JFormattedTextField jtf = new JFormattedTextField(NumberFormat.getIntegerInstance());
-	private JLabel label = new JLabel("Click to generate a game");
-	private BoardDraw boarddraw = new BoardDraw();
+	private String msg = "Click to begin the game ...";
+	private JLabel label = new JLabel(msg);
+	private BoardDraw boardDraw = new BoardDraw();
 	
 	// link controller and view
-	private MinesweeperGame controleur;
+	private MinesweeperGame controller;
 
-	
-	
-	public MinesweeperWindow(final MinesweeperGame controleur){ 
-		/**
-		 * Initialise the main windows and display the first view
-		 * @author vincent
-		 */
+
+	/**
+	* Initialise the main windows and display the first view
+	* @author vincent
+	*/	
+	public MinesweeperWindow(final MinesweeperGame controller){ 
+
 		getContentPane().setBackground(UIManager.getColor("inactiveCaption"));
-		this.controleur	= controleur;
-		
+		this.controller = controller;
 		this.setTitle("Minesweeper");
 		this.setSize(300, 400);
 		this.setResizable(false);
@@ -81,11 +78,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		
 	    container.setBackground(Color.white);
 	    container.setLayout(new BorderLayout());
-	//    final CardLayout cl = new CardLayout(); //no-used for the time being
-
-	    
-	      
-	    
 	    
 		// add listener for menu
 	    menuGameItem1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
@@ -116,33 +108,10 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		//set the input and button object
 	    container.setBackground(Color.white);
 	    container.setLayout(new BorderLayout());
-	    
-		JLabel label = new JLabel("Click to generate a game");
-		//JPanel begin = new JPanel();
-	            
 	    begin.add(label);
-	
-	 	
-	/*  // no-used for the time being
-	    
-	    JButton nextcard = new JButton("next"); 
-	    bouton2.addActionListener(new ActionListener(){
-	      public void actionPerformed(ActionEvent event){				
-	    	  cl.next(cards);
-	      }
-	    });
-	    top.add(nextcard);
-		
-		cards.setLayout(cl);
-	    //we add the card to the stack with a name to find it later
-	    cards.add(new BoardDraw(), listContent[0]);
-	    cards.add(card2, listContent[1]);*/
-	    // container.add(boarddraw, BorderLayout.CENTER);
-	    //container.add(cards, BorderLayout.CENTER);
-	    
-	    
+
 	    // update view
-	    container.add(begin, BorderLayout.CENTER);
+	    container.add(begin, BorderLayout.SOUTH);
 	    this.setContentPane(container);
 	    this.setVisible(true);  
 	    
@@ -150,15 +119,15 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
     
     /**
      * Create a listener to call rightClickOnTile and leftClickOnTile methods
+     * 
      * @author Vincent
      */
 	    this.addMouseListener(new MouseAdapter(){
 	        public void mousePressed(MouseEvent e){
 	        	Point containerlocate =  container.getLocation();
-	        	container.getSize();
 		     	switch( e.getButton() ){
-				case 1: controleur.leftClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
-				case 3: controleur.rightClickOnBoard(e.getX(),e.getY()); break;
+				case 1: controller.leftClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
+				case 3: controller.rightClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
 				
 				default: break;
 		        }
@@ -166,18 +135,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	     });
 	
 	}
-	/**
-	 * Load the view with the board
-	 * @author vincent
-	 */
-	public void boardView(){
-		boarddraw.repaint();
-		container.remove(begin);
-		    container.add(boarddraw, BorderLayout.CENTER);
-		    this.setContentPane(container);
-		    this.setVisible(true);  
-	}
-	
 	
 	
     /**
@@ -185,20 +142,40 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
      * @author Vincent
      */
 	public void drawBoard(Tile stateboard[][]){
-		boarddraw.setNewBoard(stateboard);
-		boarddraw.repaint();
-		
+		boardDraw.setNewBoard(stateboard);
+		boardDraw.repaint();
+		container.add(boardDraw, BorderLayout.CENTER);
+		this.setContentPane(container);
+		this.setVisible(true);  
 	}
-
+	
+	/**
+	 * update the bottom message
+	 * 
+	 * @param s the new message for the label
+	 */
+	public void updateMsgBottom(String s){
+		begin.remove(label);
+		JLabel label = new JLabel(s);
+	    begin.add(label);
+	    container.add(begin, BorderLayout.SOUTH);
+		this.setContentPane(container);
+		this.setVisible(true); 
+	}
+	
+	/**
+	 * event for the menu
+	 */
 	public void actionPerformed(ActionEvent event) {
 
 		if( event.getSource() == menuGameItem1 ){
 			System.out.println("New game event");
 			
+			
 		} else if( event.getSource() == menuGameItem2 ){
 			System.out.println("Statistics event");
 		} else if( event.getSource() == menuGameItem3 ){
-			
+			new OptionsWindow();
 		} else if( event.getSource() == menuGameItem4 ){
 			System.out.println("Change appearance event");
 		} else if( event.getSource() == menuGameItem5 ){
@@ -208,13 +185,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		}
 		
 	}
-	
-	  class BoutonListener implements ActionListener{
-		    public void actionPerformed(ActionEvent e) {
-		      System.out.println("TEXT : " + jtf.getText());
-		    }
-		  }
-	  
+		  
 
 }
 

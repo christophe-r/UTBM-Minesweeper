@@ -70,7 +70,7 @@ public class Board {
 			this.board[y][x] = new Tile(tileContent, tileState);
 		}
 	}
-
+	
 	/**
 	 * Checks if a tile is in the bounds of the board by the given coordinates.
 	 * @param x Coordinate
@@ -100,6 +100,20 @@ public class Board {
 
 	}
 	
+	/**
+	 * getter for the width
+	 * @return the width oh the board
+	 */
+	public int getWidth(){
+		return this.width;
+	}
+	/**
+	 * getter for the height
+	 * @return the width oh the board
+	 */
+	public int getHeight(){
+		return this.height;
+	}
 	
 	/**
 	 * Return the entire game board, in characters.
