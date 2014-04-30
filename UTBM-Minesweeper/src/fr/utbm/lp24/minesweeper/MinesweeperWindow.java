@@ -51,10 +51,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	private String msg = "Click to begin the game ...";
 	private JLabel label = new JLabel(msg);
 	private BoardDraw boardDraw = new BoardDraw();
-	
-	// link controller and view
-	private MinesweeperGame controller;
-
+	private int square_size = 20;
 
 	/**
 	* Initialize the main windows and display the first view
@@ -63,7 +60,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	public MinesweeperWindow(final MinesweeperGame controller){ 
 
 		getContentPane().setBackground(UIManager.getColor("inactiveCaption"));
-		this.controller = controller;
+		boardDraw.loadImages();
 		this.setTitle("Minesweeper");
 		this.setSize(300, 400);
 		this.setResizable(false);
@@ -146,7 +143,8 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
      * @author Vincent
      */
 	public void drawBoard(Tile stateboard[][]){
-		boardDraw.setNewBoard(stateboard);
+		this.setSize(stateboard.length*square_size + 90, stateboard[0].length*square_size + 150);
+		boardDraw.setNewBoard(stateboard, square_size);
 		boardDraw.repaint();
 		container.add(boardDraw, BorderLayout.CENTER);
 		this.setContentPane(container);
@@ -158,7 +156,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	 * 
 	 * @param s the new message for the label
 	 */
-	public void updateMsgBottom(String s){
+	public void updateMsgPanel(String s){
 		begin.remove(label);
 		JLabel label = new JLabel(s);
 	    begin.add(label);
@@ -189,7 +187,17 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		}
 		
 	}
-		  
+	
+	/**
+	 * ~~~~~~~~~~~ 
+	 * 
+	 * get the square_size
+	 * 
+	 * ~~~~~~~~~~~ 
+	 */
+	public int getsquaresize(){
+		return this.square_size;
+	}
 
 }
 

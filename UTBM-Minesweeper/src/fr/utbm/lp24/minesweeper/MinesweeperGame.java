@@ -50,24 +50,25 @@ public class MinesweeperGame {
 		 * 
 		 */
 		// transform pixel coordinate in array coordinate
-		x = ((x-21)/10);
-		y = ((y-11)/10);
+		x = ((x-21)/windows.getsquaresize())-1;
+		y = ((y-21)/windows.getsquaresize())-1;
+		
 		if(myBoard.getTile(x,y) != null){
 			if(gameInProgress == false){ // if the game does not start we gendered a new board
 				myBoard.populateMines(nbmines, x, y);
 				System.out.println("Generated board:\r\n"+myBoard);
 				gameInProgress = true;
 			}	
-			windows.updateMsgBottom("");
+			windows.updateMsgPanel("");
 			myBoard.revealTilesRecursively(y,x);
 			System.out.println("content : "+ myBoard.getTile(x,y).getContent());
 			if(myBoard.getTile(x,y).getContent() == TileContent.MINE){
-				windows.updateMsgBottom("Sorry but you lose");
+				windows.updateMsgPanel("Sorry but you lose");
 				System.out.println("Lose : "+ myBoard.getTile(y,x).getContent());
 				gameInProgress = false;
 			}
 			if(myBoard.isWon()){
-				windows.updateMsgBottom("Great you have won the game");
+				windows.updateMsgPanel("Great you have won the game");
 				gameInProgress = false;
 			}
 			windows.drawBoard(myBoard.displayBoard());
@@ -89,8 +90,8 @@ public class MinesweeperGame {
 	public void rightClickOnBoard(int x, int y){
 		// TODO
 		// transform pixel coordinate in array coordinate
-		x = ((x-21)/10);
-		y = ((y-11)/10);
+		x = ((x-21)/windows.getsquaresize())-1;
+		y = ((y-21)/windows.getsquaresize())-1;
 		
 		Tile tile = myBoard.getTile(x,y);
 		if(tile != null){
@@ -119,8 +120,11 @@ public class MinesweeperGame {
 		System.out.println("Nb flags : " + myBoard.getNbFlags());
 		System.out.println("");
 	}
+	
+	
 	public BoardController getBoardController(){
 		return myBoard;
 	}
+	
 
 }
