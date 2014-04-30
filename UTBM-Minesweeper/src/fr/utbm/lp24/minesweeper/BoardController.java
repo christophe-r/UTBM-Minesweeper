@@ -116,7 +116,7 @@ public class BoardController extends Board {
 	}
 	
 	/**
-	 * retrun the tile board
+	 * return the tile board
 	 */
 	public Tile[][] displayBoard(){
 		return board;

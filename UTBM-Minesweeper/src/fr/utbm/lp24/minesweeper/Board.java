@@ -101,18 +101,40 @@ public class Board {
 	}
 	
 	/**
-	 * getter for the width
-	 * @return the width oh the board
+	 * Getter for the width
+	 * @return the width of the board
 	 */
 	public int getWidth(){
 		return this.width;
 	}
 	/**
-	 * getter for the height
-	 * @return the width oh the board
+	 * Getter for the height
+	 * @return the width of the board
 	 */
 	public int getHeight(){
 		return this.height;
+	}
+	
+	/**
+	 * Increments the number of flags within the board
+	 */
+	public void incrementNbFlags(){
+		this.nbFlags++;
+	}
+	
+	/**
+	 * Decrements the number of flags within the board
+	 */
+	public void decrementNbFlags(){
+		this.nbFlags--;
+	}
+	
+	/**
+	 * Gets the number of flags within the board
+	 * @return The number of flags placed
+	 */
+	public int getNbFlags(){
+		return this.nbFlags;
 	}
 	
 	/**

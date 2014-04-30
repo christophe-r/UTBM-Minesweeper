@@ -95,10 +95,20 @@ public class MinesweeperGame {
 		Tile tile = myBoard.getTile(x,y);
 		if(tile != null){
 			switch( tile.getState() ){
-				case UNDISCOVERED: tile.setState(TileState.FLAGGED); break;			
-				case FLAGGED: tile.setState(TileState.QUESTION_MARK); break;	
-				case QUESTION_MARK: tile.setState(TileState.UNDISCOVERED); break;	
-				case DISCOVERED :break;
+				case UNDISCOVERED:
+					tile.setState(TileState.FLAGGED);
+					myBoard.incrementNbFlags();
+				break;
+				
+				case FLAGGED:
+					tile.setState(TileState.QUESTION_MARK);
+					myBoard.decrementNbFlags();
+				break;
+				
+				case QUESTION_MARK:
+					tile.setState(TileState.UNDISCOVERED);
+				break;
+				
 				default: break;
 			}
 			}		
@@ -106,6 +116,7 @@ public class MinesweeperGame {
 		System.out.println("Click droit");
 		System.out.println("Corrd X : " + x);
 		System.out.println("Corrd Y : " + y);
+		System.out.println("Nb flags : " + myBoard.getNbFlags());
 		System.out.println("");
 	}
 	public BoardController getBoardController(){
