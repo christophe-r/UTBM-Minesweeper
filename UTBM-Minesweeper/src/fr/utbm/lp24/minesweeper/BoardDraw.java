@@ -3,15 +3,11 @@ package fr.utbm.lp24.minesweeper;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import com.sun.imageio.plugins.common.ImageUtil;
+
 /**
  * This class draw the board on the windows
  * @author vincent
@@ -27,6 +23,7 @@ public class BoardDraw extends JPanel {
 	private Image image_tile = null;
 	private Image image_tile_clear = null;
 	private Image image_mine = null;
+	private Image image_flag = null;
 	private Image question_mark = null;
 	private Image image_clear1 = null;
 	private Image image_clear2 = null;
@@ -71,8 +68,8 @@ public class BoardDraw extends JPanel {
 					case FLAGGED: 
 						g.setColor(Color.BLACK);
 						//g.drawRect(cordX,cordY-10, 10, 10); 
-						g.drawString(" F", cordX, cordY); 
-						g.drawImage(question_mark, cordX, cordY,square_size,square_size, this); 
+						//g.drawString(" F", cordX, cordY); 
+						g.drawImage(image_flag, cordX, cordY,square_size,square_size, this); 
 						
 						break;	
 					case QUESTION_MARK:
@@ -166,6 +163,9 @@ public class BoardDraw extends JPanel {
 				
 				System.out.println("load : /resources/nine.png");
 				image_mine = ImageIO.read(getClass().getResourceAsStream("/resources/mine.png"));
+				
+				System.out.println("load : /resources/image_flag.png");
+				image_flag = ImageIO.read(getClass().getResourceAsStream("/resources/flag.png"));
 				
 				System.out.println("load : /resources/question_mark.png");
 				question_mark = ImageIO.read(getClass().getResourceAsStream("/resources/question_mark.png"));

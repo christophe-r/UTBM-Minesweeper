@@ -5,35 +5,42 @@ import javax.swing.UIManager;
 
 /**
  * Main Controller of the game 
- * @author vincent
+ * @author Vincent
  *
  */
 
 public class MinesweeperGame {
 	
-	boolean gameInProgress = false;
-	int nbmines = 20;
-	BoardController myBoard;
-	MinesweeperWindow windows;
+	private boolean gameInProgress = false;
+	private int nbMines;
+	private int width;
+	private int height;	
+	private BoardController myBoard;
+	private MinesweeperWindow window;
+	private static PreferencesManager userPreferences;
+	
 	
 	/**
 	 * Main constructor
-	 * Initialise all variables
+	 * Initialize all variables
 	 *  load the initial view
 	 * 
 	 */
 	MinesweeperGame(){
-		// TODO
+		
 		// Set the Windows UI theme
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (Exception e){
 			System.out.println("Unable to load Windows look and feel");
 		}
+		this.Majpreferences();
 		// Launch the windows
-		myBoard = new BoardController(20, 20);	
-		windows = new MinesweeperWindow(this);
-		windows.drawBoard(myBoard.displayBoard());
+		System.out.println("largueur : " + width + "   hauteur  : " +  height);
+		myBoard = new BoardController(width, height);	
+		
+		window = new MinesweeperWindow(this);
+		window.drawBoard(myBoard.displayBoard());
 	}
 
 	
@@ -50,28 +57,30 @@ public class MinesweeperGame {
 		 * 
 		 */
 		// transform pixel coordinate in array coordinate
-		x = ((x-21)/windows.getsquaresize())-1;
-		y = ((y-21)/windows.getsquaresize())-1;
+		x = ((x-21)/window.getsquaresize())-1;
+		y = ((y-21)/window.getsquaresize())-1;
 		
 		if(myBoard.getTile(x,y) != null){
 			if(gameInProgress == false){ // if the game does not start we gendered a new board
-				myBoard.populateMines(nbmines, x, y);
+				myBoard = new BoardController(width, height);	
+				myBoard.populateMines(nbMines, x, y);
 				System.out.println("Generated board:\r\n"+myBoard);
 				gameInProgress = true;
 			}	
-			windows.updateMsgPanel("");
+			window.updateMsgPanel("");
 			myBoard.revealTilesRecursively(y,x);
 			System.out.println("content : "+ myBoard.getTile(x,y).getContent());
 			if(myBoard.getTile(x,y).getContent() == TileContent.MINE){
-				windows.updateMsgPanel("Sorry but you lose");
+				window.updateMsgPanel("Sorry but you lose");
 				System.out.println("Lose : "+ myBoard.getTile(y,x).getContent());
 				gameInProgress = false;
 			}
 			if(myBoard.isWon()){
-				windows.updateMsgPanel("Great you have won the game");
+				window.updateMsgPanel("Great you have won the game");
+
 				gameInProgress = false;
 			}
-			windows.drawBoard(myBoard.displayBoard());
+			window.drawBoard(myBoard.displayBoard());
 		}
 		// use to debug
 		System.out.println("Click gauche");
@@ -90,8 +99,8 @@ public class MinesweeperGame {
 	public void rightClickOnBoard(int x, int y){
 		// TODO
 		// transform pixel coordinate in array coordinate
-		x = ((x-21)/windows.getsquaresize())-1;
-		y = ((y-21)/windows.getsquaresize())-1;
+		x = ((x-21)/window.getsquaresize())-1;
+		y = ((y-21)/window.getsquaresize())-1;
 		
 		Tile tile = myBoard.getTile(x,y);
 		if(tile != null){
@@ -112,8 +121,8 @@ public class MinesweeperGame {
 				
 				default: break;
 			}
-			}		
-		windows.drawBoard(myBoard.displayBoard());
+		}		
+		window.drawBoard(myBoard.displayBoard());
 		System.out.println("Click droit");
 		System.out.println("Corrd X : " + x);
 		System.out.println("Corrd Y : " + y);
@@ -126,5 +135,32 @@ public class MinesweeperGame {
 		return myBoard;
 	}
 	
+	
+	/**
+	 * Update the preferences
+	 * 
+	 */
+	public void Majpreferences(){
+		// load the defaults value for width, height, nbMines
+		userPreferences = new PreferencesManager();
+
+		String level = userPreferences.getPref("difficulty", "beginner");
+		
+		if( level.equals("intermediate") ){
+			this.width = this.height = 16;
+			this.nbMines = 40;
+		} else if( level.equals("advanced") ){
+			this.width = 16;
+			this.height = 30;
+			this.nbMines = 99;
+		} else if( level.equals("custom") ){
+			this.width = Integer.parseInt(userPreferences.getPref("difficulty_custom_width", "25"));
+			this.height = Integer.parseInt(userPreferences.getPref("difficulty_custom_height", "20"));
+			this.nbMines = Integer.parseInt(userPreferences.getPref("difficulty_custom_mines", "300"));
+		} else { // Beginner
+			this.width = this.height = 9;
+			this.nbMines = 10;
+		} 
+	}
 
 }

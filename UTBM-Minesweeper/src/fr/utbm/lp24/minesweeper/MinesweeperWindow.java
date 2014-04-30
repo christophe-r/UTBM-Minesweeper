@@ -143,7 +143,8 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
      * @author Vincent
      */
 	public void drawBoard(Tile stateboard[][]){
-		this.setSize(stateboard.length*square_size + 90, stateboard[0].length*square_size + 150);
+		System.out.println("largueur : " + stateboard.length*square_size + "   hauteur  : " +  stateboard[0].length*square_size);
+		this.setSize(stateboard[0].length*square_size + 100 , stateboard.length*square_size + 150);
 		boardDraw.setNewBoard(stateboard, square_size);
 		boardDraw.repaint();
 		container.add(boardDraw, BorderLayout.CENTER);
@@ -190,9 +191,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	
 	/**
 	 * ~~~~~~~~~~~ 
-	 * 
 	 * get the square_size
-	 * 
 	 * ~~~~~~~~~~~ 
 	 */
 	public int getsquaresize(){
