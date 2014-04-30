@@ -155,6 +155,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	    this.addMouseListener(new MouseAdapter(){
 	        public void mousePressed(MouseEvent e){
 	        	Point containerlocate =  container.getLocation();
+	        	container.getSize();
 		     	switch( e.getButton() ){
 				case 1: controleur.leftClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
 				case 3: controleur.rightClickOnBoard(e.getX(),e.getY()); break;
@@ -183,7 +184,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
      * This method recreate the board on the screen
      * @author Vincent
      */
-	public void drawBoard(TileContent stateboard[][]){
+	public void drawBoard(Tile stateboard[][]){
 		boarddraw.setNewBoard(stateboard);
 		boarddraw.repaint();
 		
@@ -197,6 +198,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		} else if( event.getSource() == menuGameItem2 ){
 			System.out.println("Statistics event");
 		} else if( event.getSource() == menuGameItem3 ){
+			
 		} else if( event.getSource() == menuGameItem4 ){
 			System.out.println("Change appearance event");
 		} else if( event.getSource() == menuGameItem5 ){

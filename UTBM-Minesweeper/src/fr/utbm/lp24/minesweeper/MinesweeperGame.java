@@ -1,6 +1,8 @@
 package fr.utbm.lp24.minesweeper;
 
 
+import java.awt.Dimension;
+
 import javax.swing.UIManager;
 
 
@@ -44,7 +46,7 @@ public class MinesweeperGame {
 		// TODO
 		
 		if(gameinprogress == false){ // if the game does not start
-			myBoard = new BoardController(30, 16);	
+			myBoard = new BoardController(20, 20);	
 			myBoard.populateMines(nbmines, x/5, y/5);
 			System.out.println("Generated board:\r\n"+myBoard);
 			windows.drawBoard(myBoard.displayBoard());

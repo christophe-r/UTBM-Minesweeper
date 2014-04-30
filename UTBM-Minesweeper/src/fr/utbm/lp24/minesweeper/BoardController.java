@@ -98,11 +98,7 @@ public class BoardController extends Board {
 	 */
 	public void revealTilesRecursively(int x, int y){
 		
-		switch( board[x][y].getState() ){ // Do nothing if state is : FLAGGED, QUESTION_MARK, DISCOVERED
-		case FLAGGED	:  break;
-		case QUESTION_MARK: break;
-		case DISCOVERED: break;
-		case UNDISCOVERED:  {
+		if(board[x][y].getState() ==  TileState.UNDISCOVERED){// Do nothing if state is : FLAGGED, QUESTION_MARK, DISCOVERED
 			board[x][y].setState(TileState.DISCOVERED);
 			if(board[x][y].getContent() == TileContent.CLEAR0 ){
 				revealTilesRecursively(x-1,y);
@@ -110,37 +106,16 @@ public class BoardController extends Board {
 				revealTilesRecursively(x,y-1);
 				revealTilesRecursively(x,y+1);
 			}
-		break;}
-			
-		default: break;
-        }
+		}
+
 	}
 	
 	/*
-	 * for the time being this algorithm return the content ,not the state of the tile
+	 * retrun the tile board
 	 */
-	public TileContent[][] displayBoard(){
-		TileContent stateboard[][] = new TileContent[height][width];
-		for( int i=0; i<width ; i++ ){
-			for( int j=0; j<height ; j++ ){
-				
-				stateboard[j][i] = board[j][i].getContent();
-				}
-			}
-		return stateboard;
+	public Tile[][] displayBoard(){
+		return board;
 	}
-	/*
-	 	public TileState[][] displayBoard(){
-		TileState stateboard[][] = new TileState[height][width];
-		for( int i=0; i<height ; i++ ){
-			for( int j=0; j<width ; j++ ){
-				
-				stateboard[i][j] = board[i][j].getState();
-				}
-			}
-		return stateboard;
-	}
-	 */
 	
 	
 	public String toString(){
