@@ -156,44 +156,44 @@ public class BoardDraw extends JPanel {
  */
 	public void  loadImages() { //update the stateboard
 			try {
-				System.out.println("load : /resources/tile.png");
-				image_tile = ImageIO.read(getClass().getResourceAsStream("/resources/tile.png"));
+				System.out.println("load : /resources/themes/win7_classic/tile.png");
+				image_tile = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/tile.png"));
 				
-				System.out.println("load : /resources/tile_clear.png");
-				image_tile_clear = ImageIO.read(getClass().getResourceAsStream("/resources/tile_clear.png"));
+				System.out.println("load : /resources/themes/win7_classic/tile_clear.png");
+				image_tile_clear = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/tile_clear.png"));
 				
-				System.out.println("load : /resources/mine.png");
-				image_mine = ImageIO.read(getClass().getResourceAsStream("/resources/mine.png"));
+				System.out.println("load : /resources/themes/win7_classic/mine.png");
+				image_mine = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/mine.png"));
 				
-				System.out.println("load : /resources/image_flag.png");
-				image_flag = ImageIO.read(getClass().getResourceAsStream("/resources/flag.png"));
+				System.out.println("load : /resources/themes/win7_classic/image_flag.png");
+				image_flag = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/flag.png"));
 				
-				System.out.println("load : /resources/question_mark.png");
-				question_mark = ImageIO.read(getClass().getResourceAsStream("/resources/question_mark.png"));
+				System.out.println("load : /resources/themes/win7_classic/question_mark.png");
+				question_mark = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/question_mark.png"));
 				
-				System.out.println("load : /resources/clear1.png");
-				image_clear1 = ImageIO.read(getClass().getResourceAsStream("/resources/clear1.png"));
+				System.out.println("load : /resources/themes/win7_classic/clear1.png");
+				image_clear1 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear1.png"));
 				
-				System.out.println("load : /resources/clear2.png");
-				image_clear2 = ImageIO.read(getClass().getResourceAsStream("/resources/clear2.png"));
+				System.out.println("load : /resources/themes/win7_classic/clear2.png");
+				image_clear2 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear2.png"));
 				
-				System.out.println("load : /resources/clear3.png");
-				image_clear3 = ImageIO.read(getClass().getResourceAsStream("/resources/clear3.png"));
+				System.out.println("load : /resources/themes/win7_classic/clear3.png");
+				image_clear3 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear3.png"));
 				
-				System.out.println("load : /resources/clear4.png");
-				image_clear4 = ImageIO.read(getClass().getResourceAsStream("/resources/clear4.png"));
+				System.out.println("load : /resources/themes/win7_classic/clear4.png");
+				image_clear4 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear4.png"));
 				
-				System.out.println("load : /resources/clear5.png");
-				image_clear5 = ImageIO.read(getClass().getResourceAsStream("/resources/clear5.png"));
+				System.out.println("load : /resources/themes/win7_classic/clear5.png");
+				image_clear5 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear5.png"));
 				
-				System.out.println("load : /resources/clear6.png");
-				image_clear6 = ImageIO.read(getClass().getResourceAsStream("/resources/clear6.png"));
+				System.out.println("load : /resources/themes/win7_classic/clear6.png");
+				image_clear6 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear6.png"));
 				
-				System.out.println("load : /resources/clear7.png");
-				image_clear7 = ImageIO.read(getClass().getResourceAsStream("/resources/clear7.png"));
+				System.out.println("load : /resources/themes/win7_classic/clear7.png");
+				image_clear7 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear7.png"));
 				
-				System.out.println("load : /resources/clear8.png");
-				image_clear8 = ImageIO.read(getClass().getResourceAsStream("/resources/clear8.png"));
+				System.out.println("load : /resources/themes/win7_classic/clear8.png");
+				image_clear8 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear8.png"));
 			}
 			catch(IOException exc) {
 				exc.printStackTrace();
