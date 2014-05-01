@@ -14,8 +14,7 @@ public class MinesweeperGame {
 	private GameState gameState = GameState.STOPED;
 	private int nbMines;
 	private int width;
-	private int height;	
-	private String theme;
+	private int height;
 	private BoardController myBoard;
 	private MinesweeperWindow window;
 	private static PreferencesManager userPreferences;
@@ -25,7 +24,7 @@ public class MinesweeperGame {
 	 * Initialize all variables
 	 *  load the initial view
 	 * 
-	 */
+	 */ 
 	MinesweeperGame(){
 		
 		// Set the Windows UI theme
@@ -34,12 +33,6 @@ public class MinesweeperGame {
 		} catch (Exception e){
 			System.out.println("Unable to load Windows look and feel");
 		}
-		
-		// --------- Code to test the theme loader
-		//userPreferences = new PreferencesManager();
-		//userPreferences.setPref("theme", "win7_classic");
-		// --------- 
-		
 		
 		this.Majpreferences();
 		// Launch the windows
@@ -160,7 +153,9 @@ public class MinesweeperGame {
 		// load the defaults value for width, height, nbMines
 		userPreferences = new PreferencesManager();
 		
-		theme = userPreferences.getPref("theme", "win7_classic");// get the theme
+		userPreferences.setPref("difficulty_custom_width","10");
+		userPreferences.setPref("difficulty_custom_height","10");
+		userPreferences.setPref("difficulty_custom_height","10");
 		
 		String level = userPreferences.getPref("difficulty", "beginner");
 		

@@ -245,9 +245,17 @@ public class OptionsWindow extends JDialog {
 	}
 	
 	private void textFieldCustomIntInRange(JTextField textField, int min, int max){
-		if( Integer.parseInt(textField.getText()) < min ){
+		String textFieldstr = textField.getText().replaceAll("[^0-9]", "");
+		
+		if(textFieldstr.equals("")){
+			textFieldstr = "" + min;
+			textField.setText(""+textFieldstr);
+		}
+			
+		
+		if( Integer.parseInt(textFieldstr) < min ){
 			textField.setText(""+min);
-		} else if( Integer.parseInt(textField.getText()) > max ){
+		} else if( Integer.parseInt(textFieldstr) > max ){ 	
 			textField.setText(""+max);
 		}
 		
@@ -258,11 +266,25 @@ public class OptionsWindow extends JDialog {
 	 * to the width and the height
 	 */
 	private void textFieldCustomIntInRangeMines(){
-		int maxMines = Integer.parseInt(textField_custom_width.getText())*Integer.parseInt(textField_custom_height.getText())-10;
+		String custom_height = textField_custom_mines.getText().replaceAll("[^0-9]", "");
+		String custom_mines = textField_custom_height.getText().replaceAll("[^0-9]", "");
+		String custom_width =  textField_custom_width.getText().replaceAll("[^0-9]", "");
 		
-		if( Integer.parseInt(textField_custom_mines.getText()) < 10 ){
+		if(custom_height.equals(""))
+			custom_height = "9";
+		if(custom_mines.equals(""))
+			custom_height = "10";
+		if(custom_height.equals(""))
+			custom_width = "9";
+		
+		
+		int maxMines = Integer.parseInt(custom_height)*Integer.parseInt(custom_width);
+		if(maxMines>668)
+			maxMines = 668;
+		
+		if( Integer.parseInt(custom_mines) < 10 ){
 			textField_custom_mines.setText("10");
-		} else if( Integer.parseInt(textField_custom_mines.getText()) > maxMines ){
+		} else if( Integer.parseInt(custom_mines) > maxMines){
 			textField_custom_mines.setText(""+maxMines);
 		}
 	}
