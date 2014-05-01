@@ -119,7 +119,18 @@ public class BoardController extends Board {
 	 * return the tile board
 	 */
 	public Tile[][] displayBoard(){
-		return board;
+		return super.board;
+	}
+	
+	/**
+	 * return the tile board
+	 */
+	public void Hidemines(){
+		for( int i=0 ; i<super.width ; i++ ){
+			for( int j=0 ; j<super.height ; j++ ){
+				this.setTile(i, j, this.getTile(i, j).getContent(), TileState.UNDISCOVERED);
+			}
+		}
 	}
 	
 	

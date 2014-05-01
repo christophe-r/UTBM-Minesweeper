@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -16,10 +17,23 @@ import javax.swing.JPanel;
 public class BoardDraw extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
+	PreferencesManager userPreferences; 
 	private Tile[][] stateboard; // temporary array to save the board
 	private int square_size = 20;
-	
-	
+	private String theme;
+	private String[] images = {"tile.png",
+							   "tile_clear.png",
+							   "mine.png",
+							   "flag.png",
+							   "question_mark.png",
+							   "clear1.png",
+							   "clear2.png",
+							   "clear3.png",
+							   "clear4.png",
+							   "clear5.png",
+							   "clear6.png",
+							   "clear7.png",
+							   "clear8.png"};
 	private Image image_tile = null;
 	private Image image_tile_clear = null;
 	private Image image_mine = null;
@@ -34,13 +48,28 @@ public class BoardDraw extends JPanel {
 	private Image image_clear7 = null;
 	private Image image_clear8 = null;
 	
+	private Image[] varImages = {
+			image_tile,
+			image_tile_clear,
+			image_mine,
+			image_flag,
+			question_mark,
+			image_clear1,
+			image_clear2,
+			image_clear3,
+			image_clear4,
+			image_clear5,
+			image_clear6,
+			image_clear7,
+			image_clear8,
+	};
+
+	
 	
 	
 	BoardDraw(){}
 	
-	public void paintComponent(Graphics g){
-		// TODO
-		/**
+	   /**
 		 * Draw the board on the windows
 		 * 
 		 * The board start the génération at  21px,11px
@@ -48,7 +77,16 @@ public class BoardDraw extends JPanel {
 		 * 
 	     * @author Vincent
 	     */
-		//g.drawRect(19,10, 2+(stateboard.length)*10, 2+(stateboard[0].length)*10);
+		
+	public void paintComponent(Graphics g){
+		// TODO
+
+		userPreferences = new PreferencesManager();
+		if(!theme.equals(userPreferences.getPref("theme", "win7_classic"))){ //check the theme
+			this.theme = userPreferences.getPref("theme", "win7_classic");
+			loadImages();
+		}
+		
 		
 		super.paintComponent(g);
 		for( int i=0; i<stateboard.length ; i++ ){
@@ -62,28 +100,28 @@ public class BoardDraw extends JPanel {
 				switch( stateboard[i][j].getState() ){
 					case UNDISCOVERED: 
 						//g.fillRect(cordX,cordY-10, 9, 9);
-						g.drawImage(image_tile, cordX, cordY,square_size,square_size, this); 
+						g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this); 
 						 break;	
 						
 					case FLAGGED: 
 						g.setColor(Color.BLACK);
 						//g.drawRect(cordX,cordY-10, 10, 10); 
 						//g.drawString(" F", cordX, cordY); 
-						g.drawImage(image_tile, cordX, cordY,square_size,square_size, this); 
-						g.drawImage(image_flag, cordX, cordY,square_size,square_size, this); 
+						g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this); 
+						g.drawImage(varImages[3], cordX, cordY,square_size,square_size, this); 
 						
 						break;	
 					case QUESTION_MARK:
 						g.setColor(Color.BLACK); 
 						//g.drawString(" ?", cordX-10,cordY); 
-						g.drawImage(image_tile, cordX, cordY,square_size,square_size, this); 
-						g.drawImage(question_mark, cordX, cordY,square_size,square_size, this); 
+						g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this); 
+						g.drawImage(varImages[4], cordX, cordY,square_size,square_size, this); 
 						break;	
 						
 					case DISCOVERED :{
 						//g.drawRect(cordX,cordY, 10, 10);
 						g.setColor(Color.blue);
-						g.drawImage(image_tile_clear, cordX, cordY,square_size,square_size, this); 
+						g.drawImage(varImages[1], cordX, cordY,square_size,square_size, this); 
 						switch( stateboard[i][j].getContent() ){
 							case CLEAR0: 
 								//g.drawString(" ",  cordX, cordY+10);
@@ -91,39 +129,39 @@ public class BoardDraw extends JPanel {
 							case MINE:  
 								g.setColor(Color.red); 
 								//g.drawString("@",  cordX, cordY+10);
-								g.drawImage(image_mine, cordX, cordY,square_size,square_size, this); 
+								g.drawImage(varImages[2], cordX, cordY,square_size,square_size, this); 
 								break;	
 							case CLEAR1: 
 								//g.drawString(" 1", cordX, cordY+10);
-								g.drawImage(image_clear1, cordX, cordY,square_size,square_size, this); 
+								g.drawImage(varImages[5], cordX, cordY,square_size,square_size, this); 
 								break;	
 							case CLEAR2:
 								//g.drawString(" 2", cordX, cordY+10);
-								g.drawImage(image_clear2, cordX, cordY,square_size,square_size, this); 
+								g.drawImage(varImages[6], cordX, cordY,square_size,square_size, this); 
 								break;	
 							case CLEAR3:
 								//g.drawString(" 3", cordX, cordY+10);
-								g.drawImage(image_clear3, cordX, cordY,square_size,square_size, this); 
+								g.drawImage(varImages[7], cordX, cordY,square_size,square_size, this); 
 								break;	
 							case CLEAR4:
 								//g.drawString(" 4", cordX, cordY+10); 
-								g.drawImage(image_clear4, cordX, cordY,square_size,square_size, this); 
+								g.drawImage(varImages[8], cordX, cordY,square_size,square_size, this); 
 								break;	
 							case CLEAR5:
 								//g.drawString(" 5", cordX, cordY+10); 
-								g.drawImage(image_clear5, cordX, cordY,square_size,square_size, this);
+								g.drawImage(varImages[9], cordX, cordY,square_size,square_size, this);
 								break;	
 							case CLEAR6:
 								//g.drawString(" 6", cordX, cordY+10);
-								g.drawImage(image_clear6, cordX, cordY,square_size,square_size, this);
+								g.drawImage(varImages[10], cordX, cordY,square_size,square_size, this);
 								break;	
 							case CLEAR7:
 								//g.drawString(" 7", cordX, cordY+10);
-								g.drawImage(image_clear7, cordX, cordY,square_size,square_size, this);
+								g.drawImage(varImages[11], cordX, cordY,square_size,square_size, this);
 								break;	
 							case CLEAR8:
 								//g.drawString(" 8", cordX, cordY+10);
-								g.drawImage(image_clear8, cordX, cordY,square_size,square_size, this);
+								g.drawImage(varImages[12], cordX, cordY,square_size,square_size, this);
 								break;	
 							default: break;
 			        	}	
@@ -155,45 +193,14 @@ public class BoardDraw extends JPanel {
  * @return the object image
  */
 	public void  loadImages() { //update the stateboard
+			userPreferences = new PreferencesManager();
+			this.theme = userPreferences.getPref("theme", "win7_classic");
 			try {
-				System.out.println("load : /resources/themes/win7_classic/tile.png");
-				image_tile = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/tile.png"));
-				
-				System.out.println("load : /resources/themes/win7_classic/tile_clear.png");
-				image_tile_clear = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/tile_clear.png"));
-				
-				System.out.println("load : /resources/themes/win7_classic/mine.png");
-				image_mine = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/mine.png"));
-				
-				System.out.println("load : /resources/themes/win7_classic/image_flag.png");
-				image_flag = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/flag.png"));
-				
-				System.out.println("load : /resources/themes/win7_classic/question_mark.png");
-				question_mark = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/question_mark.png"));
-				
-				System.out.println("load : /resources/themes/win7_classic/clear1.png");
-				image_clear1 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear1.png"));
-				
-				System.out.println("load : /resources/themes/win7_classic/clear2.png");
-				image_clear2 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear2.png"));
-				
-				System.out.println("load : /resources/themes/win7_classic/clear3.png");
-				image_clear3 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear3.png"));
-				
-				System.out.println("load : /resources/themes/win7_classic/clear4.png");
-				image_clear4 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear4.png"));
-				
-				System.out.println("load : /resources/themes/win7_classic/clear5.png");
-				image_clear5 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear5.png"));
-				
-				System.out.println("load : /resources/themes/win7_classic/clear6.png");
-				image_clear6 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear6.png"));
-				
-				System.out.println("load : /resources/themes/win7_classic/clear7.png");
-				image_clear7 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear7.png"));
-				
-				System.out.println("load : /resources/themes/win7_classic/clear8.png");
-				image_clear8 = ImageIO.read(getClass().getResourceAsStream("/resources/themes/win7_classic/clear8.png"));
+				for(int i=0;i<images.length;i++){
+					String s = "/resources/themes/" + theme + "/" + images[i];
+					System.out.println("load : " + s);
+					varImages[i] = ImageIO.read(getClass().getResourceAsStream(s));
+				}
 			}
 			catch(IOException exc) {
 				exc.printStackTrace();

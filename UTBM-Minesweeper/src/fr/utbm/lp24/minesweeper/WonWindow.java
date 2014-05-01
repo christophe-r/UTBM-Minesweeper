@@ -24,7 +24,7 @@ public class WonWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public WonWindow() {
+	public WonWindow(final MinesweeperGame controller) {
 		setTitle("Game Won");
 		setResizable(false);
 		setModal(true);
@@ -51,7 +51,7 @@ public class WonWindow extends JDialog {
 			JButton playAgainButton = new JButton("Play again");
 			playAgainButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					playAgain();
+					playAgain(controller);
 				}
 			});
 			playAgainButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -63,7 +63,7 @@ public class WonWindow extends JDialog {
 		
 		this.addWindowListener(new WindowAdapter() {
 			   public void windowClosing(WindowEvent evt) {
-				   playAgain();
+				   playAgain(controller);
 			   }
 		});
 		
@@ -95,10 +95,8 @@ public class WonWindow extends JDialog {
 		
 	}
 	
-	private void playAgain(){
-		// TODO
-		//controller.newGame();
-
+	private void playAgain(MinesweeperGame controller){
+		controller.newGame();
 		// Close the window
 		this.dispose();
 	}

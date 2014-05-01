@@ -20,7 +20,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import java.awt.Component;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.FocusAdapter;
@@ -53,7 +52,7 @@ public class OptionsWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public OptionsWindow() {
+	public OptionsWindow(final MinesweeperGame controller) {
 		setTitle("Options");
 		setResizable(false);
 		setModal(true);
@@ -65,7 +64,7 @@ public class OptionsWindow extends JDialog {
 			okButton.setActionCommand("OK");
 			okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					optionWindowOK();
+					optionWindowOK(controller);
 				}
 			});
 			getRootPane().setDefaultButton(okButton);
@@ -291,7 +290,7 @@ public class OptionsWindow extends JDialog {
 		
 	}
 	
-	private void optionWindowOK(){
+	private void optionWindowOK(MinesweeperGame controller){
 		userPreferences = new PreferencesManager();
 		
 		String difficulty = "beginner";
@@ -313,8 +312,9 @@ public class OptionsWindow extends JDialog {
 		userPreferences.setPref("difficulty_custom_width", textField_custom_width.getText());
 		userPreferences.setPref("difficulty_custom_mines", textField_custom_mines.getText());
 				
-		
 		setVisible(false);
+		
+		controller.newGame();
 		
 	}
 	

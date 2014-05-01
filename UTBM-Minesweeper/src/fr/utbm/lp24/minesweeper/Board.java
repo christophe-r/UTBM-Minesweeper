@@ -71,6 +71,7 @@ public class Board {
 		}
 	}
 	
+	
 	/**
 	 * Checks if a tile is in the bounds of the board by the given coordinates.
 	 * @param x Coordinate

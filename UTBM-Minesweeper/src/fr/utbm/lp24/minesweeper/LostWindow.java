@@ -24,7 +24,7 @@ public class LostWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public LostWindow() {
+	public LostWindow(final MinesweeperGame controller) {
 		setTitle("Game Lost");
 		setResizable(false);
 		setModal(true);
@@ -51,7 +51,7 @@ public class LostWindow extends JDialog {
 			JButton playAgainButton = new JButton("Play again");
 			playAgainButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					playAgain();
+					playAgain(controller);
 				}
 			});
 			playAgainButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -63,7 +63,7 @@ public class LostWindow extends JDialog {
 		
 		this.addWindowListener(new WindowAdapter() {
 			   public void windowClosing(WindowEvent evt) {
-				   playAgain();
+				   playAgain(controller);
 			   }
 		});
 		
@@ -93,7 +93,7 @@ public class LostWindow extends JDialog {
 		JButton btnRestartThisGame = new JButton("Restart this game");
 		btnRestartThisGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				restartGame();
+				restartGame(controller);
 			}
 		});
 		btnRestartThisGame.setBounds(142, 201, 120, 23);
@@ -104,19 +104,14 @@ public class LostWindow extends JDialog {
 		
 	}
 	
-	private void playAgain(){
-		// TODO
-		//controller.newGame();
-
-		// Close the window
+	private void playAgain(MinesweeperGame controller){
+		controller.newGame();
 		this.dispose();
 	}
 	
-	private void restartGame(){
+	private void restartGame(MinesweeperGame controller){
 		// TODO
-		// Restart THE SAME game (do not re-generate a new grid)
-
-		// Close the window
+		controller.restartGame();
 		this.dispose();
 	}
 	

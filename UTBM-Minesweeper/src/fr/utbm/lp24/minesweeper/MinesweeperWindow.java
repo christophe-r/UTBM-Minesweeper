@@ -2,6 +2,7 @@ package fr.utbm.lp24.minesweeper;
 
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -12,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -46,12 +48,15 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	
 	// container
 	private JPanel container = new JPanel(); // main container
-	private JPanel begin = new JPanel();
+	private JPanel infobottom = new JPanel();
+	int indice=0; 
+	
 	
 	private String msg = "Click to begin the game ...";
 	private JLabel label = new JLabel(msg);
 	private BoardDraw boardDraw = new BoardDraw();
 	private int square_size = 20;
+	
 	
 	private MinesweeperGame controller;
 
@@ -63,7 +68,8 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 		this.controller = controller;
 		getContentPane().setBackground(UIManager.getColor("inactiveCaption"));
-		boardDraw.loadImages();
+		boardDraw.loadImages(); 
+		
 		this.setTitle("Minesweeper");
 		this.setSize(300, 400);
 		this.setResizable(false);
@@ -73,10 +79,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		URL iconURL = getClass().getResource("/resources/icon64.png");
 		ImageIcon icon = new ImageIcon(iconURL);
 		this.setIconImage(icon.getImage());
-		
-	    container.setBackground(Color.white);
-	    container.setLayout(new BorderLayout());
-	    
+			    
 		// add listener for menu
 	    
 		this.menuGame.add(menuGameItem1);
@@ -109,14 +112,15 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		this.menuBar.add(menuHelp);
 
 		this.setJMenuBar(menuBar);
-		
+
+
 		//set the input and button object
 	    container.setBackground(Color.white);
 	    container.setLayout(new BorderLayout());
-	    begin.add(label);
+	    infobottom.add(label);
 
 	    // update view
-	    container.add(begin, BorderLayout.SOUTH);
+	    container.add(infobottom, BorderLayout.SOUTH);
 	    this.setContentPane(container);
 	    this.setVisible(true);  
 	    
@@ -160,10 +164,8 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	 * @param s the new message for the label
 	 */
 	public void updateMsgPanel(String s){
-		begin.remove(label);
-		JLabel label = new JLabel(s);
-	    begin.add(label);
-	    container.add(begin, BorderLayout.SOUTH);
+
+		 label.setText(s);
 		this.setContentPane(container);
 		this.setVisible(true); 
 	}
@@ -180,9 +182,13 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		} else if( event.getSource() == menuGameItem2 ){
 			System.out.println("Statistics event");
 		} else if( event.getSource() == menuGameItem3 ){
-			new OptionsWindow();
+			new OptionsWindow(controller);
 		} else if( event.getSource() == menuGameItem4 ){
 			System.out.println("Change appearance event");
+			PreferencesManager userPreferences = new PreferencesManager();
+			userPreferences.setPref("theme", "win7_flower");// get the theme
+			boardDraw.repaint(); // display the new board
+			
 		} else if( event.getSource() == menuGameItem5 ){
 			System.exit(0);
 		} else if( event.getSource() == menuHelpItem1 ){
