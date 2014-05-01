@@ -116,8 +116,7 @@ public class AppearanceWindow extends JDialog {
 		}
 		
 		userPreferences.setPref("theme", theme);
-			
-		//boardDraw.repaint(); // display the new board
+
 		setVisible(false);
 		
 	}

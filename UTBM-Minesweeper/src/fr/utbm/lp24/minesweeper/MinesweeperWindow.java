@@ -185,11 +185,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 			new OptionsWindow(controller);
 		} else if( event.getSource() == menuGameItem4 ){
 			new AppearanceWindow();
-			System.out.println("Change appearance event");
-			//PreferencesManager userPreferences = new PreferencesManager();
-			//userPreferences.setPref("theme", "win7_flower");// get the theme
-			
-			
+			boardDraw.repaint(); // display the new board
 		} else if( event.getSource() == menuGameItem5 ){
 			System.exit(0);
 		} else if( event.getSource() == menuHelpItem1 ){
