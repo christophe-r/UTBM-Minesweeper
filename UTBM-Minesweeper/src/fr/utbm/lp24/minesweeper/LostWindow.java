@@ -99,7 +99,7 @@ public class LostWindow extends JDialog {
 		btnRestartThisGame.setBounds(142, 201, 120, 23);
 		contentPanel.add(btnRestartThisGame);
 		
-		
+		setLocationRelativeTo(null);
 		setVisible(true);
 		
 	}

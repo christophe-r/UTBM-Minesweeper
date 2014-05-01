@@ -90,7 +90,7 @@ public class WonWindow extends JDialog {
 		lblTDate.setBounds(212, 78, 73, 14);
 		contentPanel.add(lblTDate);
 		
-		
+		setLocationRelativeTo(null);
 		setVisible(true);
 		
 	}

@@ -36,8 +36,8 @@ public class MinesweeperGame {
 		}
 		
 		// --------- Code to test the theme loader
-		userPreferences = new PreferencesManager();
-		userPreferences.setPref("theme", "win7_classic");
+		//userPreferences = new PreferencesManager();
+		//userPreferences.setPref("theme", "win7_classic");
 		// --------- 
 		
 		
@@ -168,8 +168,8 @@ public class MinesweeperGame {
 			this.width = this.height = 16;
 			this.nbMines = 40;
 		} else if( level.equals("advanced") ){
-			this.width = 16;
-			this.height = 30;
+			this.width = 30;
+			this.height = 16;
 			this.nbMines = 99;
 		} else if( level.equals("custom") ){
 			this.width = Integer.parseInt(userPreferences.getPref("difficulty_custom_width", "25"));
