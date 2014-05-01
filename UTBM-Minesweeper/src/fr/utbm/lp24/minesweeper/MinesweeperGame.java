@@ -83,9 +83,10 @@ public class MinesweeperGame {
 				break;
 				case RUN:
 					window.updateMsgPanel(" ");
+					myBoard.revealTilesRecursively(y,x);
+					window.drawBoard(myBoard.displayBoard());
 					if(myBoard.getTile(x,y).getContent() == TileContent.MINE){
 						window.updateMsgPanel("Sorry but you lose, click to restart.");
-						window.drawBoard(myBoard.displayBoard()); // display the new board
 						new LostWindow(this);				
 					}
 					
@@ -95,8 +96,7 @@ public class MinesweeperGame {
 						new WonWindow(this);		
 					}
 					
-					myBoard.revealTilesRecursively(y,x);
-					window.drawBoard(myBoard.displayBoard());
+					
 				break;
 				default: break;
 			}
@@ -203,7 +203,7 @@ public class MinesweeperGame {
 		System.out.println("restart game");
 		myBoard.Hidemines(); // hide all mine
 		window.drawBoard(myBoard.displayBoard()); // display the new board
-		gameState = GameState.PAUSED;
+		gameState = GameState.RUN;
 	}
 	
 }
