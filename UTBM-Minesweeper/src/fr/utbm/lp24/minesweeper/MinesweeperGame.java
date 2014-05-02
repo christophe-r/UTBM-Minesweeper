@@ -18,6 +18,8 @@ public class MinesweeperGame {
 	private BoardController myBoard;
 	private MinesweeperWindow window;
 	private static PreferencesManager userPreferences;
+	
+	private Timer boardTimer;
 
 	/**
 	 * Main constructor
@@ -65,33 +67,47 @@ public class MinesweeperGame {
 				window.updateMsgPanel(" ");
 				this.newGame();//to restart the game
 				gameState = GameState.PAUSED;
-				break;	
+				break;
+				
 			case PAUSED:
 				myBoard.populateMines(nbMines, x, y);
+				
+				boardTimer = new Timer();
+				(new Thread(boardTimer)).start();
+				
 				System.out.println("Generated board:\r\n"+myBoard);
 				myBoard.revealTilesRecursively(x,y);
 
 				window.drawBoard(myBoard.displayBoard());
 				gameState = GameState.RUNNING;
 				break;
+				
 			case RUNNING:
 				window.updateMsgPanel(" ");
 				if( myBoard.getTile(x, y).getState() == TileState.UNDISCOVERED ) {
 					myBoard.revealTilesRecursively(x,y);
 					window.drawBoard(myBoard.displayBoard());
+					
 					if(myBoard.getTile(x,y).getContent() == TileContent.MINE){
 						window.updateMsgPanel("Sorry but you lose, click to restart.");
-						new LostWindow(this);				
+						
+						boardTimer.stopTimer();
+						int time = boardTimer.getTimer();
+						new LostWindow(this, time);
 					}
 
 					if(myBoard.isWon()){
 						window.updateMsgPanel("Great you have won the game, click to restart.");
 						gameState = GameState.STOPPED;
-						new WonWindow(this);		
+						
+						boardTimer.stopTimer();
+						int time = boardTimer.getTimer();
+						new WonWindow(this, time);	
 					}
 				}
 
 				break;
+				
 			default: break;
 			}
 

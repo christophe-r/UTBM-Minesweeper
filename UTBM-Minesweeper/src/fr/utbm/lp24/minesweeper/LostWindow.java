@@ -24,7 +24,7 @@ public class LostWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public LostWindow(final MinesweeperGame controller) {
+	public LostWindow(final MinesweeperGame controller, int time) {
 		setTitle("Game Lost");
 		setResizable(false);
 		setModal(true);
@@ -78,8 +78,9 @@ public class LostWindow extends JDialog {
 		lblTime.setBounds(10, 78, 26, 14);
 		contentPanel.add(lblTime);
 		
-		JLabel lblSeconds = new JLabel("9999 seconds");
+		JLabel lblSeconds = new JLabel("");
 		lblSeconds.setBounds(40, 78, 89, 14);
+		lblSeconds.setText(time+" seconds");
 		contentPanel.add(lblSeconds);
 		
 		JLabel lblDate = new JLabel("Date:");
