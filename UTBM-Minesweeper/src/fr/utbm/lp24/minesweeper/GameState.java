@@ -7,7 +7,7 @@ package fr.utbm.lp24.minesweeper;
  *
  */
 public enum GameState {
-		RUN, // There are a game in progress
+		RUNNING, // There are a game in progress
 		PAUSED, // There are a board but no mines
-		STOPED // There are no game
+		STOPPED // There are no game
 }

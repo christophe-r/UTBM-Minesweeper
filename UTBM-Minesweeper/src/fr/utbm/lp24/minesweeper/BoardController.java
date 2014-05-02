@@ -98,10 +98,10 @@ public class BoardController extends Board {
 	 */
 	public void revealTilesRecursively(int x, int y){
 		
-		if(this.getTile(y,x) != null){
-			if(this.getTile(y,x).getState() ==  TileState.UNDISCOVERED){ // Do nothing if state is : FLAGGED, QUESTION_MARK, DISCOVERED
-				this.getTile(y,x).setState(TileState.DISCOVERED);
-				if(this.getTile(y,x).getContent() == TileContent.CLEAR0 ){
+		if(this.getTile(x,y) != null){
+			if(this.getTile(x,y).getState() ==  TileState.UNDISCOVERED){ // Do nothing if state is : FLAGGED, QUESTION_MARK, DISCOVERED
+				this.getTile(x,y).setState(TileState.DISCOVERED);
+				if(this.getTile(x,y).getContent() == TileContent.CLEAR0 ){
 					for( int i=-1 ; i<=1 ; i++ ){
 						for( int j=-1 ; j<=1 ; j++ ){
 							if( i != 0 || j != 0 ){

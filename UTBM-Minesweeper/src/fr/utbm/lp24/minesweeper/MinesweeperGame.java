@@ -10,15 +10,15 @@ import javax.swing.UIManager;
  */
 
 public class MinesweeperGame {
-	
-	private GameState gameState = GameState.STOPED;
+
+	private GameState gameState = GameState.STOPPED;
 	private int nbMines;
 	private int width;
 	private int height;
 	private BoardController myBoard;
 	private MinesweeperWindow window;
 	private static PreferencesManager userPreferences;
-	
+
 	/**
 	 * Main constructor
 	 * Initialize all variables
@@ -26,23 +26,23 @@ public class MinesweeperGame {
 	 * 
 	 */ 
 	MinesweeperGame(){
-		
+
 		// Set the Windows UI theme
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (Exception e){
 			System.out.println("Unable to load Windows look and feel");
 		}
-		
+
 		this.Majpreferences();
 		// Launch the windows
-	
+
 		window = new MinesweeperWindow(this);
 		this.newGame();
 		gameState = GameState.PAUSED;
 	}
 
-	
+
 	/**
 	 * This method is called when a left-click happens.
 	 * @param x The X coordinate where the click happens
@@ -58,42 +58,43 @@ public class MinesweeperGame {
 		// transform pixel coordinate in array coordinate
 		x = ((x-21)/window.getsquaresize())-1;
 		y = ((y-21)/window.getsquaresize())-1;
-		
+
 		if(myBoard.getTile(x,y) != null){
 			switch(gameState){
-				case STOPED: 
-					window.updateMsgPanel(" ");
-					this.newGame();//to restart the game
-					gameState = GameState.PAUSED;
+			case STOPPED: 
+				window.updateMsgPanel(" ");
+				this.newGame();//to restart the game
+				gameState = GameState.PAUSED;
 				break;	
-				case PAUSED:
-					myBoard.populateMines(nbMines, x, y);
-					System.out.println("Generated board:\r\n"+myBoard);
-					myBoard.revealTilesRecursively(y,x);
-					
-					window.drawBoard(myBoard.displayBoard());
-					gameState = GameState.RUN;
+			case PAUSED:
+				myBoard.populateMines(nbMines, x, y);
+				System.out.println("Generated board:\r\n"+myBoard);
+				myBoard.revealTilesRecursively(x,y);
+
+				window.drawBoard(myBoard.displayBoard());
+				gameState = GameState.RUNNING;
 				break;
-				case RUN:
-					window.updateMsgPanel(" ");
-					myBoard.revealTilesRecursively(y,x);
+			case RUNNING:
+				window.updateMsgPanel(" ");
+				if( myBoard.getTile(x, y).getState() == TileState.UNDISCOVERED ) {
+					myBoard.revealTilesRecursively(x,y);
 					window.drawBoard(myBoard.displayBoard());
 					if(myBoard.getTile(x,y).getContent() == TileContent.MINE){
 						window.updateMsgPanel("Sorry but you lose, click to restart.");
 						new LostWindow(this);				
 					}
-					
+
 					if(myBoard.isWon()){
 						window.updateMsgPanel("Great you have won the game, click to restart.");
-						gameState = GameState.STOPED;
+						gameState = GameState.STOPPED;
 						new WonWindow(this);		
 					}
-					
-					
+				}
+
 				break;
-				default: break;
+			default: break;
 			}
-			
+
 		}
 		// use to debug
 		System.out.println("Click gauche");
@@ -102,8 +103,8 @@ public class MinesweeperGame {
 		System.out.println("Corrd Y : " + y);
 		System.out.println("");
 	}
-	
-	
+
+
 	/**
 	 * This method is called when a right-click happens.
 	 * @param x The X coordinate where the click happens
@@ -115,25 +116,25 @@ public class MinesweeperGame {
 		// transform pixel coordinate in array coordinate
 		x = ((x-21)/window.getsquaresize())-1;
 		y = ((y-21)/window.getsquaresize())-1;
-		
+
 		Tile tile = myBoard.getTile(x,y);
 		if(tile != null){
 			switch( tile.getState() ){
-				case UNDISCOVERED:
-					tile.setState(TileState.FLAGGED);
-					myBoard.incrementNbFlags();
+			case UNDISCOVERED:
+				tile.setState(TileState.FLAGGED);
+				myBoard.incrementNbFlags();
 				break;
-				
-				case FLAGGED:
-					tile.setState(TileState.QUESTION_MARK);
-					myBoard.decrementNbFlags();
+
+			case FLAGGED:
+				tile.setState(TileState.QUESTION_MARK);
+				myBoard.decrementNbFlags();
 				break;
-				
-				case QUESTION_MARK:
-					tile.setState(TileState.UNDISCOVERED);
+
+			case QUESTION_MARK:
+				tile.setState(TileState.UNDISCOVERED);
 				break;
-				
-				default: break;
+
+			default: break;
 			}
 		}		
 		window.drawBoard(myBoard.displayBoard());
@@ -143,8 +144,8 @@ public class MinesweeperGame {
 		System.out.println("Nb flags : " + myBoard.getNbFlags());
 		System.out.println("");
 	}
-	
-	
+
+
 	/**
 	 * Update the preferences
 	 * 
@@ -152,9 +153,9 @@ public class MinesweeperGame {
 	public void Majpreferences(){
 		// load the preference values for the difficulty, the width, height and nb of mines.
 		userPreferences = new PreferencesManager();
-		
+
 		String level = userPreferences.getPref("difficulty", "beginner");
-		
+
 		if( level.equals("intermediate") ){
 			this.width = this.height = 16;
 			this.nbMines = 40;
@@ -170,10 +171,10 @@ public class MinesweeperGame {
 			this.width = this.height = 9;
 			this.nbMines = 10;
 		} 
-		
+
 	}
 
-	
+
 	/**
 	 * Method to start a new the game
 	 * 
@@ -185,7 +186,7 @@ public class MinesweeperGame {
 		window.drawBoard(myBoard.displayBoard()); // display the new board
 		gameState = GameState.PAUSED;
 	}
-	
+
 	/**
 	 * Method to restart the same game
 	 * 
@@ -194,7 +195,7 @@ public class MinesweeperGame {
 		System.out.println("restart game");
 		myBoard.Hidemines(); // hide all mine
 		window.drawBoard(myBoard.displayBoard()); // display the new board
-		gameState = GameState.RUN;
+		gameState = GameState.RUNNING;
 	}
-	
+
 }
