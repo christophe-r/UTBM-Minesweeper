@@ -15,25 +15,25 @@ import javax.swing.JPanel;
  *
  */
 public class BoardDraw extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 	PreferencesManager userPreferences; 
 	private Tile[][] stateboard; // temporary array to save the board
 	private int square_size = 20;
 	private String theme;
 	private String[] images = {"tile.png",
-							   "tile_clear.png",
-							   "mine.png",
-							   "flag.png",
-							   "question_mark.png",
-							   "clear1.png",
-							   "clear2.png",
-							   "clear3.png",
-							   "clear4.png",
-							   "clear5.png",
-							   "clear6.png",
-							   "clear7.png",
-							   "clear8.png"};
+			"tile_clear.png",
+			"mine.png",
+			"flag.png",
+			"question_mark.png",
+			"clear1.png",
+			"clear2.png",
+			"clear3.png",
+			"clear4.png",
+			"clear5.png",
+			"clear6.png",
+			"clear7.png",
+	"clear8.png"};
 	private Image image_tile = null;
 	private Image image_tile_clear = null;
 	private Image image_mine = null;
@@ -47,7 +47,7 @@ public class BoardDraw extends JPanel {
 	private Image image_clear6 = null;
 	private Image image_clear7 = null;
 	private Image image_clear8 = null;
-	
+
 	private Image[] varImages = {
 			image_tile,
 			image_tile_clear,
@@ -64,148 +64,122 @@ public class BoardDraw extends JPanel {
 			image_clear8,
 	};
 
-	
-	
-	
-	BoardDraw(){}
-	
-	   /**
-		 * Draw the board on the windows
-		 * 
-		 * The board start the génération at  21px,11px
-		 * and any box is a square of 10px
-		 * 
-	     * @author Vincent
-	     */
-		
-	public void paintComponent(Graphics g){
-		// TODO
 
+	public BoardDraw(){
 		userPreferences = new PreferencesManager();
-		if(!theme.equals(userPreferences.getPref("theme", "win7_classic"))){ //check the theme
-			this.theme = userPreferences.getPref("theme", "win7_classic");
-			loadImages();
-		}
-		
-		
+		this.theme = userPreferences.getPref("theme", "win7_classic");
+	}
+
+
+	/**
+	 * Draw the board on the windows
+	 * 
+	 * The board starts the generation at 21px,11px
+	 * and each box is a square of 10px
+	 * 
+	 * @author Vincent
+	 */
+	public void paintComponent(Graphics g){
+
+		this.theme = userPreferences.getPref("theme", "win7_classic");
+		loadImages();
+
 		super.paintComponent(g);
 		for( int i=0; i<stateboard.length ; i++ ){
 			for( int j=0; j<stateboard[0].length ; j++ ){
 				int cordX =  1+(j+2)*square_size;
-			    int cordY =  1+(i+2)*square_size;
-			   // g.drawImage(image_clear1, 0, 0,10,10, null) ; 
-			    //    g.drawImage(loadImage("mine.png"), 10, 10, this);
-			    //System.out.println("cord X : " + i + " cord Y : " + j);
-			    g.setColor(Color.GRAY);
+				int cordY =  1+(i+2)*square_size;
+				g.setColor(Color.GRAY);
 				switch( stateboard[i][j].getState() ){
-					case UNDISCOVERED: 
-						//g.fillRect(cordX,cordY-10, 9, 9);
-						g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this); 
-						 break;	
-						
-					case FLAGGED: 
-						g.setColor(Color.BLACK);
-						//g.drawRect(cordX,cordY-10, 10, 10); 
-						//g.drawString(" F", cordX, cordY); 
-						g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this); 
-						g.drawImage(varImages[3], cordX, cordY,square_size,square_size, this); 
-						
+				case UNDISCOVERED: 
+					g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this);
+					break;	
+
+				case FLAGGED: 
+					g.setColor(Color.BLACK);
+					g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this);
+					g.drawImage(varImages[3], cordX, cordY,square_size,square_size, this);
+
+					break;	
+				case QUESTION_MARK:
+					g.setColor(Color.BLACK);
+					g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this);
+					g.drawImage(varImages[4], cordX, cordY,square_size,square_size, this);
+					break;	
+
+				case DISCOVERED: {
+					g.setColor(Color.blue);
+					g.drawImage(varImages[1], cordX, cordY,square_size,square_size, this);
+					switch( stateboard[i][j].getContent() ){
+					//case CLEAR0: break;			
+					case MINE:  
+						g.setColor(Color.red);
+						g.drawImage(varImages[2], cordX, cordY,square_size,square_size, this);
 						break;	
-					case QUESTION_MARK:
-						g.setColor(Color.BLACK); 
-						//g.drawString(" ?", cordX-10,cordY); 
-						g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this); 
-						g.drawImage(varImages[4], cordX, cordY,square_size,square_size, this); 
+					case CLEAR1:
+						g.drawImage(varImages[5], cordX, cordY,square_size,square_size, this);
 						break;	
-						
-					case DISCOVERED :{
-						//g.drawRect(cordX,cordY, 10, 10);
-						g.setColor(Color.blue);
-						g.drawImage(varImages[1], cordX, cordY,square_size,square_size, this); 
-						switch( stateboard[i][j].getContent() ){
-							case CLEAR0: 
-								//g.drawString(" ",  cordX, cordY+10);
-								break;			
-							case MINE:  
-								g.setColor(Color.red); 
-								//g.drawString("@",  cordX, cordY+10);
-								g.drawImage(varImages[2], cordX, cordY,square_size,square_size, this); 
-								break;	
-							case CLEAR1: 
-								//g.drawString(" 1", cordX, cordY+10);
-								g.drawImage(varImages[5], cordX, cordY,square_size,square_size, this); 
-								break;	
-							case CLEAR2:
-								//g.drawString(" 2", cordX, cordY+10);
-								g.drawImage(varImages[6], cordX, cordY,square_size,square_size, this); 
-								break;	
-							case CLEAR3:
-								//g.drawString(" 3", cordX, cordY+10);
-								g.drawImage(varImages[7], cordX, cordY,square_size,square_size, this); 
-								break;	
-							case CLEAR4:
-								//g.drawString(" 4", cordX, cordY+10); 
-								g.drawImage(varImages[8], cordX, cordY,square_size,square_size, this); 
-								break;	
-							case CLEAR5:
-								//g.drawString(" 5", cordX, cordY+10); 
-								g.drawImage(varImages[9], cordX, cordY,square_size,square_size, this);
-								break;	
-							case CLEAR6:
-								//g.drawString(" 6", cordX, cordY+10);
-								g.drawImage(varImages[10], cordX, cordY,square_size,square_size, this);
-								break;	
-							case CLEAR7:
-								//g.drawString(" 7", cordX, cordY+10);
-								g.drawImage(varImages[11], cordX, cordY,square_size,square_size, this);
-								break;	
-							case CLEAR8:
-								//g.drawString(" 8", cordX, cordY+10);
-								g.drawImage(varImages[12], cordX, cordY,square_size,square_size, this);
-								break;	
-							default: break;
-			        	}	
+					case CLEAR2:
+						g.drawImage(varImages[6], cordX, cordY,square_size,square_size, this);
+						break;	
+					case CLEAR3:
+						g.drawImage(varImages[7], cordX, cordY,square_size,square_size, this);
+						break;	
+					case CLEAR4:
+						g.drawImage(varImages[8], cordX, cordY,square_size,square_size, this);
+						break;	
+					case CLEAR5:
+						g.drawImage(varImages[9], cordX, cordY,square_size,square_size, this);
+						break;	
+					case CLEAR6:
+						g.drawImage(varImages[10], cordX, cordY,square_size,square_size, this);
+						break;	
+					case CLEAR7:
+						g.drawImage(varImages[11], cordX, cordY,square_size,square_size, this);
+						break;	
+					case CLEAR8:
+						g.drawImage(varImages[12], cordX, cordY,square_size,square_size, this);
+						break;	
+					default: break;
+					}	
 				}
 				default: break;
 				}
 			}
 		}
 
-		
 	}
 
-	
+
 	/**
 	 * Update the stateboard
 	 * 
 	 * @param stateboard
 	 */
-	public void setNewBoard(Tile[][] stateboard,int square_size) { //update the stateboard
+	public void setNewBoard(Tile[][] stateboard,int square_size) {
 		this.square_size = square_size;
 		this.stateboard = stateboard;
-		
 	}     
-	
-/**
- *  load a image
- *  
- * @param String filename
- * @return the object image
- */
-	public void  loadImages() { //update the stateboard
-			userPreferences = new PreferencesManager();
-			this.theme = userPreferences.getPref("theme", "win7_classic");
-			try {
-				for(int i=0;i<images.length;i++){
-					String s = "/resources/themes/" + theme + "/" + images[i];
-					System.out.println("load : " + s);
-					varImages[i] = ImageIO.read(getClass().getResourceAsStream(s));
-				}
+
+
+	/**
+	 *  Loads an image
+	 *  
+	 * @param String filename
+	 * @return the object image
+	 */
+	public void loadImages() {
+
+		try {
+			for( int i=0; i<images.length; i++ ){
+				String s = "/resources/themes/" + theme + "/" + images[i];
+				System.out.println("load : " + s);
+				varImages[i] = ImageIO.read(getClass().getResourceAsStream(s));
 			}
-			catch(IOException exc) {
-				exc.printStackTrace();
-			
-			}
-		
+		}
+		catch(IOException exc) {
+			exc.printStackTrace();
+		}
+
 	}     
 }
