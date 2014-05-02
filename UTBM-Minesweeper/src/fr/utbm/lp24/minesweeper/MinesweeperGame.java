@@ -89,6 +89,8 @@ public class MinesweeperGame {
 					window.drawBoard(myBoard.displayBoard());
 					
 					if(myBoard.getTile(x,y).getContent() == TileContent.MINE){
+						myBoard.viewAllMines();
+						window.drawBoard(myBoard.displayBoard());
 						window.updateMsgPanel("Sorry but you lose, click to restart.");
 						
 						boardTimer.stopTimer();

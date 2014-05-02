@@ -133,6 +133,18 @@ public class BoardController extends Board {
 		}
 	}
 	
+	/**
+	 * reveals all mines in the board
+	 */
+	public void viewAllMines(){
+		for( int i=0 ; i<super.width ; i++ ){
+			for( int j=0 ; j<super.height ; j++ ){
+				if(this.getTile(i, j).getContent() == TileContent.MINE)
+					this.setTile(i, j, this.getTile(i, j).getContent(), TileState.DISCOVERED);
+			}
+		}
+	}
+	
 	
 	public String toString(){
 		
