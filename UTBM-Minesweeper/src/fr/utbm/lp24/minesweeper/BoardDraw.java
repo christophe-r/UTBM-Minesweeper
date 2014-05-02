@@ -80,9 +80,12 @@ public class BoardDraw extends JPanel {
 	 * @author Vincent
 	 */
 	public void paintComponent(Graphics g){
-
-		this.theme = userPreferences.getPref("theme", "win7_classic");
-		loadImages();
+		
+		userPreferences = new PreferencesManager();
+		if(!theme.equals(userPreferences.getPref("theme", "win7_classic"))){ //check the theme
+			this.theme = userPreferences.getPref("theme", "win7_classic");
+			loadImages();
+		}
 
 		super.paintComponent(g);
 		for( int i=0; i<stateboard.length ; i++ ){
@@ -181,5 +184,6 @@ public class BoardDraw extends JPanel {
 			exc.printStackTrace();
 		}
 
-	}     
+	}  
+
 }
