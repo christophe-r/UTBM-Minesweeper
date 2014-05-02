@@ -24,7 +24,7 @@ public class WonWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public WonWindow(final MinesweeperGame controller, int time) {
+	public WonWindow(final MinesweeperGame controller, int time, int score ) {
 		setTitle("Game Won");
 		setResizable(false);
 		setModal(true);
@@ -91,6 +91,15 @@ public class WonWindow extends JDialog {
 		lblTDate.setBounds(212, 78, 73, 14);
 		contentPanel.add(lblTDate);
 		
+		
+		JLabel lblTScore = new JLabel("");
+		lblTScore.setBounds(70, 120, 150, 14);
+		System.out.println("score : " + score);
+		lblTScore.setText("Votre score est de " + score + " points");
+		contentPanel.add(lblTScore);
+		
+		
+		
 		setLocationRelativeTo(null);
 		setVisible(true);
 		
@@ -102,4 +111,5 @@ public class WonWindow extends JDialog {
 		this.dispose();
 	}
 	
+
 }

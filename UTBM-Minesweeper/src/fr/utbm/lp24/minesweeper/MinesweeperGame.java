@@ -15,6 +15,8 @@ public class MinesweeperGame {
 	private int nbMines;
 	private int width;
 	private int height;
+	private boolean playAgain = false;
+	private Score myScore = new Score();
 	private BoardController myBoard;
 	private MinesweeperWindow window;
 	private static PreferencesManager userPreferences;
@@ -70,6 +72,7 @@ public class MinesweeperGame {
 				break;
 				
 			case PAUSED:
+				window.updateMsgPanel("Flags remainings : " + (this.nbMines - myBoard.nbFlags));
 				myBoard.populateMines(nbMines, x, y);
 				
 				boardTimer = new Timer();
@@ -79,11 +82,11 @@ public class MinesweeperGame {
 				myBoard.revealTilesRecursively(x,y);
 
 				window.drawBoard(myBoard.displayBoard());
-				gameState = GameState.RUNNING;
+				gameState = GameState.RUNNING;		
 				break;
 				
 			case RUNNING:
-				window.updateMsgPanel(" ");
+				window.updateMsgPanel("Flags remainings : " + (this.nbMines - myBoard.nbFlags));
 				if( myBoard.getTile(x, y).getState() == TileState.UNDISCOVERED ) {
 					myBoard.revealTilesRecursively(x,y);
 					window.drawBoard(myBoard.displayBoard());
@@ -104,7 +107,7 @@ public class MinesweeperGame {
 						
 						boardTimer.stopTimer();
 						int time = boardTimer.getTimer();
-						new WonWindow(this, time);	
+						new WonWindow(this,time,myScore.getscore(nbMines, width, height, time, playAgain));
 					}
 				}
 
@@ -130,7 +133,6 @@ public class MinesweeperGame {
 	 * @author Vincent
 	 */
 	public void rightClickOnBoard(int x, int y){
-		// TODO
 		// transform pixel coordinate in array coordinate
 		x = ((x-21)/window.getsquaresize())-1;
 		y = ((y-21)/window.getsquaresize())-1;
@@ -154,7 +156,8 @@ public class MinesweeperGame {
 
 			default: break;
 			}
-		}		
+		}	
+		window.updateMsgPanel("Flags remainings : " + (this.nbMines - myBoard.nbFlags));
 		window.drawBoard(myBoard.displayBoard());
 		System.out.println("Click droit");
 		System.out.println("Corrd X : " + x);
@@ -189,6 +192,11 @@ public class MinesweeperGame {
 			this.width = this.height = 9;
 			this.nbMines = 10;
 		} 
+		System.out.println("MAJ preferences");
+		System.out.println("height : " + height);
+		System.out.println("width : " + width);
+		System.out.println("nbMines : " + nbMines);
+		
 
 	}
 
@@ -200,6 +208,7 @@ public class MinesweeperGame {
 	public void newGame(){
 		System.out.println("newgame");
 		this.Majpreferences();
+		this.playAgain = false;
 		myBoard = new BoardController(width, height);// gen a new board
 		window.drawBoard(myBoard.displayBoard()); // display the new board
 		gameState = GameState.PAUSED;
@@ -211,6 +220,7 @@ public class MinesweeperGame {
 	 */
 	public void restartGame(){
 		System.out.println("restart game");
+		this.playAgain = true;
 		myBoard.Hidemines(); // hide all mine
 		window.drawBoard(myBoard.displayBoard()); // display the new board
 		gameState = GameState.RUNNING;

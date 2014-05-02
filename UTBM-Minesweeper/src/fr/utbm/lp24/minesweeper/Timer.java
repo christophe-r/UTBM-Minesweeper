@@ -31,7 +31,7 @@ public class Timer implements Runnable {
 			
 			if( this.runnable ){
 				timer++;
-				System.out.println("Timer: "+timer);
+				//System.out.println("Timer: "+timer);
 			}
 		}
 		
