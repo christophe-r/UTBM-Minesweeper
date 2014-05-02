@@ -150,12 +150,8 @@ public class MinesweeperGame {
 	 * 
 	 */
 	public void Majpreferences(){
-		// load the defaults value for width, height, nbMines
+		// load the preference values for the difficulty, the width, height and nb of mines.
 		userPreferences = new PreferencesManager();
-		
-		userPreferences.setPref("difficulty_custom_width","10");
-		userPreferences.setPref("difficulty_custom_height","10");
-		userPreferences.setPref("difficulty_custom_height","10");
 		
 		String level = userPreferences.getPref("difficulty", "beginner");
 		
@@ -167,8 +163,8 @@ public class MinesweeperGame {
 			this.height = 16;
 			this.nbMines = 99;
 		} else if( level.equals("custom") ){
-			this.width = Integer.parseInt(userPreferences.getPref("difficulty_custom_width", "25"));
 			this.height = Integer.parseInt(userPreferences.getPref("difficulty_custom_height", "20"));
+			this.width = Integer.parseInt(userPreferences.getPref("difficulty_custom_width", "25"));
 			this.nbMines = Integer.parseInt(userPreferences.getPref("difficulty_custom_mines", "300"));
 		} else { // Beginner
 			this.width = this.height = 9;

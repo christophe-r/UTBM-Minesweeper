@@ -27,25 +27,24 @@ import java.awt.event.FocusEvent;
 
 public class OptionsWindow extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private final JPanel contentPanel = new JPanel();
 	private JButton cancelButton;
 	private JButton okButton;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+
+	private JLabel lbl_custom_mines;
+
 	private JTextField textField_custom_height;
 	private JTextField textField_custom_width;
 	private JTextField textField_custom_mines;
-	
+
 	private JRadioButton rdbtn_beginner;
 	private JRadioButton rdbtn_intermediate;
 	private JRadioButton rdbtn_advanced;
-	
 	private JRadioButton rdbtn_custom;
-	
+
 	private PreferencesManager userPreferences;
 
 
@@ -80,47 +79,47 @@ public class OptionsWindow extends JDialog {
 		}
 		getContentPane().setLayout(null);
 		getContentPane().add(contentPanel);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Difficulty", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, gl_contentPanel.createSequentialGroup()
-							.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
-							.addGap(6)
-							.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
+						.addContainerGap()
+						.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addComponent(panel, GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+								.addGroup(Alignment.TRAILING, gl_contentPanel.createSequentialGroup()
+										.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+										.addGap(6)
+										.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)))
+										.addContainerGap())
+				);
 		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(okButton)
-						.addComponent(cancelButton))
-					.addGap(105))
-		);
+						.addContainerGap()
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addComponent(okButton)
+								.addComponent(cancelButton))
+								.addGap(105))
+				);
 		panel.setLayout(null);
-		
-		
+
+
 		rdbtn_beginner = new JRadioButton("<html>Beginner<br>\r\n10 mines<br>\r\n9 x 9 tile grid");
 		rdbtn_beginner.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				radioButtonCustom();
 			}
 		});
-		
+
 		buttonGroup.add(rdbtn_beginner);		
 		rdbtn_beginner.setBounds(12, 28, 109, 43);
 		panel.add(rdbtn_beginner);
-		
+
 		rdbtn_intermediate = new JRadioButton("<html>Intermediate<br>\r\n40 mines<br>\r\n16 x 16 tile grid");
 		rdbtn_intermediate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -130,7 +129,7 @@ public class OptionsWindow extends JDialog {
 		buttonGroup.add(rdbtn_intermediate);
 		rdbtn_intermediate.setBounds(12, 80, 109, 43);
 		panel.add(rdbtn_intermediate);
-		
+
 		rdbtn_advanced = new JRadioButton("<html>Advanced<br>\r\n99 mines<br>\r\n16 x 30 tile grid");
 		rdbtn_advanced.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -140,9 +139,7 @@ public class OptionsWindow extends JDialog {
 		buttonGroup.add(rdbtn_advanced);
 		rdbtn_advanced.setBounds(12, 132, 109, 43);
 		panel.add(rdbtn_advanced);
-		
-		
-		
+
 		rdbtn_custom = new JRadioButton("Custom");
 		rdbtn_custom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -153,18 +150,19 @@ public class OptionsWindow extends JDialog {
 		buttonGroup.add(rdbtn_custom);
 		rdbtn_custom.setBounds(170, 28, 71, 23);
 		panel.add(rdbtn_custom);
-		
-		
+
+
 		JLabel lbl_custom_height = new JLabel("Height (9-24):");
 		lbl_custom_height.setBounds(196, 50, 71, 14);
 		panel.add(lbl_custom_height);
-		
+
 		textField_custom_height = new JTextField();
 		textField_custom_height.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				textFieldCustomIntInRange(textField_custom_height, 9, 24);
 				textFieldCustomIntInRangeMines();
+				updateLabelMaxMines();
 			}
 		});
 		textField_custom_height.addKeyListener(new KeyAdapter() {
@@ -177,17 +175,18 @@ public class OptionsWindow extends JDialog {
 		textField_custom_height.setBounds(286, 47, 53, 20);
 		panel.add(textField_custom_height);
 		textField_custom_height.setColumns(10);
-		
+
 		JLabel lbl_custom_width = new JLabel("Width (9-30):");
 		lbl_custom_width.setBounds(196, 80, 71, 14);
 		panel.add(lbl_custom_width);
-		
+
 		textField_custom_width = new JTextField();
 		textField_custom_width.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				textFieldCustomIntInRange(textField_custom_width, 9, 30);
 				textFieldCustomIntInRangeMines();
+				updateLabelMaxMines();
 			}
 		});
 		textField_custom_width.addKeyListener(new KeyAdapter() {
@@ -200,15 +199,16 @@ public class OptionsWindow extends JDialog {
 		textField_custom_width.setBounds(286, 77, 53, 20);
 		panel.add(textField_custom_width);
 		textField_custom_width.setColumns(10);
-		
-		JLabel lbl_custom_mines = new JLabel("Mines (10-668):");
+
+		lbl_custom_mines = new JLabel("Mines (10-710):");
 		lbl_custom_mines.setBounds(196, 110, 83, 14);
 		panel.add(lbl_custom_mines);
-		
+
 		textField_custom_mines = new JTextField();
 		textField_custom_mines.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
+				textFieldCustomIntInRange(textField_custom_mines, 10, 710);
 				textFieldCustomIntInRangeMines();
 			}
 		});
@@ -225,122 +225,88 @@ public class OptionsWindow extends JDialog {
 		panel.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{rdbtn_beginner, rdbtn_intermediate, rdbtn_advanced, rdbtn_custom, lbl_custom_height, textField_custom_height, lbl_custom_width, textField_custom_width, lbl_custom_mines, textField_custom_mines}));
 		contentPanel.setLayout(gl_contentPanel);
 		getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPanel, panel, rdbtn_beginner, rdbtn_intermediate, rdbtn_advanced, rdbtn_custom, lbl_custom_height, textField_custom_height, lbl_custom_width, textField_custom_width, lbl_custom_mines, textField_custom_mines, okButton, cancelButton}));
-		
-		
+
 		optionWindowInit();
-		
-		
-			setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			setLocationRelativeTo(null);
-			setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{getContentPane(), contentPanel, panel, rdbtn_beginner, rdbtn_intermediate, rdbtn_advanced, rdbtn_custom, lbl_custom_height, textField_custom_height, lbl_custom_width, textField_custom_width, lbl_custom_mines, textField_custom_mines, okButton, cancelButton}));
-			setVisible(true);
-		
+
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{getContentPane(), contentPanel, panel, rdbtn_beginner, rdbtn_intermediate, rdbtn_advanced, rdbtn_custom, lbl_custom_height, textField_custom_height, lbl_custom_width, textField_custom_width, lbl_custom_mines, textField_custom_mines, okButton, cancelButton}));
+		setVisible(true);
+
 	}
-	
-	
+
+
+	/**
+	 * This function split the string if its length exceeded
+	 * @param textField
+	 * @param length
+	 */
 	private void textFieldMaxLength(JTextField textField, int length){
 		if(textField.getText().length()>length){
 			textField.setText(textField.getText().substring(0, length));
 		}
 	}
-	
+
+
+	/**
+	 * This function sets the new text in the label of the new amount of mines possible
+	 */
+	private void updateLabelMaxMines(){
+		lbl_custom_mines.setText("Mines (10-"+maxMines()+"):");
+	}
+
+
+	/**
+	 * This function checks if the integer entered is in the given range, if not, it puts the min or max value
+	 * @param textField The textField
+	 * @param min The minimum value
+	 * @param max The maximum value
+	 */
 	private void textFieldCustomIntInRange(JTextField textField, int min, int max){
-		String textFieldstr = textField.getText().replaceAll("[^0-9]", "");
-		
-		if(textFieldstr.equals("")){
-			textFieldstr = "" + min;
-			textField.setText(""+textFieldstr);
-		}
-			
-		
-		if( Integer.parseInt(textFieldstr) < min ){
+		int textFieldInt = parseInt(textField.getText());
+
+		if( textFieldInt < min  ){
 			textField.setText(""+min);
-		} else if( Integer.parseInt(textFieldstr) > max ){ 	
+		} else if( textFieldInt > max ){ 	
 			textField.setText(""+max);
 		}
-		
+
 	}
-	
+
+
 	/**
 	 * Function to check that the number of mines entered (in the custom case) is not to high, relative
-	 * to the width and the height
+	 * to the width and the height. If it's not in range, it sets the min or max value.
 	 */
 	private void textFieldCustomIntInRangeMines(){
-		String custom_height = textField_custom_mines.getText().replaceAll("[^0-9]", "");
-		String custom_mines = textField_custom_height.getText().replaceAll("[^0-9]", "");
-		String custom_width =  textField_custom_width.getText().replaceAll("[^0-9]", "");
-		
-		if(custom_height.equals(""))
-			custom_height = "9";
-		if(custom_mines.equals(""))
-			custom_height = "10";
-		if(custom_height.equals(""))
-			custom_width = "9";
-		
-		
-		int maxMines = Integer.parseInt(custom_height)*Integer.parseInt(custom_width);
-		if(maxMines>668)
-			maxMines = 668;
-		
-		if( Integer.parseInt(custom_mines) < 10 ){
+
+		int custom_mines = parseInt(textField_custom_mines.getText());
+
+		int maxMines = maxMines();
+
+		if( custom_mines < 10 ){
 			textField_custom_mines.setText("10");
-		} else if( Integer.parseInt(custom_mines) > maxMines){
+		} else if( custom_mines > maxMines ){
 			textField_custom_mines.setText(""+maxMines);
 		}
 	}
-	
-	private void optionWindowInit(){
-		// Retrieving user preferences
-		userPreferences = new PreferencesManager();
-		String difficulty = userPreferences.getPref("difficulty", "beginner");
-		
-		if( difficulty.equals("beginner") ){
-			rdbtn_beginner.setSelected(true);
-		} else if( difficulty.equals("intermediate") ){
-			rdbtn_intermediate.setSelected(true);
-		} else if( difficulty.equals("advanced") ){
-			rdbtn_advanced.setSelected(true);
-		} else if( difficulty.equals("custom") ){
-			rdbtn_custom.setSelected(true);
-		}
-		
-		radioButtonCustom();
-		
-		textField_custom_height.setText(userPreferences.getPref("difficulty_custom_height", "20"));
-		textField_custom_width.setText(userPreferences.getPref("difficulty_custom_width", "25"));
-		textField_custom_mines.setText(userPreferences.getPref("difficulty_custom_mines", "300"));
-		
+
+
+	/**
+	 * This function compute the maximum value of mines possible. The formula is WIDTH*HEIGHT-3*3-1.
+	 * "3*3" because of the first click. And "-1" to avoid to win on first click
+	 * @return
+	 */
+	private int maxMines(){
+		int custom_height = parseInt(textField_custom_height.getText());
+		int custom_width =  parseInt(textField_custom_width.getText());
+		return custom_height*custom_width-10;
 	}
-	
-	private void optionWindowOK(MinesweeperGame controller){
-		userPreferences = new PreferencesManager();
-		
-		String difficulty = "beginner";
-		
-		if( rdbtn_beginner.isSelected() ){
-			difficulty = "beginner";
-		} else if( rdbtn_intermediate.isSelected() ){
-			difficulty = "intermediate";
-		} else if( rdbtn_advanced.isSelected() ){
-			difficulty = "advanced";
-		} else if( rdbtn_custom.isSelected() ){
-			difficulty = "custom";
-		}
-		
-		
-		userPreferences.setPref("difficulty", difficulty);
-		
-		userPreferences.setPref("difficulty_custom_height", textField_custom_height.getText());
-		userPreferences.setPref("difficulty_custom_width", textField_custom_width.getText());
-		userPreferences.setPref("difficulty_custom_mines", textField_custom_mines.getText());
-				
-		setVisible(false);
-		
-		controller.newGame();
-		
-	}
-	
-	
+
+
+	/**
+	 * To handle the activation of the 3 text fields relative to the radio buttons .
+	 */
 	private void radioButtonCustom(){
 		if( rdbtn_custom.isSelected() ){
 			System.out.println("selected");
@@ -352,8 +318,80 @@ public class OptionsWindow extends JDialog {
 			textField_custom_width.setEnabled(false);
 			textField_custom_mines.setEnabled(false);
 		}
+
+	}
+
+
+	/**
+	 * This function returns an integer from a string. If the string is empty, it returns 0.
+	 * @param s The string
+	 * @return The parsed integer
+	 */
+	private int parseInt(String s){
+		s = s.replaceAll("[^0-9]", "");
+		return s.equals("")?0:Integer.parseInt(s);
+	}	
+
+
+	/**
+	 * What to do on the initialization.
+	 */
+	private void optionWindowInit(){
+		// Retrieving user preferences
+		userPreferences = new PreferencesManager();
+		String difficulty = userPreferences.getPref("difficulty", "beginner");
+
+		if( difficulty.equals("beginner") ){
+			rdbtn_beginner.setSelected(true);
+		} else if( difficulty.equals("intermediate") ){
+			rdbtn_intermediate.setSelected(true);
+		} else if( difficulty.equals("advanced") ){
+			rdbtn_advanced.setSelected(true);
+		} else if( difficulty.equals("custom") ){
+			rdbtn_custom.setSelected(true);
+		}
+
+		radioButtonCustom();
+		
+		textField_custom_height.setText(userPreferences.getPref("difficulty_custom_height", "20"));
+		textField_custom_width.setText(userPreferences.getPref("difficulty_custom_width", "25"));
+		textField_custom_mines.setText(userPreferences.getPref("difficulty_custom_mines", "300"));
+
+		updateLabelMaxMines();
 		
 	}
-	
-	
+
+
+	/**
+	 * What to do when "OK" button is pressed.
+	 * @param controller
+	 */
+	private void optionWindowOK(MinesweeperGame controller){
+		userPreferences = new PreferencesManager();
+
+		String difficulty = "beginner";
+
+		if( rdbtn_beginner.isSelected() ){
+			difficulty = "beginner";
+		} else if( rdbtn_intermediate.isSelected() ){
+			difficulty = "intermediate";
+		} else if( rdbtn_advanced.isSelected() ){
+			difficulty = "advanced";
+		} else if( rdbtn_custom.isSelected() ){
+			difficulty = "custom";
+		}
+
+
+		userPreferences.setPref("difficulty", difficulty);
+
+		userPreferences.setPref("difficulty_custom_height", textField_custom_height.getText());
+		userPreferences.setPref("difficulty_custom_width", textField_custom_width.getText());
+		userPreferences.setPref("difficulty_custom_mines", textField_custom_mines.getText());
+
+		setVisible(false);
+
+		controller.newGame();
+
+	}
+
 }
