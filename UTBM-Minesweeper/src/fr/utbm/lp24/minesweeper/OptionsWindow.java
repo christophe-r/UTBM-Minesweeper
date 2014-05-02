@@ -269,6 +269,8 @@ public class OptionsWindow extends JDialog {
 			textField.setText(""+min);
 		} else if( textFieldInt > max ){ 	
 			textField.setText(""+max);
+		}else{
+			textField.setText("" + parseInt(textField.getText()));
 		}
 
 	}
@@ -384,9 +386,9 @@ public class OptionsWindow extends JDialog {
 
 		userPreferences.setPref("difficulty", difficulty);
 
-		userPreferences.setPref("difficulty_custom_height", textField_custom_height.getText());
-		userPreferences.setPref("difficulty_custom_width", textField_custom_width.getText());
-		userPreferences.setPref("difficulty_custom_mines", textField_custom_mines.getText());
+		userPreferences.setPref("difficulty_custom_height", "" + parseInt(textField_custom_height.getText())); // security to prevent any upcoming bug
+		userPreferences.setPref("difficulty_custom_width", "" + parseInt(textField_custom_width.getText()));
+		userPreferences.setPref("difficulty_custom_mines", "" + parseInt(textField_custom_mines.getText()));
 
 		setVisible(false);
 
