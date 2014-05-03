@@ -147,9 +147,9 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
      * This method recreate the board on the screen
      * @author Vincent
      */
-	public void drawBoard(Tile stateboard[][]){
+	public void drawBoard(Tile stateboard[][], boolean endgame){
 		this.setSize(stateboard[0].length*square_size + 100 , stateboard.length*square_size + 150);
-		boardDraw.setNewBoard(stateboard, square_size);
+		boardDraw.setNewBoard(stateboard, square_size, endgame);
 		boardDraw.repaint();
 		this.updateSouth(stateboard[0].length*square_size + 100 , "size");
 		container.add(boardDraw, BorderLayout.CENTER);

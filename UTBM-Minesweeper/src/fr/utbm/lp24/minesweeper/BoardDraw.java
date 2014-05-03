@@ -21,6 +21,7 @@ public class BoardDraw extends JPanel {
 	private Tile[][] stateboard; // temporary array to save the board
 	private int square_size = 20;
 	private String theme;
+	private boolean endGame;
 	private String[] images = {"tile.png",
 			"tile_clear.png",
 			"mine.png",
@@ -33,7 +34,9 @@ public class BoardDraw extends JPanel {
 			"clear5.png",
 			"clear6.png",
 			"clear7.png",
-	"clear8.png"};
+			"clear8.png",
+			"cross.png"
+	};
 	private Image image_tile = null;
 	private Image image_tile_clear = null;
 	private Image image_mine = null;
@@ -47,6 +50,7 @@ public class BoardDraw extends JPanel {
 	private Image image_clear6 = null;
 	private Image image_clear7 = null;
 	private Image image_clear8 = null;
+	private Image cross = null;
 
 	private Image[] varImages = {
 			image_tile,
@@ -62,6 +66,7 @@ public class BoardDraw extends JPanel {
 			image_clear6,
 			image_clear7,
 			image_clear8,
+			cross
 	};
 
 
@@ -102,6 +107,9 @@ public class BoardDraw extends JPanel {
 					g.setColor(Color.BLACK);
 					g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this);
 					g.drawImage(varImages[3], cordX, cordY,square_size,square_size, this);
+					if(endGame){
+						g.drawImage(varImages[13], cordX, cordY,square_size,square_size, this);	
+					}
 
 					break;	
 				case QUESTION_MARK:
@@ -159,9 +167,10 @@ public class BoardDraw extends JPanel {
 	 * 
 	 * @param stateboard
 	 */
-	public void setNewBoard(Tile[][] stateboard,int square_size) {
+	public void setNewBoard(Tile[][] stateboard,int square_size, boolean endGame) {
 		this.square_size = square_size;
 		this.stateboard = stateboard;
+		this.endGame = endGame;
 	}     
 
 

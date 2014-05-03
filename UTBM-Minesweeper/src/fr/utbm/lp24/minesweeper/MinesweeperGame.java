@@ -80,7 +80,7 @@ public class MinesweeperGame {
 				System.out.println("Generated board:\r\n"+myBoard);
 				myBoard.revealTilesRecursively(x,y);
 
-				window.drawBoard(myBoard.displayBoard());
+				window.drawBoard(myBoard.displayBoard(),false);
 				gameState = GameState.RUNNING;		
 				break;
 				
@@ -88,11 +88,11 @@ public class MinesweeperGame {
 				window.updateSouth((this.nbMines - myBoard.nbFlags), "flags");
 				if( myBoard.getTile(x, y).getState() == TileState.UNDISCOVERED ) {
 					myBoard.revealTilesRecursively(x,y);
-					window.drawBoard(myBoard.displayBoard());
+					window.drawBoard(myBoard.displayBoard(),false);
 					
 					if(myBoard.getTile(x,y).getContent() == TileContent.MINE){
 						myBoard.viewAllMines();
-						window.drawBoard(myBoard.displayBoard());
+						window.drawBoard(myBoard.displayBoard(),true);
 						//window.updateSouth("Sorry but you lose, click to restart.");
 						
 						boardTimer.stopTimer();
@@ -106,6 +106,8 @@ public class MinesweeperGame {
 						
 						boardTimer.stopTimer();
 						int time = boardTimer.getTimer();
+						myBoard.viewAllMines();
+						window.drawBoard(myBoard.displayBoard(),true);
 						new WonWindow(this,time,myScore.getscore(nbMines, width, height, time, playAgain));
 					}
 				}
@@ -157,7 +159,7 @@ public class MinesweeperGame {
 			}
 		}	
 		window.updateSouth((this.nbMines - myBoard.nbFlags), "flags");
-		window.drawBoard(myBoard.displayBoard());
+		window.drawBoard(myBoard.displayBoard(),false);
 		System.out.println("Click droit");
 		System.out.println("Corrd X : " + x);
 		System.out.println("Corrd Y : " + y);
@@ -209,7 +211,7 @@ public class MinesweeperGame {
 		this.Majpreferences();
 		this.playAgain = false;
 		myBoard = new BoardController(width, height);// gen a new board
-		window.drawBoard(myBoard.displayBoard()); // display the new board
+		window.drawBoard(myBoard.displayBoard(),false); // display the new board
 		gameState = GameState.PAUSED;
 	}
 
@@ -221,7 +223,7 @@ public class MinesweeperGame {
 		System.out.println("restart game");
 		this.playAgain = true;
 		myBoard.Hidemines(); // hide all mine
-		window.drawBoard(myBoard.displayBoard()); // display the new board
+		window.drawBoard(myBoard.displayBoard(),false); // display the new board
 		gameState = GameState.RUNNING;
 	}
 

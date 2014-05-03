@@ -6,6 +6,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+
+/**
+ * 
+ * Draw the southBar
+ * @author vincent
+ *
+ */
 public class SouthBar extends JPanel{
 
 	private static final long serialVersionUID = 1L;
@@ -17,12 +24,21 @@ public class SouthBar extends JPanel{
 	private int flags = 10;
 	private int size = 200;
 	
+	
+	/**
+	 * main constructor
+	 * get the preference and load images for the first time
+	 */
 	SouthBar(){
 		userPreferences = new PreferencesManager();
 		this.theme = userPreferences.getPref("theme", "win7_classic");
 		loadImages();
 	}
 	
+	
+	/**
+	 * draw the SouthBar
+	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		userPreferences = new PreferencesManager();
@@ -30,7 +46,7 @@ public class SouthBar extends JPanel{
 			this.theme = userPreferences.getPref("theme", "win7_classic");
 			loadImages();
 		}
-		int margin = (size /2)-85;
+		int margin = (size /2)-100;
 	    g.drawImage(image_clock,margin + 10, 0,20,20, this);
 	    if (time > 0 ){
 	    	g.drawString(time + " seconds", margin + 30, 15);
@@ -39,10 +55,20 @@ public class SouthBar extends JPanel{
 	    }
 	    
 	    g.drawImage(image_Flag,margin + 130, 0,20,20, this);
-	    g.drawString("" + flags , margin + 150, 15); 
+	    if (time > 0 ){
+	    	 g.drawString(flags +"restants", margin + 150, 15); 
+	    }else{
+	    	 g.drawString( flags +"restant", margin + 150, 15); 
+	    }
+	   
 	    
 	}
 	
+	
+	/**
+	  * Update parameters used to draw the SouthBar
+	  * 
+	  */
 	public void updateParameter(int value, String type){
 		if(type.equals("time"))
 			this.time = value;
@@ -54,7 +80,10 @@ public class SouthBar extends JPanel{
 			this.size = value;
 	}
 
-	
+	/**
+	 * 
+	 * Method used to load images
+	 */
 	public void loadImages() {
 		try {
 				String s = "/resources/themes/" + theme + "/flag.png";
