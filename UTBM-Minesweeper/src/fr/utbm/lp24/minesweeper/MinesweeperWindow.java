@@ -3,6 +3,7 @@ package fr.utbm.lp24.minesweeper;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,13 +47,13 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	
 	// container
 	private JPanel container = new JPanel(); // main container
-	private JPanel infobottom = new JPanel();
-	int indice=0; 
+	//private JPanel infobottom = new JPanel();
 	
 	
-	private String msg = "Click to begin the game ...";
-	private JLabel label = new JLabel(msg);
+	//private String msg = "Click to begin the game ...";
+//	private JLabel label = new JLabel(msg);
 	private BoardDraw boardDraw = new BoardDraw();
+	private SouthBar southbar = new SouthBar();
 	private int square_size = 20;
 	
 	
@@ -115,10 +116,9 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		//set the input and button object
 	    container.setBackground(Color.white);
 	    container.setLayout(new BorderLayout());
-	    infobottom.add(label);
+	    //infobottom.add(label);
 
 	    // update view
-	    container.add(infobottom, BorderLayout.SOUTH);
 	    this.setContentPane(container);
 	    this.setVisible(true);  
 	    
@@ -151,6 +151,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		this.setSize(stateboard[0].length*square_size + 100 , stateboard.length*square_size + 150);
 		boardDraw.setNewBoard(stateboard, square_size);
 		boardDraw.repaint();
+		this.updateSouth(stateboard[0].length*square_size + 100 , "size");
 		container.add(boardDraw, BorderLayout.CENTER);
 		this.setContentPane(container);
 		this.setVisible(true);  
@@ -161,9 +162,13 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	 * 
 	 * @param s the new message for the label
 	 */
-	public void updateMsgPanel(String s){
-
-		 label.setText(s);
+	public void updateSouth(int value,String type){
+		southbar.updateParameter(value,type);
+		southbar.removeAll();
+		JLabel label = new JLabel(" ");
+		southbar.add(label);
+		southbar.repaint();
+		container.add(southbar, BorderLayout.SOUTH);
 		this.setContentPane(container);
 		this.setVisible(true); 
 	}

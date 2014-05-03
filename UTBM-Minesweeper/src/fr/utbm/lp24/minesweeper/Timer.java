@@ -4,6 +4,7 @@ public class Timer implements Runnable {
 	
 	private int timer;
 	private boolean runnable;
+	private MinesweeperWindow window;
 
 	/*public static void main(String[] args) {
 		
@@ -14,9 +15,10 @@ public class Timer implements Runnable {
 		
 	}*/
 	
-	public Timer(){
+	public Timer(MinesweeperWindow window){
 		this.timer = 0;
 		this.runnable = true;
+		this.window = window;
 	}
 	
 
@@ -32,6 +34,7 @@ public class Timer implements Runnable {
 			if( this.runnable ){
 				timer++;
 				//System.out.println("Timer: "+timer);
+				window.updateSouth(timer,"time");
 			}
 		}
 		

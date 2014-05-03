@@ -66,16 +66,15 @@ public class MinesweeperGame {
 		if(myBoard.getTile(x,y) != null){
 			switch(gameState){
 			case STOPPED: 
-				window.updateMsgPanel(" ");
 				this.newGame();//to restart the game
 				gameState = GameState.PAUSED;
 				break;
 				
 			case PAUSED:
-				window.updateMsgPanel("Flags remainings : " + (this.nbMines - myBoard.nbFlags));
+				window.updateSouth((this.nbMines - myBoard.nbFlags), "flags");
 				myBoard.populateMines(nbMines, x, y);
 				
-				boardTimer = new Timer();
+				boardTimer = new Timer(window);
 				(new Thread(boardTimer)).start();
 				
 				System.out.println("Generated board:\r\n"+myBoard);
@@ -86,7 +85,7 @@ public class MinesweeperGame {
 				break;
 				
 			case RUNNING:
-				window.updateMsgPanel("Flags remainings : " + (this.nbMines - myBoard.nbFlags));
+				window.updateSouth((this.nbMines - myBoard.nbFlags), "flags");
 				if( myBoard.getTile(x, y).getState() == TileState.UNDISCOVERED ) {
 					myBoard.revealTilesRecursively(x,y);
 					window.drawBoard(myBoard.displayBoard());
@@ -94,7 +93,7 @@ public class MinesweeperGame {
 					if(myBoard.getTile(x,y).getContent() == TileContent.MINE){
 						myBoard.viewAllMines();
 						window.drawBoard(myBoard.displayBoard());
-						window.updateMsgPanel("Sorry but you lose, click to restart.");
+						//window.updateSouth("Sorry but you lose, click to restart.");
 						
 						boardTimer.stopTimer();
 						int time = boardTimer.getTimer();
@@ -102,7 +101,7 @@ public class MinesweeperGame {
 					}
 
 					if(myBoard.isWon()){
-						window.updateMsgPanel("Great you have won the game, click to restart.");
+						//window.updateSouth("Great you have won the game, click to restart.");
 						gameState = GameState.STOPPED;
 						
 						boardTimer.stopTimer();
@@ -157,7 +156,7 @@ public class MinesweeperGame {
 			default: break;
 			}
 		}	
-		window.updateMsgPanel("Flags remainings : " + (this.nbMines - myBoard.nbFlags));
+		window.updateSouth((this.nbMines - myBoard.nbFlags), "flags");
 		window.drawBoard(myBoard.displayBoard());
 		System.out.println("Click droit");
 		System.out.println("Corrd X : " + x);
