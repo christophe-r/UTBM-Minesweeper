@@ -22,6 +22,10 @@ public class BoardDraw extends JPanel {
 	private int square_size = 20;
 	private String theme;
 	private boolean endGame;
+	private boolean activeShadow;
+	private int shadowX;
+	private int shadowY;
+	
 	private String[] images = {"tile.png",
 			"tile_clear.png",
 			"mine.png",
@@ -35,7 +39,7 @@ public class BoardDraw extends JPanel {
 			"clear6.png",
 			"clear7.png",
 			"clear8.png",
-			"cross.png"
+			"cross.png",
 	};
 	private Image image_tile = null;
 	private Image image_tile_clear = null;
@@ -51,6 +55,7 @@ public class BoardDraw extends JPanel {
 	private Image image_clear7 = null;
 	private Image image_clear8 = null;
 	private Image cross = null;
+	private Image mask = null;
 
 	private Image[] varImages = {
 			image_tile,
@@ -66,8 +71,9 @@ public class BoardDraw extends JPanel {
 			image_clear6,
 			image_clear7,
 			image_clear8,
-			cross
+			cross,
 	};
+
 
 
 	public BoardDraw(){
@@ -91,7 +97,6 @@ public class BoardDraw extends JPanel {
 			this.theme = userPreferences.getPref("theme", "win7_classic");
 			loadImages();
 		}
-
 		super.paintComponent(g);
 		for( int i=0; i<stateboard.length ; i++ ){
 			for( int j=0; j<stateboard[0].length ; j++ ){
@@ -158,7 +163,20 @@ public class BoardDraw extends JPanel {
 				}
 			}
 		}
-
+		
+		if(activeShadow){
+			for( int i=1 ; i<=3 ; i++ ){
+				for( int j=1 ; j<=3 ; j++ ){
+					if( i != 2 || j != 2 ){
+						if	((shadowX+i) > 1 && (shadowY+j) > 1){
+							if((shadowX+i) < stateboard.length+2 && (shadowY+j) <stateboard[0].length+2)
+								g.drawImage(mask, (shadowX+i)*square_size, (shadowY+j)*square_size,square_size,square_size, this);
+						}
+					}
+				}
+			}
+			//activeShadow = false;
+		}
 	}
 
 
@@ -188,11 +206,20 @@ public class BoardDraw extends JPanel {
 				System.out.println("load : " + s);
 				varImages[i] = ImageIO.read(getClass().getResourceAsStream(s));
 			}
+			
+			mask = ImageIO.read(getClass().getResourceAsStream("/resources/mask.png"));
 		}
 		catch(IOException exc) {
 			exc.printStackTrace();
 		}
 
+	}
+
+
+	public void shadow(boolean shadow, int x, int y) {
+		this.activeShadow = shadow;
+		this.shadowX = x;
+		this.shadowY = y;
 	}  
 
 }

@@ -45,7 +45,15 @@ public class MinesweeperGame {
 		this.newGame();
 		gameState = GameState.PAUSED;
 	}
+	public void helpshadow(int x, int y){
+		x = ((x-21)/window.getsquaresize())-1;
+		y = ((y-21)/window.getsquaresize())-1;
 
+		/*  add functionality to active or disables this feature */
+		if(myBoard.getTile(x,y) != null)
+			window.drawshaddow(true, x,y);
+		
+	}
 
 	/**
 	 * This method is called when a left-click happens.

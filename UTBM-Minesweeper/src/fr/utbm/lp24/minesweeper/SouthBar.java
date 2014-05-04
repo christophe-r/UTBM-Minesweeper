@@ -55,10 +55,10 @@ public class SouthBar extends JPanel{
 	    }
 	    
 	    g.drawImage(image_Flag,margin + 130, 0,20,20, this);
-	    if (time > 0 ){
-	    	 g.drawString(flags +"restants", margin + 150, 15); 
+	    if (flags > 0 ){
+	    	 g.drawString(flags +" restants", margin + 150, 15); 
 	    }else{
-	    	 g.drawString( flags +"restant", margin + 150, 15); 
+	    	 g.drawString( flags +" restant", margin + 150, 15); 
 	    }
 	   
 	    

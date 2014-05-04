@@ -3,13 +3,13 @@ package fr.utbm.lp24.minesweeper;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -123,6 +123,15 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	    this.setVisible(true);  
 	    
 	    
+	    /**
+	     *  Create a listener to draw the help shadow
+	     */
+	    this.addMouseMotionListener(new MouseMotionAdapter() {
+	        public void mouseMoved(MouseEvent e) {
+	        	controller.helpshadow((e.getX())-5, (e.getY()-45));
+	        }
+	        
+	    });
     
     /**
      * Create a listener to call rightClickOnTile and leftClickOnTile methods
@@ -204,6 +213,17 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	 */
 	public int getsquaresize(){
 		return this.square_size;
+	}
+
+	/**
+	 * draw the shadow on the board
+	 * @param x
+	 * @param y
+	 */
+	public void drawshaddow(boolean shadow, int x, int y) {
+		boardDraw.repaint();
+		boardDraw.shadow(shadow, x,y);
+		
 	}
 
 }
