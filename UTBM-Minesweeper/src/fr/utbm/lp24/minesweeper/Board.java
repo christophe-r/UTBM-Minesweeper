@@ -10,9 +10,9 @@ public class Board {
 	protected int height;
 	protected int nbMines;
 	protected int nbFlags;
-	
+
 	protected Tile board[][];
-	
+
 	/**
 	 * Initialize the board with the given dimension.
 	 * @param width Width of the board
@@ -21,7 +21,8 @@ public class Board {
 	public Board(int width, int height){
 		this.setDimension(width, height);
 	}
-	
+
+
 	/**
 	 * Modify the dimension of the board.
 	 * @param width Width of the board
@@ -32,10 +33,10 @@ public class Board {
 		this.height = height;
 		this.nbMines = 0;
 		this.nbFlags = 0;
-		
+
 		// Setting the bounds
 		this.board = new Tile[height][width];
-		
+
 		// Creating all tiles of the board
 		for( int j=0 ; j<height ; j++ ){
 			for( int i=0 ; i<width ; i++ ){
@@ -43,7 +44,8 @@ public class Board {
 			}
 		}
 	}
-	
+
+
 	/**
 	 * Get the tile from the given coordinates
 	 * @param x Coordinate
@@ -57,7 +59,8 @@ public class Board {
 			return null;
 		}
 	}
-	
+
+
 	/**
 	 * Set a tile to the given position with the given parameters.
 	 * @param x Coordinate
@@ -70,8 +73,8 @@ public class Board {
 			this.board[y][x] = new Tile(tileContent, tileState);
 		}
 	}
-	
-	
+
+
 	/**
 	 * Checks if a tile is in the bounds of the board by the given coordinates.
 	 * @param x Coordinate
@@ -81,7 +84,8 @@ public class Board {
 	public boolean tileInBounds(int x, int y){
 		return (x >= 0 && x < width) && (y >= 0 && y < height);
 	}
-	
+
+
 	/**
 	 * Get the adjacent tile.
 	 * (x,y) : coordinates of the tile in the board.
@@ -100,7 +104,8 @@ public class Board {
 		}
 
 	}
-	
+
+
 	/**
 	 * Getter for the width
 	 * @return the width of the board
@@ -108,6 +113,8 @@ public class Board {
 	public int getWidth(){
 		return this.width;
 	}
+
+
 	/**
 	 * Getter for the height
 	 * @return the width of the board
@@ -115,21 +122,24 @@ public class Board {
 	public int getHeight(){
 		return this.height;
 	}
-	
+
+
 	/**
 	 * Increments the number of flags within the board
 	 */
 	public void incrementNbFlags(){
 		this.nbFlags++;
 	}
-	
+
+
 	/**
 	 * Decrements the number of flags within the board
 	 */
 	public void decrementNbFlags(){
 		this.nbFlags--;
 	}
-	
+
+
 	/**
 	 * Gets the number of flags within the board
 	 * @return The number of flags placed
@@ -137,22 +147,23 @@ public class Board {
 	public int getNbFlags(){
 		return this.nbFlags;
 	}
-	
+
+
 	/**
 	 * Return the entire game board, in characters.
 	 */
 	public String toString(){
-		
+
 		String charBoard = "";
-		
+
 		for(Tile[] lineTile : this.board ){
 			for(Tile tile : lineTile ){
 				charBoard += ""+tile;
 			}
 			charBoard += "\r\n";
 		}
-		
+
 		return charBoard;
 	}
-	
+
 }

@@ -30,7 +30,7 @@ public class LostWindow extends JDialog {
 		setModal(true);
 		setBounds(100, 100, 410, 260);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		
+
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -59,38 +59,38 @@ public class LostWindow extends JDialog {
 			contentPanel.add(playAgainButton);
 			playAgainButton.setActionCommand("Play again");
 		}
-		
-		
+
+
 		this.addWindowListener(new WindowAdapter() {
-			   public void windowClosing(WindowEvent evt) {
-				   playAgain(controller);
-			   }
+			public void windowClosing(WindowEvent evt) {
+				playAgain(controller);
+			}
 		});
-		
-		
+
+
 		JLabel lblSorry = new JLabel("Sorry, you lost this game. Better luck next time!");
 		lblSorry.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblSorry.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSorry.setBounds(10, 21, 384, 23);
 		contentPanel.add(lblSorry);
-		
+
 		JLabel lblTime = new JLabel("Time:");
 		lblTime.setBounds(10, 78, 26, 14);
 		contentPanel.add(lblTime);
-		
+
 		JLabel lblSeconds = new JLabel("");
 		lblSeconds.setBounds(40, 78, 89, 14);
 		lblSeconds.setText(time+" seconds");
 		contentPanel.add(lblSeconds);
-		
+
 		JLabel lblDate = new JLabel("Date:");
 		lblDate.setBounds(179, 78, 27, 14);
 		contentPanel.add(lblDate);
-		
+
 		JLabel lblTDate = new JLabel("00-Mon-00");
 		lblTDate.setBounds(212, 78, 73, 14);
 		contentPanel.add(lblTDate);
-		
+
 		JButton btnRestartThisGame = new JButton("Restart this game");
 		btnRestartThisGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -99,21 +99,21 @@ public class LostWindow extends JDialog {
 		});
 		btnRestartThisGame.setBounds(142, 201, 120, 23);
 		contentPanel.add(btnRestartThisGame);
-		
+
 		setLocationRelativeTo(null);
 		setVisible(true);
-		
+
 	}
-	
+
 	private void playAgain(MinesweeperGame controller){
 		controller.newGame();
 		this.dispose();
 	}
-	
+
 	private void restartGame(MinesweeperGame controller){
 		// TODO
 		controller.restartGame();
 		this.dispose();
 	}
-	
+
 }

@@ -30,7 +30,7 @@ public class WonWindow extends JDialog {
 		setModal(true);
 		setBounds(100, 100, 320, 260);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		
+
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -59,57 +59,57 @@ public class WonWindow extends JDialog {
 			contentPanel.add(playAgainButton);
 			playAgainButton.setActionCommand("Play again");
 		}
-		
-		
+
+
 		this.addWindowListener(new WindowAdapter() {
-			   public void windowClosing(WindowEvent evt) {
-				   playAgain(controller);
-			   }
+			public void windowClosing(WindowEvent evt) {
+				playAgain(controller);
+			}
 		});
-		
-		
+
+
 		JLabel lblCongrats = new JLabel("Congratulations, you won the game!");
 		lblCongrats.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCongrats.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCongrats.setBounds(10, 21, 294, 23);
 		contentPanel.add(lblCongrats);
-		
+
 		JLabel lblTime = new JLabel("Time:");
 		lblTime.setBounds(10, 78, 26, 14);
 		contentPanel.add(lblTime);
-		
+
 		JLabel lblSeconds = new JLabel("");
 		lblSeconds.setBounds(40, 78, 89, 14);
 		lblSeconds.setText(time+" seconds");
 		contentPanel.add(lblSeconds);
-		
+
 		JLabel lblDate = new JLabel("Date:");
 		lblDate.setBounds(179, 78, 27, 14);
 		contentPanel.add(lblDate);
-		
+
 		JLabel lblTDate = new JLabel("00-Mon-00");
 		lblTDate.setBounds(212, 78, 73, 14);
 		contentPanel.add(lblTDate);
-		
-		
+
+
 		JLabel lblTScore = new JLabel("");
 		lblTScore.setBounds(70, 120, 150, 14);
 		System.out.println("score : " + score);
 		lblTScore.setText("Votre score est de " + score + " points");
 		contentPanel.add(lblTScore);
-		
-		
-		
+
+
+
 		setLocationRelativeTo(null);
 		setVisible(true);
-		
+
 	}
-	
+
 	private void playAgain(MinesweeperGame controller){
 		controller.newGame();
 		// Close the window
 		this.dispose();
 	}
-	
+
 
 }

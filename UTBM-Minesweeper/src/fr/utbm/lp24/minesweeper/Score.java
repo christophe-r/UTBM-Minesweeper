@@ -3,28 +3,30 @@ package fr.utbm.lp24.minesweeper;
 public class Score {
 	
 	/**
-	 * class used to manage score
+	 * Class used to manage the score
 	 * 
-	 * @param nbmines
+	 * @param nbMines
 	 * @param width
 	 * @param height
 	 * @param time
-	 * @param playagain
-	 * @return the calculate score
+	 * @param playAgain
+	 * @return the computed score
 	 */
-	public int getscore(float nbmines, float width, float height, float time, boolean playagain){
+	public int getScore(float nbMines, float width, float height, float time, boolean playAgain){
 		
-		int triche = 1 ;
-		if(playagain){
-			triche = 0;
+		int cheat = 1 ;
+		if( playAgain ){
+			cheat = 0;
 		}
-		if(time == 0 ){
+		
+		if( time == 0 ){
 			time = 1;
-			triche = 0;
+			cheat = 0;
 		}
-		float score = ( 1000 * triche )/( (nbmines / (width*height)) + 1/time );
 		
-		return Math.round(score) ;
+		float score = ( 1000 * cheat )/( (nbMines / (width*height)) + 1/time );
+		
+		return Math.round(score);
 		
 	}
 }

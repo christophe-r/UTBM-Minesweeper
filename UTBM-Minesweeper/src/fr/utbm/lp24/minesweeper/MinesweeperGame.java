@@ -8,7 +8,6 @@ import javax.swing.UIManager;
  * @author Vincent
  *
  */
-
 public class MinesweeperGame {
 
 	private GameState gameState = GameState.STOPPED;
@@ -20,16 +19,15 @@ public class MinesweeperGame {
 	private BoardController myBoard;
 	private MinesweeperWindow window;
 	private static PreferencesManager userPreferences;
-	
+
 	private Timer boardTimer;
 
 	/**
 	 * Main constructor
 	 * Initialize all variables
 	 *  load the initial view
-	 * 
 	 */ 
-	MinesweeperGame(){
+	public MinesweeperGame(){
 
 		// Set the Windows UI theme
 		try {
@@ -38,21 +36,25 @@ public class MinesweeperGame {
 			System.out.println("Unable to load Windows look and feel");
 		}
 
-		this.Majpreferences();
+		this.updatePreferences();
 		// Launch the windows
 
 		window = new MinesweeperWindow(this);
 		this.newGame();
 		gameState = GameState.PAUSED;
 	}
-	public void helpshadow(int x, int y){
-		x = ((x-21)/window.getsquaresize())-1;
-		y = ((y-21)/window.getsquaresize())-1;
 
-		/*  add functionality to active or disables this feature */
-		if(myBoard.getTile(x,y) != null)
-			window.drawshaddow(true, x,y);
-		
+
+	public void helpShadow(int x, int y){
+		x = ((x-21)/window.getSquareSize())-1;
+		y = ((y-21)/window.getSquareSize())-1;
+
+		/* Here, add functionality to enable or disable this feature */
+
+		if( myBoard.getTile(x,y) != null ){
+			window.drawShadow(true, x,y);	
+		}
+
 	}
 
 	/**
@@ -62,76 +64,68 @@ public class MinesweeperGame {
 	 * @author Vincent
 	 */
 	public void leftClickOnBoard(int x, int y){
-		// TODO
-		/*
-		 * possible bug with coordinate
-		 * 
-		 */
-		// transform pixel coordinate in array coordinate
-		x = ((x-21)/window.getsquaresize())-1;
-		y = ((y-21)/window.getsquaresize())-1;
+		// Transform pixel coordinate in array coordinate
+		x = ((x-21)/window.getSquareSize())-1;
+		y = ((y-21)/window.getSquareSize())-1;
 
 		if(myBoard.getTile(x,y) != null){
 			switch(gameState){
 			case STOPPED: 
-				this.newGame();//to restart the game
+				this.newGame(); // To restart the game
 				gameState = GameState.PAUSED;
 				break;
-				
+
 			case PAUSED:
-				window.updateSouth((this.nbMines - myBoard.nbFlags), "flags");
+				window.updateBottom((this.nbMines - myBoard.nbFlags), "flags");
 				myBoard.populateMines(nbMines, x, y);
-				
+
 				boardTimer = new Timer(window);
 				(new Thread(boardTimer)).start();
-				
+
 				System.out.println("Generated board:\r\n"+myBoard);
 				myBoard.revealTilesRecursively(x,y);
 
 				window.drawBoard(myBoard.displayBoard(),false);
 				gameState = GameState.RUNNING;		
 				break;
-				
+
 			case RUNNING:
-				window.updateSouth((this.nbMines - myBoard.nbFlags), "flags");
+				window.updateBottom((this.nbMines - myBoard.nbFlags), "flags");
 				if( myBoard.getTile(x, y).getState() == TileState.UNDISCOVERED ) {
 					myBoard.revealTilesRecursively(x,y);
 					window.drawBoard(myBoard.displayBoard(),false);
-					
+
 					if(myBoard.getTile(x,y).getContent() == TileContent.MINE){
-						myBoard.viewAllMines();
-						window.drawBoard(myBoard.displayBoard(),true);
-						//window.updateSouth("Sorry but you lose, click to restart.");
-						
+						myBoard.revealsAllMines();
+						window.drawBoard(myBoard.displayBoard(), true);
+
 						boardTimer.stopTimer();
 						int time = boardTimer.getTimer();
 						new LostWindow(this, time);
 					}
 
 					if(myBoard.isWon()){
-						//window.updateSouth("Great you have won the game, click to restart.");
 						gameState = GameState.STOPPED;
-						
+
 						boardTimer.stopTimer();
 						int time = boardTimer.getTimer();
-						myBoard.viewAllMines();
+						myBoard.revealsAllMines();
 						window.drawBoard(myBoard.displayBoard(),true);
-						new WonWindow(this,time,myScore.getscore(nbMines, width, height, time, playAgain));
+						new WonWindow(this,time,myScore.getScore(nbMines, width, height, time, playAgain));
 					}
 				}
 
 				break;
-				
+
 			default: break;
 			}
 
 		}
-		// use to debug
-		System.out.println("Click gauche");
-		//System.out.println("content : "+ myBoard.getTile(x,y).getContent());
-		System.out.println("Corrd X : " + x);
-		System.out.println("Corrd Y : " + y);
-		System.out.println("");
+
+		// Debug
+		System.out.println("Left click");
+		System.out.println("Coord X : " + x);
+		System.out.println("Coord Y : " + y+"\r\n");
 	}
 
 
@@ -142,9 +136,9 @@ public class MinesweeperGame {
 	 * @author Vincent
 	 */
 	public void rightClickOnBoard(int x, int y){
-		// transform pixel coordinate in array coordinate
-		x = ((x-21)/window.getsquaresize())-1;
-		y = ((y-21)/window.getsquaresize())-1;
+		// Transform pixel coordinate in array coordinate
+		x = ((x-21)/window.getSquareSize())-1;
+		y = ((y-21)/window.getSquareSize())-1;
 
 		Tile tile = myBoard.getTile(x,y);
 		if(tile != null){
@@ -166,22 +160,20 @@ public class MinesweeperGame {
 			default: break;
 			}
 		}	
-		window.updateSouth((this.nbMines - myBoard.nbFlags), "flags");
+		window.updateBottom((this.nbMines - myBoard.nbFlags), "flags");
 		window.drawBoard(myBoard.displayBoard(),false);
-		System.out.println("Click droit");
-		System.out.println("Corrd X : " + x);
-		System.out.println("Corrd Y : " + y);
-		System.out.println("Nb flags : " + myBoard.getNbFlags());
-		System.out.println("");
+		System.out.println("Right click");
+		System.out.println("Coord X : " + x);
+		System.out.println("Coord Y : " + y);
+		System.out.println("Nb flags : " + myBoard.getNbFlags()+"\r\n");
 	}
 
 
 	/**
 	 * Update the preferences
-	 * 
 	 */
-	public void Majpreferences(){
-		// load the preference values for the difficulty, the width, height and nb of mines.
+	public void updatePreferences(){
+		// Load the preferences values for the difficulty, the width, height and nb of mines.
 		userPreferences = new PreferencesManager();
 
 		String level = userPreferences.getPref("difficulty", "beginner");
@@ -200,38 +192,38 @@ public class MinesweeperGame {
 		} else { // Beginner
 			this.width = this.height = 9;
 			this.nbMines = 10;
-		} 
-		System.out.println("MAJ preferences");
-		System.out.println("height : " + height);
-		System.out.println("width : " + width);
-		System.out.println("nbMines : " + nbMines);
-		
+		}
+
+		System.out.println("Update preferences");
+		System.out.println("Height : " + height);
+		System.out.println("Width : " + width);
+		System.out.println("NbMines : " + nbMines);
 
 	}
 
 
 	/**
 	 * Method to start a new the game
-	 * 
 	 */
 	public void newGame(){
-		System.out.println("newgame");
-		this.Majpreferences();
+		System.out.println("New game");
+
+		this.updatePreferences();
 		this.playAgain = false;
-		myBoard = new BoardController(width, height);// gen a new board
-		window.drawBoard(myBoard.displayBoard(),false); // display the new board
+		myBoard = new BoardController(width, height); // Generate a new board
+		window.drawBoard(myBoard.displayBoard(),false); // Display the new board
 		gameState = GameState.PAUSED;
 	}
 
 	/**
 	 * Method to restart the same game
-	 * 
 	 */
 	public void restartGame(){
-		System.out.println("restart game");
+		System.out.println("Restart game");
+
 		this.playAgain = true;
-		myBoard.Hidemines(); // hide all mine
-		window.drawBoard(myBoard.displayBoard(),false); // display the new board
+		myBoard.hideMines(); // Hide all mine
+		window.drawBoard(myBoard.displayBoard(),false); // Display the new board
 		gameState = GameState.RUNNING;
 	}
 

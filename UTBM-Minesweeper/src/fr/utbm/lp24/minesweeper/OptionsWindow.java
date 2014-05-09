@@ -354,13 +354,13 @@ public class OptionsWindow extends JDialog {
 		}
 
 		radioButtonCustom();
-		
+
 		textField_custom_height.setText(userPreferences.getPref("difficulty_custom_height", "20"));
 		textField_custom_width.setText(userPreferences.getPref("difficulty_custom_width", "25"));
 		textField_custom_mines.setText(userPreferences.getPref("difficulty_custom_mines", "300"));
 
 		updateLabelMaxMines();
-		
+
 	}
 
 

@@ -23,84 +23,80 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
 
-
 /**
  * Class to manage the Minesweeper (main) window.
  * @author Christophe and Vincent
  */
 public class MinesweeperWindow extends JFrame implements ActionListener {
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	// menu items
+
+	// Menu items
 	private JMenuBar menuBar = new JMenuBar();
 	private JMenu menuGame = new JMenu("Game");
-	
+
 	private JMenuItem menuGameItem1 = new JMenuItem("New Game");
 	private JMenuItem menuGameItem2 = new JMenuItem("Statistics");
 	private JMenuItem menuGameItem3 = new JMenuItem("Options");
 	private JMenuItem menuGameItem4 = new JMenuItem("Change appearance");
 	private JMenuItem menuGameItem5 = new JMenuItem("Exit");
-	
+
 	private JMenu menuHelp = new JMenu("Help");
 	private JMenuItem menuHelpItem1 = new JMenuItem("About UTBM Minesweeper");
-	
-	// container
-	private JPanel container = new JPanel(); // main container
-	//private JPanel infobottom = new JPanel();
-	
-	
-	//private String msg = "Click to begin the game ...";
-//	private JLabel label = new JLabel(msg);
+
+	// Main container
+	private JPanel container = new JPanel();
+
 	private BoardDraw boardDraw = new BoardDraw();
-	private SouthBar southbar = new SouthBar();
+	private BottomBar bottomBar = new BottomBar();
 	private int square_size = 20;
-	
-	
+
+
 	private MinesweeperGame controller;
 
+
 	/**
-	* Initialize the main windows and display the first view
-	* @author Vincent
-	*/	
+	 * Initialize the main window and display the first view
+	 * @author Vincent
+	 */	
 	public MinesweeperWindow(final MinesweeperGame controller){ 
 
 		this.controller = controller;
 		getContentPane().setBackground(UIManager.getColor("inactiveCaption"));
 		boardDraw.loadImages(); 
-		
+
 		this.setTitle("Minesweeper");
 		this.setSize(300, 400);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		
+
 		URL iconURL = getClass().getResource("/resources/icon64.png");
 		ImageIcon icon = new ImageIcon(iconURL);
 		this.setIconImage(icon.getImage());
-			    
-		// add listener for menu
-	    
+
+
+		// Add items and listeners for the JMenu
 		this.menuGame.add(menuGameItem1);
 		menuGameItem1.addActionListener(this);
 		menuGameItem1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
-		
+
 		this.menuGame.addSeparator();
-		
+
 		this.menuGame.add(menuGameItem2);
 		menuGameItem2.addActionListener(this);
 		menuGameItem2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
-		
+
 		this.menuGame.add(menuGameItem3);
 		menuGameItem3.addActionListener(this);
 		menuGameItem3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
-		
+
 		this.menuGame.add(menuGameItem4);
 		menuGameItem4.addActionListener(this);
 		menuGameItem4.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
-		
+
 		this.menuGame.addSeparator();
-		
+
 		this.menuGame.add(menuGameItem5);
 		menuGameItem5.addActionListener(this);
 
@@ -113,75 +109,74 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		this.setJMenuBar(menuBar);
 
 
-		//set the input and button object
-	    container.setBackground(Color.white);
-	    container.setLayout(new BorderLayout());
-	    //infobottom.add(label);
+		container.setBackground(Color.white);
+		container.setLayout(new BorderLayout());
 
-	    // update view
-	    this.setContentPane(container);
-	    this.setVisible(true);  
-	    
-	    
-	    /**
-	     *  Create a listener to draw the help shadow
-	     */
-	    this.addMouseMotionListener(new MouseMotionAdapter() {
-	        public void mouseMoved(MouseEvent e) {
-	        	controller.helpshadow((e.getX())-5, (e.getY()-45));
-	        }
-	        
-	    });
-    
-    /**
-     * Create a listener to call rightClickOnTile and leftClickOnTile methods
-     * 
-     * @author Vincent
-     */
-	    this.addMouseListener(new MouseAdapter(){
-	        public void mousePressed(MouseEvent e){
-	        	Point containerlocate =  container.getLocation();
-		     	switch( e.getButton() ){
-		     		case 1: controller.leftClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
-		     		case 3: controller.rightClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
-		     		default: break;
-		        }
-	        }
-	     });
-	
+		// Update view
+		this.setContentPane(container);
+		this.setVisible(true);  
+
+
+		/**
+		 * Create a listener to draw the help shadow
+		 */
+		this.addMouseMotionListener(new MouseMotionAdapter() {
+			public void mouseMoved(MouseEvent e) {
+				controller.helpShadow((e.getX())-5, (e.getY()-45));
+			}
+		});
+
+
+		/**
+		 * Create a listener to call rightClickOnTile and leftClickOnTile methods
+		 * 
+		 * @author Vincent
+		 */
+		this.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				Point containerlocate =  container.getLocation();
+				switch( e.getButton() ){
+				case 1: controller.leftClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
+				case 3: controller.rightClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
+				default: break;
+				}
+			}
+		});
+
 	}
-	
-	
-    /**
-     * This method recreate the board on the screen
-     * @author Vincent
-     */
+
+
+	/**
+	 * This method redraw the board on the screen
+	 * @author Vincent
+	 */
 	public void drawBoard(Tile stateboard[][], boolean endgame){
 		this.setSize(stateboard[0].length*square_size + 100 , stateboard.length*square_size + 150);
 		boardDraw.setNewBoard(stateboard, square_size, endgame);
 		boardDraw.repaint();
-		this.updateSouth(stateboard[0].length*square_size + 100 , "size");
+		this.updateBottom(stateboard[0].length*square_size + 100 , "size");
 		container.add(boardDraw, BorderLayout.CENTER);
 		this.setContentPane(container);
 		this.setVisible(true);  
 	}
-	
+
+
 	/**
-	 * update the bottom message
+	 * Updates the bottom bar
 	 * 
 	 * @param s the new message for the label
 	 */
-	public void updateSouth(int value,String type){
-		southbar.updateParameter(value,type);
-		southbar.removeAll();
+	public void updateBottom(int value, String type){
+		bottomBar.updateParameter(value, type);
+		bottomBar.removeAll();
 		JLabel label = new JLabel(" ");
-		southbar.add(label);
-		southbar.repaint();
-		container.add(southbar, BorderLayout.SOUTH);
+		bottomBar.add(label);
+		bottomBar.repaint();
+		container.add(bottomBar, BorderLayout.SOUTH);
 		this.setContentPane(container);
 		this.setVisible(true); 
 	}
-	
+
 	/**
 	 * Event handlers for the JMenu
 	 */
@@ -190,7 +185,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		if( event.getSource() == menuGameItem1 ){
 			System.out.println("New game event");
 			controller.newGame();
-			
 		} else if( event.getSource() == menuGameItem2 ){
 			System.out.println("Statistics event");
 		} else if( event.getSource() == menuGameItem3 ){
@@ -203,27 +197,28 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		} else if( event.getSource() == menuHelpItem1 ){
 			new AboutWindow();
 		}
-		
+
 	}
-	
+
+
 	/**
-	 * ~~~~~~~~~~~ 
-	 * get the square_size
-	 * ~~~~~~~~~~~ 
+	 * Get the square size
+	 * @return square size
 	 */
-	public int getsquaresize(){
+	public int getSquareSize(){
 		return this.square_size;
 	}
 
+
 	/**
-	 * draw the shadow on the board
-	 * @param x
-	 * @param y
+	 * Draw the shadow on the board
+	 * @param shadow TODO
+	 * @param x TODO
+	 * @param y TODO
 	 */
-	public void drawshaddow(boolean shadow, int x, int y) {
+	public void drawShadow(boolean shadow, int x, int y) {
 		boardDraw.repaint();
 		boardDraw.shadow(shadow, x,y);
-		
 	}
 
 }

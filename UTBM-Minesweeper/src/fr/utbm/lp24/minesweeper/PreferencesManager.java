@@ -8,14 +8,14 @@ import java.util.prefs.Preferences;
  *
  */
 public class PreferencesManager {
-	
+
 	private Preferences prefs;
-	
+
 	public PreferencesManager(){
 		// Retrieve the user preference node for this package
 		prefs = Preferences.userNodeForPackage(fr.utbm.lp24.minesweeper.Main.class);
 	}
-	
+
 	/**
 	 * This method is used to set an user preference
 	 * @param pref_key The key of the reference
@@ -24,7 +24,7 @@ public class PreferencesManager {
 	public void setPref(String pref_key, String pref_value){
 		prefs.put(pref_key, pref_value);
 	}
-	
+
 	/**
 	 * This method allows us to get an user preference
 	 * @param pref_key The key of the wanted preference value

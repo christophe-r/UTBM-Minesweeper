@@ -9,7 +9,7 @@ public class Tile {
 
 	private TileContent content;
 	private TileState state;
-	
+
 	/**
 	 * Initialize a clean undiscovered tile.
 	 */
@@ -17,7 +17,7 @@ public class Tile {
 		this.setContent(TileContent.CLEAR0);
 		this.setState(TileState.UNDISCOVERED);
 	}
-	
+
 	/**
 	 * This method allows us to change the content and/or the state of a tile.
 	 * @param content (c.f. enum TileContent)
@@ -35,7 +35,7 @@ public class Tile {
 	public TileContent getContent() {
 		return content;
 	}
-	
+
 	/**
 	 * Set the Content (c.f. enum TileContent) of a tile.
 	 * @param content (c.f. enum TileContent)
@@ -59,49 +59,49 @@ public class Tile {
 	public void setState(TileState state) {
 		this.state = state;
 	}
-	
+
 	/**
 	 * This method increments the content (number of mines around) of a tile only if it does not contain a mine.
 	 */
 	public void setContentIncrement() {
-		
+
 		switch( this.getContent() ){
-			case CLEAR0: this.setContent(TileContent.CLEAR1); break;
-			case CLEAR1: this.setContent(TileContent.CLEAR2); break;
-			case CLEAR2: this.setContent(TileContent.CLEAR3); break;
-			case CLEAR3: this.setContent(TileContent.CLEAR4); break;
-			case CLEAR4: this.setContent(TileContent.CLEAR5); break;
-			case CLEAR5: this.setContent(TileContent.CLEAR6); break;
-			case CLEAR6: this.setContent(TileContent.CLEAR7); break;
-			case CLEAR7: this.setContent(TileContent.CLEAR8); break;
-			
-			default: break;
+		case CLEAR0: this.setContent(TileContent.CLEAR1); break;
+		case CLEAR1: this.setContent(TileContent.CLEAR2); break;
+		case CLEAR2: this.setContent(TileContent.CLEAR3); break;
+		case CLEAR3: this.setContent(TileContent.CLEAR4); break;
+		case CLEAR4: this.setContent(TileContent.CLEAR5); break;
+		case CLEAR5: this.setContent(TileContent.CLEAR6); break;
+		case CLEAR6: this.setContent(TileContent.CLEAR7); break;
+		case CLEAR7: this.setContent(TileContent.CLEAR8); break;
+
+		default: break;
 		}
-		
+
 	}
-	
+
 	/**
 	 * This method returns the appropriate character according to the state and the content of the tile.
 	 */
 	public String toString(){
-		
+
 		String character = "";
-		
+
 		//if( this.getState() == TileState.DISCOVERED ){
-			
-			switch( this.getContent() ){
-				case CLEAR0: character = " "; break;
-				case CLEAR1: character = "1"; break;
-				case CLEAR2: character = "2"; break;
-				case CLEAR3: character = "3"; break;
-				case CLEAR4: character = "4"; break;
-				case CLEAR5: character = "5"; break;
-				case CLEAR6: character = "6"; break;
-				case CLEAR7: character = "7"; break;
-				case CLEAR8: character = "8"; break;
-				case MINE: character = "@"; break;
-				default: break;
-			}
+
+		switch( this.getContent() ){
+		case CLEAR0: character = " "; break;
+		case CLEAR1: character = "1"; break;
+		case CLEAR2: character = "2"; break;
+		case CLEAR3: character = "3"; break;
+		case CLEAR4: character = "4"; break;
+		case CLEAR5: character = "5"; break;
+		case CLEAR6: character = "6"; break;
+		case CLEAR7: character = "7"; break;
+		case CLEAR8: character = "8"; break;
+		case MINE: character = "@"; break;
+		default: break;
+		}
 		/*
 		} else {
 			if( this.getState() == TileState.UNDISCOVERED ){
@@ -112,9 +112,9 @@ public class Tile {
 				character = "?";
 			}
 		}
-		*/
+		 */
 		return character;
-		
+
 	}
-	
+
 }

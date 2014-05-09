@@ -16,14 +16,15 @@ import javax.swing.ButtonGroup;
 public class AppearanceWindow extends JDialog {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private PreferencesManager userPreferences;
 	private final JPanel contentPanel = new JPanel();
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final JRadioButton rdbtnWin7Classic;
 	private final JRadioButton rdbtnWin7Flower;
 	private final JRadioButton rdbtnWin98Classic;
-	
+
+
 	/**
 	 * Create the dialog.
 	 */
@@ -60,39 +61,42 @@ public class AppearanceWindow extends JDialog {
 			contentPanel.add(cancelButton);
 			cancelButton.setActionCommand("Cancel");
 		}
-		
+
 		rdbtnWin7Classic = new JRadioButton("Windows 7 Classic");
 		buttonGroup.add(rdbtnWin7Classic);
 		rdbtnWin7Classic.setBounds(20, 139, 125, 23);
 		contentPanel.add(rdbtnWin7Classic);
-		
+
 		rdbtnWin7Flower = new JRadioButton("Windows 7 Flower");
 		buttonGroup.add(rdbtnWin7Flower);
 		rdbtnWin7Flower.setBounds(147, 139, 125, 23);
 		contentPanel.add(rdbtnWin7Flower);
-		
+
 		rdbtnWin98Classic = new JRadioButton("Windows 98 Classic");
 		buttonGroup.add(rdbtnWin98Classic);
 		rdbtnWin98Classic.setBounds(274, 139, 125, 23);
 		contentPanel.add(rdbtnWin98Classic);
-		
-		
+
+
 		appearanceWindowInit();
-		
-		
+
+
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
-		
-		
+
+
 	}
-	
-	
+
+
+	/**
+	 * Called when the window opens
+	 */
 	private void appearanceWindowInit(){
 		// Retrieving user preferences
 		userPreferences = new PreferencesManager();
 		String theme = userPreferences.getPref("theme", "win7_classic");
-		
+
 		if( theme.equals("win7_classic") ){
 			rdbtnWin7Classic.setSelected(true);
 		} else if( theme.equals("win7_flower") ){
@@ -100,13 +104,17 @@ public class AppearanceWindow extends JDialog {
 		} else if( theme.equals("win98_classic") ){
 			rdbtnWin98Classic.setSelected(true);
 		}
-			
+
 	}
-	
+
+
+	/**
+	 * Called when the user clicks on the OK button
+	 */
 	private void appearanceWindowOK(){
-		
+
 		String theme = "win7_classic";
-		
+
 		if( rdbtnWin7Classic.isSelected() ){
 			theme = "win7_classic";
 		} else if( rdbtnWin7Flower.isSelected() ){
@@ -114,12 +122,12 @@ public class AppearanceWindow extends JDialog {
 		} else if( rdbtnWin98Classic.isSelected() ){
 			theme = "win98_classic";
 		}
-		
+
 		userPreferences.setPref("theme", theme);
 
 		setVisible(false);
-		
+
 	}
-	
-	
+
+
 }

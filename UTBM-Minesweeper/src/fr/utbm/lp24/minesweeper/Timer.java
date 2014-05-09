@@ -34,7 +34,7 @@ public class Timer implements Runnable {
 			if( this.runnable ){
 				timer++;
 				//System.out.println("Timer: "+timer);
-				window.updateSouth(timer,"time");
+				window.updateBottom(timer,"time");
 			}
 		}
 		

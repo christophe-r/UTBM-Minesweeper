@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 
 
 /**
- * This class draw the board on the windows
- * @author vincent
+ * This class draw the board on the window
+ * @author Vincent
  *
  */
 public class BoardDraw extends JPanel {
@@ -25,7 +25,7 @@ public class BoardDraw extends JPanel {
 	private boolean activeShadow;
 	private int shadowX;
 	private int shadowY;
-	
+
 	private String[] images = {"tile.png",
 			"tile_clear.png",
 			"mine.png",
@@ -91,13 +91,15 @@ public class BoardDraw extends JPanel {
 	 * @author Vincent
 	 */
 	public void paintComponent(Graphics g){
-		
+
 		userPreferences = new PreferencesManager();
-		if(!theme.equals(userPreferences.getPref("theme", "win7_classic"))){ //check the theme
+		if(!theme.equals(userPreferences.getPref("theme", "win7_classic"))){ // Check the theme
 			this.theme = userPreferences.getPref("theme", "win7_classic");
 			loadImages();
 		}
+		
 		super.paintComponent(g);
+		
 		for( int i=0; i<stateboard.length ; i++ ){
 			for( int j=0; j<stateboard[0].length ; j++ ){
 				int cordX =  1+(j+2)*square_size;
@@ -126,6 +128,7 @@ public class BoardDraw extends JPanel {
 				case DISCOVERED: {
 					g.setColor(Color.blue);
 					g.drawImage(varImages[1], cordX, cordY,square_size,square_size, this);
+					
 					switch( stateboard[i][j].getContent() ){
 					//case CLEAR0: break;			
 					case MINE:  
@@ -163,7 +166,7 @@ public class BoardDraw extends JPanel {
 				}
 			}
 		}
-		
+
 		if(activeShadow){
 			for( int i=1 ; i<=3 ; i++ ){
 				for( int j=1 ; j<=3 ; j++ ){
@@ -193,7 +196,7 @@ public class BoardDraw extends JPanel {
 
 
 	/**
-	 *  Loads an image
+	 * Loads an image
 	 *  
 	 * @param String filename
 	 * @return the object image
@@ -206,7 +209,7 @@ public class BoardDraw extends JPanel {
 				System.out.println("load : " + s);
 				varImages[i] = ImageIO.read(getClass().getResourceAsStream(s));
 			}
-			
+
 			mask = ImageIO.read(getClass().getResourceAsStream("/resources/mask.png"));
 		}
 		catch(IOException exc) {
