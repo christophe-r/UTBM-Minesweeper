@@ -23,6 +23,7 @@ public class AppearanceWindow extends JDialog {
 	private final JRadioButton rdbtnWin7Classic;
 	private final JRadioButton rdbtnWin7Flower;
 	private final JRadioButton rdbtnWin98Classic;
+	private final JRadioButton rdbtnWin8Classic;
 
 
 	/**
@@ -33,7 +34,7 @@ public class AppearanceWindow extends JDialog {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setTitle("Change Appearance");
-		setBounds(100, 100, 420, 255);
+		setBounds(100, 100, 550, 255);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -76,6 +77,11 @@ public class AppearanceWindow extends JDialog {
 		buttonGroup.add(rdbtnWin98Classic);
 		rdbtnWin98Classic.setBounds(274, 139, 125, 23);
 		contentPanel.add(rdbtnWin98Classic);
+		
+		rdbtnWin8Classic = new JRadioButton("Windows 8 Classic");
+		buttonGroup.add(rdbtnWin8Classic);
+		rdbtnWin8Classic.setBounds(408, 139, 125, 23);
+		contentPanel.add(rdbtnWin8Classic);
 
 
 		appearanceWindowInit();
@@ -103,6 +109,8 @@ public class AppearanceWindow extends JDialog {
 			rdbtnWin7Flower.setSelected(true);
 		} else if( theme.equals("win98_classic") ){
 			rdbtnWin98Classic.setSelected(true);
+		} else if( theme.equals("win8_classic") ){
+			rdbtnWin8Classic.setSelected(true);
 		}
 
 	}
@@ -121,6 +129,8 @@ public class AppearanceWindow extends JDialog {
 			theme = "win7_flower";
 		} else if( rdbtnWin98Classic.isSelected() ){
 			theme = "win98_classic";
+		} else if( rdbtnWin8Classic.isSelected() ){
+			theme = "win8_classic";
 		}
 
 		userPreferences.setPref("theme", theme);
