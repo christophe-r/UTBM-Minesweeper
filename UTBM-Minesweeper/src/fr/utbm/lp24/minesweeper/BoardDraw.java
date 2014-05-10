@@ -26,6 +26,8 @@ public class BoardDraw extends JPanel {
 	private int shadowX;
 	private int shadowY;
 
+	private boolean cheatPixelState;
+
 	private String[] images = {"tile.png",
 			"tile_clear.png",
 			"mine.png",
@@ -97,9 +99,9 @@ public class BoardDraw extends JPanel {
 			this.theme = userPreferences.getPref("theme", "win7_classic");
 			loadImages();
 		}
-		
+
 		super.paintComponent(g);
-		
+
 		for( int i=0; i<stateboard.length ; i++ ){
 			for( int j=0; j<stateboard[0].length ; j++ ){
 				int cordX =  1+(j+2)*square_size;
@@ -128,7 +130,7 @@ public class BoardDraw extends JPanel {
 				case DISCOVERED: {
 					g.setColor(Color.blue);
 					g.drawImage(varImages[1], cordX, cordY,square_size,square_size, this);
-					
+
 					switch( stateboard[i][j].getContent() ){
 					//case CLEAR0: break;			
 					case MINE:  
@@ -167,6 +169,7 @@ public class BoardDraw extends JPanel {
 			}
 		}
 
+
 		if(activeShadow){
 			for( int i=1 ; i<=3 ; i++ ){
 				for( int j=1 ; j<=3 ; j++ ){
@@ -178,8 +181,14 @@ public class BoardDraw extends JPanel {
 					}
 				}
 			}
-			//activeShadow = false;
 		}
+
+
+		if(this.cheatPixelState){
+			g.fillRect(1, 0, 1, 1);
+		}
+
+
 	}
 
 
@@ -218,11 +227,27 @@ public class BoardDraw extends JPanel {
 
 	}
 
-
-	public void shadow(boolean shadow, int x, int y) {
+	/**
+	 * TODO
+	 * @param x TODO
+	 * @param y TODO
+	 * @param shadow TODO
+	 */
+	public void shadow(int x, int y, boolean shadow) {
 		this.activeShadow = shadow;
 		this.shadowX = x;
 		this.shadowY = y;
-	}  
+	}
+
+
+	/**
+	 * Set the pixel state
+	 * @param pixelState pixel state
+	 */
+	public void cheatPixel(boolean pixelState) {
+		this.cheatPixelState = pixelState;
+	}
+
+
 
 }

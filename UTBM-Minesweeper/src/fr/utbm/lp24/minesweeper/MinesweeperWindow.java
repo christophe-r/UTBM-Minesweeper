@@ -7,10 +7,12 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -54,6 +56,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 	private MinesweeperGame controller;
 
+	private ArrayList<Integer> cheatCodePressedKeys;
 
 	/**
 	 * Initialize the main window and display the first view
@@ -75,6 +78,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		ImageIcon icon = new ImageIcon(iconURL);
 		this.setIconImage(icon.getImage());
 
+		this.cheatCodePressedKeys = new ArrayList<Integer>();
 
 		// Add items and listeners for the JMenu
 		this.menuGame.add(menuGameItem1);
@@ -123,7 +127,42 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		this.addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseMoved(MouseEvent e) {
 				controller.helpShadow((e.getX())-5, (e.getY()-45));
+				controller.cheatPixel((e.getX())-5, (e.getY()-45));
 			}
+		});
+
+
+		/**
+		 * Key listener for cheat code
+		 * @author Christophe
+		 */
+		this.addKeyListener(new KeyListener(){
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+				if( cheatCodePressedKeys.size() >= 6 ){ // Do not exceed 6 chars in the list (delete the first one instead)
+					cheatCodePressedKeys.remove(0);
+				}
+
+				cheatCodePressedKeys.add(e.getKeyCode());
+
+				ArrayList<Integer> pixelCode = new ArrayList<Integer>(6);
+				pixelCode.add(88); // X
+				pixelCode.add(89); // Y
+				pixelCode.add(90); // Z
+				pixelCode.add(90); // Z
+				pixelCode.add(89); // Y
+				pixelCode.add(10); // Enter
+
+				if( cheatCodePressedKeys.equals(pixelCode) ){ // If the last pressed keys match with the cheat code
+					controller.enableCheatPixel();
+				}
+
+			}
+			@Override
+			public void keyReleased(KeyEvent e){}
+			@Override
+			public void keyTyped(KeyEvent e){}
 		});
 
 
@@ -212,14 +251,26 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 	/**
 	 * Draw the shadow on the board
-	 * @param shadow TODO
 	 * @param x TODO
 	 * @param y TODO
+	 * @param shadow TODO
 	 */
-	public void drawShadow(boolean shadow, int x, int y) {
+	public void drawShadow(int x, int y, boolean shadow){
 		boardDraw.repaint();
-		boardDraw.shadow(shadow, x,y);
+		boardDraw.shadow(x, y, shadow);
 	}
+
+
+	/**
+	 * Draw the cheat pixel
+	 * @param pixelState true=there is a mine, false=no mine
+	 * @author Christophe
+	 */
+	public void drawCheatPixel(boolean pixelState){
+		boardDraw.repaint();
+		boardDraw.cheatPixel(pixelState);
+	}
+
 
 }
 

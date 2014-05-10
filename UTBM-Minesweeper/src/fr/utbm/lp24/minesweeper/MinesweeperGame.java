@@ -20,6 +20,8 @@ public class MinesweeperGame {
 	private MinesweeperWindow window;
 	private static PreferencesManager userPreferences;
 
+	private boolean pixelCheatEnabled = false;
+
 	private Timer boardTimer;
 
 	/**
@@ -45,6 +47,11 @@ public class MinesweeperGame {
 	}
 
 
+	/**
+	 * TODO
+	 * @param x TODO
+	 * @param y TODO
+	 */
 	public void helpShadow(int x, int y){
 		x = ((x-21)/window.getSquareSize())-1;
 		y = ((y-21)/window.getSquareSize())-1;
@@ -52,10 +59,42 @@ public class MinesweeperGame {
 		/* Here, add functionality to enable or disable this feature */
 
 		if( myBoard.getTile(x,y) != null ){
-			window.drawShadow(true, x,y);	
+			window.drawShadow(x, y, true);	
 		}
 
 	}
+
+	/**
+	 * Cheat pixel cheat management
+	 * @param x
+	 * @param y
+	 * @author Christophe
+	 */
+	public void cheatPixel(int x, int y){
+		x = ((x-21)/window.getSquareSize())-1;
+		y = ((y-21)/window.getSquareSize())-1;
+
+
+		if( this.pixelCheatEnabled ){
+
+			if( myBoard.getTile(x,y) != null && myBoard.getTile(x, y).getContent() == TileContent.MINE ){
+				window.drawCheatPixel(true); // true = Black pixel = mined
+			} else {
+				window.drawCheatPixel(false); // false = White pixel = not mined
+			}
+
+		}
+
+	}
+
+	/**
+	 * Enable the cheat pixel
+	 * @author Christophe
+	 */
+	public void enableCheatPixel(){
+		this.pixelCheatEnabled = true;
+	}
+
 
 	/**
 	 * This method is called when a left-click happens.
