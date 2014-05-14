@@ -142,12 +142,7 @@ public class MinesweeperGame {
 					window.drawBoard(myBoard.displayBoard(),false);
 
 					if(myBoard.getTile(x,y).getContent() == TileContent.MINE){
-						myBoard.revealsAllMines();
-						window.drawBoard(myBoard.displayBoard(), true);
-
-						boardTimer.stopTimer();
-						int time = boardTimer.getTimer();
-						new LostWindow(this, time);
+						this.lostGame();
 					}
 
 					if(myBoard.isWon()){
@@ -214,9 +209,26 @@ public class MinesweeperGame {
 		System.out.println("Nb flags : " + myBoard.getNbFlags()+"\r\n");
 	}
 
+	/**
+	 * manage the central button click
+	 * @param x
+	 * @param y
+	 * @author vincent
+	 * 
+	 */
+	public void centralClickOnBoard(int x, int y) {
+		x = ((x-21)/window.getSquareSize())-1;
+		y = ((y-21)/window.getSquareSize())-1;
+		if(myBoard.getTile(x, y) != null){
+			if(myBoard.getTile(x, y).getState() == TileState.DISCOVERED && myBoard.getTile(x, y).getContent() != TileContent.CLEAR0 && myBoard.getTile(x, y).getContent() != TileContent.MINE)
+			myBoard.revealsAllMinesWithFlagCount(x,y,this);
+		}
+		
+	}
 
 	/**
 	 * Update the preferences
+	 * @author vincent
 	 */
 	public void updatePreferences(){
 		// Load the preferences values for the difficulty, the width, height and nb of mines.
@@ -246,10 +258,11 @@ public class MinesweeperGame {
 		System.out.println("NbMines : " + nbMines);
 
 	}
-
+	
 
 	/**
 	 * Method to start a new the game
+	 * @author vincent
 	 */
 	public void newGame(){
 		System.out.println("New game");
@@ -263,6 +276,7 @@ public class MinesweeperGame {
 
 	/**
 	 * Method to restart the same game
+	 * @author vincent
 	 */
 	public void restartGame(){
 		System.out.println("Restart game");
@@ -272,5 +286,21 @@ public class MinesweeperGame {
 		window.drawBoard(myBoard.displayBoard(),false); // Display the new board
 		gameState = GameState.RUNNING;
 	}
+	
+	/**
+	 * Method call if you lose the game
+	 * @author vincent
+	 */
+	public void lostGame(){
+		System.out.println("Game lost");
+		
+		myBoard.revealsAllMines();
+		window.drawBoard(myBoard.displayBoard(), true);
+
+		boardTimer.stopTimer();
+		int time = boardTimer.getTimer();
+		new LostWindow(this, time);
+	}
+
 
 }

@@ -116,5 +116,25 @@ public class Tile {
 		return character;
 
 	}
+	
+	/**
+	 * Transform tile state to number
+	 * @author vincent
+	 */
+	public int toContent(){
+		switch( this.getContent()){
+		case CLEAR0: return 0; 
+		case CLEAR1: return 1; 
+		case CLEAR2: return 2; 
+		case CLEAR3: return 3; 
+		case CLEAR4: return 4; 
+		case CLEAR5: return 5; 
+		case CLEAR6: return 6; 
+		case CLEAR7: return 7; 
+		case CLEAR8: return 8; 
+		case MINE: return 10; 
+		default: return 11;
+		}
+	}
 
 }

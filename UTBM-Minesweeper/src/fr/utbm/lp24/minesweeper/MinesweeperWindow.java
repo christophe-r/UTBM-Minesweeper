@@ -183,6 +183,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 				switch( e.getButton() ){
 				case 1: controller.leftClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
 				case 3: controller.rightClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
+				case 2: controller.centralClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
 				default: break;
 				}
 			}
@@ -260,9 +261,9 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 	/**
 	 * Draw the shadow on the board
-	 * @param x TODO
-	 * @param y TODO
-	 * @param shadow TODO
+	 * @param x 
+	 * @param y 
+	 * @param shadow
 	 */
 	public void drawShadow(int x, int y, boolean shadow){
 		boardDraw.repaint();

@@ -115,10 +115,45 @@ public class BoardController extends Board {
 
 	}
 
-
+	/**
+	 * This method revales all adjacent mines if the number of flag around is the same that the content in the mine
+	 * @param x The X coordinate 
+	 * @param y The Y coordinate
+	 * @author vincent
+	 */
+	public void revealsAllMinesWithFlagCount(int x, int y, MinesweeperGame controleur ){
+		int nbmines = 0;
+		if(this.getTile(x,y) != null){
+			Tile myTile = this.getTile(x,y);
+			for( int i=-1; i<=1 ; i++ ){
+				for( int j=-1; j<=1 ; j++ ){
+					System.out.println("x : " + (x+i));
+					System.out.println("y : " + (y+j));
+					if(this.getTile(x+i,y-j) != null && this.getTile(x+i,y+j).getState() == TileState.FLAGGED){
+						nbmines++;
+					}
+				}
+			}
+			if (myTile.toContent() == nbmines){
+				for( int i=-1; i<=1 ; i++ ){
+					for( int j=-1; j<=1 ; j++ ){
+						if(this.getTile(x+i,y-j) != null && this.getTile(x+i,y+j).getState() != TileState.FLAGGED){
+							this.getTile(x+i,y+j).setState(TileState.DISCOVERED);
+							if(this.getTile(x+i,y+j).getContent() == TileContent.MINE ){
+								controleur.lostGame();
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	
 	/**
 	 * Get the tile board
 	 * @return the tile board
+	 * @author vincent
 	 */
 	public Tile[][] displayBoard(){
 		return super.board;
@@ -127,6 +162,7 @@ public class BoardController extends Board {
 
 	/**
 	 * Hide all mines
+	 * @author vincent
 	 */
 	public void hideMines(){
 		for( int i=0 ; i<super.width ; i++ ){
@@ -138,6 +174,7 @@ public class BoardController extends Board {
 
 	/**
 	 * Reveals all mines in the board
+	 * @author vincent
 	 */
 	public void revealsAllMines(){
 		for( int i=0 ; i<super.width ; i++ ){
