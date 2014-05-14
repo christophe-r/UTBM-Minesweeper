@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -42,6 +43,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	private JMenuItem menuGameItem3 = new JMenuItem("Options");
 	private JMenuItem menuGameItem4 = new JMenuItem("Change appearance");
 	private JMenuItem menuGameItem5 = new JMenuItem("Exit");
+	private JCheckBoxMenuItem menuGameItem6 = new JCheckBoxMenuItem("Enable shadows");
 
 	private JMenu menuHelp = new JMenu("Help");
 	private JMenuItem menuHelpItem1 = new JMenuItem("About UTBM Minesweeper");
@@ -99,6 +101,10 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		menuGameItem4.addActionListener(this);
 		menuGameItem4.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
 
+		
+		this.menuGame.add(menuGameItem6);
+		menuGameItem6.addActionListener(this);
+		
 		this.menuGame.addSeparator();
 
 		this.menuGame.add(menuGameItem5);
@@ -123,6 +129,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 		/**
 		 * Create a listener to draw the help shadow
+		 *  @author Vincent
 		 */
 		this.addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseMoved(MouseEvent e) {
@@ -168,7 +175,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 		/**
 		 * Create a listener to call rightClickOnTile and leftClickOnTile methods
-		 * 
 		 * @author Vincent
 		 */
 		this.addMouseListener(new MouseAdapter(){
@@ -202,8 +208,8 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 	/**
 	 * Updates the bottom bar
-	 * 
 	 * @param s the new message for the label
+	 * @author Vincent
 	 */
 	public void updateBottom(int value, String type){
 		bottomBar.updateParameter(value, type);
@@ -235,6 +241,9 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 			System.exit(0);
 		} else if( event.getSource() == menuHelpItem1 ){
 			new AboutWindow();
+		} else if( event.getSource() == menuGameItem6 ){
+			PreferencesManager userPreferences = new PreferencesManager();
+			userPreferences.setPref("heplshadow", ""+menuGameItem6.isSelected());
 		}
 
 	}

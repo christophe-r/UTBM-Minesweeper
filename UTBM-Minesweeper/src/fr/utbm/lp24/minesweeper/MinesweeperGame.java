@@ -48,19 +48,25 @@ public class MinesweeperGame {
 
 
 	/**
-	 * TODO
-	 * @param x TODO
-	 * @param y TODO
+	 * manage the help shadows feature
+	 * @param x X coordinate in px
+	 * @param y Y coordinate in px
+	 * @author Vincent
 	 */
 	public void helpShadow(int x, int y){
 		x = ((x-21)/window.getSquareSize())-1;
 		y = ((y-21)/window.getSquareSize())-1;
 
 		/* Here, add functionality to enable or disable this feature */
-
-		if( myBoard.getTile(x,y) != null ){
-			window.drawShadow(x, y, true);	
+		userPreferences = new PreferencesManager();
+		String shadows = userPreferences.getPref("heplshadow", "true");
+		if(shadows.equals("true")){
+			if( myBoard.getTile(x,y) != null ){
+				window.drawShadow(x, y, true);	
+			}			
 		}
+		
+
 
 	}
 
@@ -93,6 +99,7 @@ public class MinesweeperGame {
 	 */
 	public void enableCheatPixel(){
 		this.pixelCheatEnabled = true;
+		System.out.println("cheat active");
 	}
 
 

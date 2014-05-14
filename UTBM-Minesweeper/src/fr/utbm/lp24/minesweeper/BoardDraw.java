@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 /**
  * This class draw the board on the window
  * @author Vincent
- *
  */
 public class BoardDraw extends JPanel {
 
@@ -169,14 +168,16 @@ public class BoardDraw extends JPanel {
 			}
 		}
 
-
+		String shadow = userPreferences.getPref("heplshadow", "true");
 		if(activeShadow){
 			for( int i=1 ; i<=3 ; i++ ){
 				for( int j=1 ; j<=3 ; j++ ){
 					if( i != 2 || j != 2 ){
 						if	((shadowX+i) > 1 && (shadowY+j) > 1){
 							if((shadowX+i) < stateboard.length+2 && (shadowY+j) <stateboard[0].length+2)
-								g.drawImage(mask, (shadowX+i)*square_size, (shadowY+j)*square_size,square_size,square_size, this);
+								if(shadow.equals("true")){
+									g.drawImage(mask, (shadowX+i)*square_size, (shadowY+j)*square_size,square_size,square_size, this);
+								}
 						}
 					}
 				}
@@ -228,10 +229,10 @@ public class BoardDraw extends JPanel {
 	}
 
 	/**
-	 * TODO
-	 * @param x TODO
-	 * @param y TODO
-	 * @param shadow TODO
+	 * Update the coordinate to draw the shadows
+	 * @param x coordinate of the center of the shadow
+	 * @param y coordinate of the center of the shadow
+	 * @param shadow true if the shadow is active
 	 */
 	public void shadow(int x, int y, boolean shadow) {
 		this.activeShadow = shadow;
