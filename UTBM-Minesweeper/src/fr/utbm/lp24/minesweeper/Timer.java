@@ -24,18 +24,16 @@ public class Timer implements Runnable {
 
 	public void run() {
 		
-		while (true) {
+		while (this.runnable) {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			
-			if( this.runnable ){
 				timer++;
 				//System.out.println("Timer: "+timer);
 				window.updateBottom(timer,"time");
-			}
 		}
 		
 	}

@@ -56,9 +56,9 @@ public class BottomBar extends JPanel{
 
 		g.drawImage(image_Flag,margin + 130, 0,20,20, this);
 		if( flags > 0 ){
-			g.drawString(flags +" restants", margin + 150, 15); 
+			g.drawString(flags +" remainings", margin + 150, 15); 
 		} else {
-			g.drawString( flags +" restant", margin + 150, 15); 
+			g.drawString( flags +" remaining", margin + 150, 15); 
 		}
 
 

@@ -118,6 +118,14 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 		this.setJMenuBar(menuBar);
 
+		PreferencesManager userPreferences = new PreferencesManager();
+		if(userPreferences.getPref("heplshadow", "true").equals("true")){
+			menuGameItem6.setSelected(true);
+		}else{
+			menuGameItem6.setSelected(false);
+		}
+		
+		
 
 		container.setBackground(Color.white);
 		container.setLayout(new BorderLayout());
@@ -203,7 +211,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		this.updateBottom(stateboard[0].length*square_size + 100 , "size");
 		container.add(boardDraw, BorderLayout.CENTER);
 		this.setContentPane(container);
-		this.setVisible(true);  
 	}
 
 
@@ -220,7 +227,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		bottomBar.repaint();
 		container.add(bottomBar, BorderLayout.SOUTH);
 		this.setContentPane(container);
-		this.setVisible(true); 
 	}
 
 	/**
