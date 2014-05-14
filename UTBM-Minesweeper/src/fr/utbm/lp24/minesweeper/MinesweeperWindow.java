@@ -214,7 +214,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	 */
 	public void updateBottom(int value, String type){
 		bottomBar.updateParameter(value, type);
-		bottomBar.removeAll();
+		bottomBar.removeAll(); // add ghost label to have margin in the bottom bar
 		JLabel label = new JLabel(" ");
 		bottomBar.add(label);
 		bottomBar.repaint();
@@ -253,6 +253,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	/**
 	 * Get the square size
 	 * @return square size
+	 * @author vincent
 	 */
 	public int getSquareSize(){
 		return this.square_size;
@@ -264,6 +265,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	 * @param x 
 	 * @param y 
 	 * @param shadow
+	 * @author vincent
 	 */
 	public void drawShadow(int x, int y, boolean shadow){
 		boardDraw.repaint();

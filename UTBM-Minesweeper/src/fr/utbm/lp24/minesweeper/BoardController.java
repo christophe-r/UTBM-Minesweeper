@@ -127,8 +127,6 @@ public class BoardController extends Board {
 			Tile myTile = this.getTile(x,y);
 			for( int i=-1; i<=1 ; i++ ){
 				for( int j=-1; j<=1 ; j++ ){
-					System.out.println("x : " + (x+i));
-					System.out.println("y : " + (y+j));
 					if(this.getTile(x+i,y-j) != null && this.getTile(x+i,y+j).getState() == TileState.FLAGGED){
 						nbmines++;
 					}
