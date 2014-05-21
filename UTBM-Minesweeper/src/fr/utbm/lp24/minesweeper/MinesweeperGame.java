@@ -37,7 +37,8 @@ public class MinesweeperGame {
 		} catch (Exception e){
 			System.out.println("Unable to load Windows look and feel");
 		}
-
+		
+		
 		this.updatePreferences();
 		// Launch the windows
 

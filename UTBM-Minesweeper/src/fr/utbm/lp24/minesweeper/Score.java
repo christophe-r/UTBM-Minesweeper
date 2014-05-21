@@ -26,7 +26,15 @@ public class Score {
 		
 		float score = ( 1000 * cheat )/( (nbMines / (width*height)) + 1/time );
 		
+		
+
+		//HTTPapi htmlapi = new HTTPapi();
+		//(new Thread(boardTimer)).start();
+		// TODO implement Internet score feature
+		
 		return Math.round(score);
+		
+		
 		
 	}
 }

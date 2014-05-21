@@ -43,7 +43,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	private JMenuItem menuGameItem3 = new JMenuItem("Options");
 	private JMenuItem menuGameItem4 = new JMenuItem("Change appearance");
 	private JMenuItem menuGameItem5 = new JMenuItem("Exit");
-	private JCheckBoxMenuItem menuGameItem6 = new JCheckBoxMenuItem("Enable shadows");
+	private JCheckBoxMenuItem menuGameItem6 = new JCheckBoxMenuItem("Enable help shadow");
 
 	private JMenu menuHelp = new JMenu("Help");
 	private JMenuItem menuHelpItem1 = new JMenuItem("About UTBM Minesweeper");
@@ -121,7 +121,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		PreferencesManager userPreferences = new PreferencesManager();
 		if(userPreferences.getPref("heplshadow", "true").equals("true")){
 			menuGameItem6.setSelected(true);
-			menuGameItem6.setText("Disable shadow");
+			menuGameItem6.setText("Disable help shadow");
 		}else{
 			menuGameItem6.setSelected(false);
 		}
@@ -253,9 +253,9 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 			PreferencesManager userPreferences = new PreferencesManager();
 			userPreferences.setPref("heplshadow", ""+menuGameItem6.isSelected());
 			if(menuGameItem6.isSelected()){
-				menuGameItem6.setText("Disable shadow");
+				menuGameItem6.setText("Disable help shadow");
 			}else{
-				menuGameItem6.setText("Enable shadow");
+				menuGameItem6.setText("Enable help shadow");
 			}
 		}
 
