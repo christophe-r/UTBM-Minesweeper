@@ -103,8 +103,8 @@ public class BoardDraw extends JPanel {
 
 		for( int i=0; i<stateboard.length ; i++ ){
 			for( int j=0; j<stateboard[0].length ; j++ ){
-				int cordX =  1+(j+2)*square_size;
-				int cordY =  1+(i+2)*square_size;
+				int cordX =  1+(j+1)*square_size;
+				int cordY =  1+(i+1)*square_size;
 				g.setColor(Color.GRAY);
 				switch( stateboard[i][j].getState() ){
 				case UNDISCOVERED: 
@@ -170,11 +170,11 @@ public class BoardDraw extends JPanel {
 
 		String shadow = userPreferences.getPref("heplshadow", "true");
 		if(activeShadow){
-			for( int i=1 ; i<=3 ; i++ ){
-				for( int j=1 ; j<=3 ; j++ ){
-					if( i != 2 || j != 2 ){
-						if	((shadowX+i) > 1 && (shadowY+j) > 1){
-							if((shadowX+i) < stateboard.length+2 && (shadowY+j) <stateboard[0].length+2)
+			for( int i=0 ; i<=2 ; i++ ){
+				for( int j=0 ; j<=2 ; j++ ){
+					if( i != 1 || j != 1 ){
+						if	((shadowX+i) > 0 && (shadowY+j) > 0){
+							if((shadowX+i) < stateboard.length+1 && (shadowY+j) <stateboard[0].length+1)
 								if(shadow.equals("true")){
 									g.drawImage(mask, (shadowX+i)*square_size, (shadowY+j)*square_size,square_size,square_size, this);
 								}

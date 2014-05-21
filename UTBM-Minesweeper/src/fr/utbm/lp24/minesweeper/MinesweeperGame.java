@@ -22,7 +22,7 @@ public class MinesweeperGame {
 
 	private boolean pixelCheatEnabled = false;
 
-	private Timer boardTimer;
+	private Timer boardTimer ;
 
 	/**
 	 * Main constructor
@@ -54,9 +54,8 @@ public class MinesweeperGame {
 	 * @author Vincent
 	 */
 	public void helpShadow(int x, int y){
-		x = ((x-21)/window.getSquareSize())-1;
-		y = ((y-21)/window.getSquareSize())-1;
-
+		x = ((x-1)/window.getSquareSize())-1;
+		y = ((y-1)/window.getSquareSize())-1;
 		/* Here, add functionality to enable or disable this feature */
 		userPreferences = new PreferencesManager();
 		String shadows = userPreferences.getPref("heplshadow", "true");
@@ -77,8 +76,8 @@ public class MinesweeperGame {
 	 * @author Christophe
 	 */
 	public void cheatPixel(int x, int y){
-		x = ((x-21)/window.getSquareSize())-1;
-		y = ((y-21)/window.getSquareSize())-1;
+		x = ((x-1)/window.getSquareSize())-1;
+		y = ((y-1)/window.getSquareSize())-1;
 
 
 		if( this.pixelCheatEnabled ){
@@ -110,9 +109,10 @@ public class MinesweeperGame {
 	 * @author Vincent
 	 */
 	public void leftClickOnBoard(int x, int y){
+		
 		// Transform pixel coordinate in array coordinate
-		x = ((x-21)/window.getSquareSize())-1;
-		y = ((y-21)/window.getSquareSize())-1;
+		x = ((x-1)/window.getSquareSize())-1;
+		y = ((y-1)/window.getSquareSize())-1;
 
 		if(myBoard.getTile(x,y) != null){
 			switch(gameState){
@@ -178,8 +178,8 @@ public class MinesweeperGame {
 	 */
 	public void rightClickOnBoard(int x, int y){
 		// Transform pixel coordinate in array coordinate
-		x = ((x-21)/window.getSquareSize())-1;
-		y = ((y-21)/window.getSquareSize())-1;
+		x = ((x-1)/window.getSquareSize())-1;
+		y = ((y-1)/window.getSquareSize())-1;
 
 		Tile tile = myBoard.getTile(x,y);
 		if(tile != null){
@@ -217,8 +217,8 @@ public class MinesweeperGame {
 	 * 
 	 */
 	public void centralClickOnBoard(int x, int y) {
-		x = ((x-21)/window.getSquareSize())-1;
-		y = ((y-21)/window.getSquareSize())-1;
+		x = ((x-1)/window.getSquareSize())-1;
+		y = ((y-1)/window.getSquareSize())-1;
 		if(myBoard.getTile(x, y) != null){
 			if(myBoard.getTile(x, y).getState() == TileState.DISCOVERED && myBoard.getTile(x, y).getContent() != TileContent.CLEAR0 && myBoard.getTile(x, y).getContent() != TileContent.MINE)
 			myBoard.revealsAllMinesWithFlagCount(x,y,this);
@@ -266,7 +266,9 @@ public class MinesweeperGame {
 	 */
 	public void newGame(){
 		System.out.println("New game");
-
+		
+		if(boardTimer != null)
+			boardTimer.stopTimer();
 		this.updatePreferences();
 		this.playAgain = false;
 		myBoard = new BoardController(width, height); // Generate a new board

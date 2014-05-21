@@ -54,11 +54,11 @@ public class BottomBar extends JPanel{
 			g.drawString(time + " second", margin + 30, 15);
 		}
 
-		g.drawImage(image_Flag,margin + 130, 0,20,20, this);
+		g.drawImage(image_Flag,margin + 100, 0,20,20, this);
 		if( flags > 0 ){
-			g.drawString(flags +" remainings", margin + 150, 15); 
+			g.drawString(flags +" remainings", margin + 120, 15); 
 		} else {
-			g.drawString( flags +" remaining", margin + 150, 15); 
+			g.drawString( flags +" remaining", margin + 120, 15); 
 		}
 
 

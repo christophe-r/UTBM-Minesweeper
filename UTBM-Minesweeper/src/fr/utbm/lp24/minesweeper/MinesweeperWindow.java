@@ -142,8 +142,8 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		 */
 		this.addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseMoved(MouseEvent e) {
-				controller.helpShadow((e.getX())-5, (e.getY()-45));
-				controller.cheatPixel((e.getX())-5, (e.getY()-45));
+				controller.helpShadow((e.getX()-2), (e.getY()-45));// warning the y an x axes are invert in other function
+				controller.cheatPixel((e.getX())-2, (e.getY()-45));
 			}
 		});
 
@@ -206,10 +206,10 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	 * @author Vincent
 	 */
 	public void drawBoard(Tile stateboard[][], boolean endgame){
-		this.setSize(stateboard[0].length*square_size + 100 , stateboard.length*square_size + 150);
+		this.setSize(stateboard[0].length*square_size + 50 , stateboard.length*square_size + 105);
 		boardDraw.setNewBoard(stateboard, square_size, endgame);
 		boardDraw.repaint();
-		this.updateBottom(stateboard[0].length*square_size + 100 , "size");
+		this.updateBottom(stateboard[0].length*square_size + 40 , "size");
 		container.add(boardDraw, BorderLayout.CENTER);
 		this.setContentPane(container);
 	}
