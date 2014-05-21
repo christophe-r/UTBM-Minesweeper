@@ -121,6 +121,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		PreferencesManager userPreferences = new PreferencesManager();
 		if(userPreferences.getPref("heplshadow", "true").equals("true")){
 			menuGameItem6.setSelected(true);
+			menuGameItem6.setText("Disable shadow");
 		}else{
 			menuGameItem6.setSelected(false);
 		}
@@ -251,6 +252,11 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		} else if( event.getSource() == menuGameItem6 ){
 			PreferencesManager userPreferences = new PreferencesManager();
 			userPreferences.setPref("heplshadow", ""+menuGameItem6.isSelected());
+			if(menuGameItem6.isSelected()){
+				menuGameItem6.setText("Disable shadow");
+			}else{
+				menuGameItem6.setText("Enable shadow");
+			}
 		}
 
 	}
