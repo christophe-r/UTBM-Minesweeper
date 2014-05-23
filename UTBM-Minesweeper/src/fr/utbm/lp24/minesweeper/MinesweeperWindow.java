@@ -2,7 +2,6 @@ package fr.utbm.lp24.minesweeper;
 
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -126,9 +125,12 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 			menuGameItem6.setSelected(false);
 		}
 		
+		boardDraw.setOpaque(false);
+		bottomBar.setOpaque(false);
 		
-
-		container.setBackground(Color.white);
+		// TODO fix the bug when the background is not draw because we use a layout
+		container.add(new Background());
+		 
 		container.setLayout(new BorderLayout());
 
 		// Update view
@@ -206,7 +208,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	 * @author Vincent
 	 */
 	public void drawBoard(Tile stateboard[][], boolean endgame){
-		this.setSize(stateboard[0].length*square_size + 50 , stateboard.length*square_size + 105);
+		this.setSize(stateboard[0].length*square_size + 50 , stateboard.length*square_size + 125);
 		boardDraw.setNewBoard(stateboard, square_size, endgame);
 		boardDraw.repaint();
 		this.updateBottom(stateboard[0].length*square_size + 40 , "size");
