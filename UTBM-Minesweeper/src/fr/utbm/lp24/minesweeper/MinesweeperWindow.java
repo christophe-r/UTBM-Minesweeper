@@ -1,7 +1,7 @@
 package fr.utbm.lp24.minesweeper;
 
 
-import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,8 +16,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
+import javax.swing.JMenu; 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -50,6 +49,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	// Main container
 	private JPanel container = new JPanel();
 
+	private Background background = new Background();
 	private BoardDraw boardDraw = new BoardDraw();
 	private BottomBar bottomBar = new BottomBar();
 	private int square_size = 20;
@@ -127,12 +127,13 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		
 		boardDraw.setOpaque(false);
 		bottomBar.setOpaque(false);
-		
+		background.setOpaque(false);
 		// TODO fix the bug when the background is not draw because we use a layout
-		container.add(new Background());
-		 
-		container.setLayout(new BorderLayout());
+	
+		container.setLayout(null);
+		//container.add(background); // le background et present mais cacher pare les autres
 
+		
 		// Update view
 		this.setContentPane(container);
 		this.setVisible(true);  
@@ -208,13 +209,16 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	 * @author Vincent
 	 */
 	public void drawBoard(Tile stateboard[][], boolean endgame){
+		
 		this.setSize(stateboard[0].length*square_size + 50 , stateboard.length*square_size + 125);
 		boardDraw.setNewBoard(stateboard, square_size, endgame);
+		boardDraw.setBounds(0, 0, stateboard[0].length*square_size + 50, stateboard.length*square_size + 125);
 		boardDraw.repaint();
+		container.remove(boardDraw);
+		container.add(boardDraw);	
 		this.updateBottom(stateboard[0].length*square_size + 40 , "size");
-		container.add(boardDraw, BorderLayout.CENTER);
 		this.setContentPane(container);
-	}
+		}
 
 
 	/**
@@ -223,12 +227,17 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	 * @author Vincent
 	 */
 	public void updateBottom(int value, String type){
+		Dimension size = this.getSize();
 		bottomBar.updateParameter(value, type);
-		bottomBar.removeAll(); // add ghost label to have margin in the bottom bar
-		JLabel label = new JLabel(" ");
-		bottomBar.add(label);
+		bottomBar.setBounds(0,size.height-85, size.width,size.height);
 		bottomBar.repaint();
-		container.add(bottomBar, BorderLayout.SOUTH);
+		container.remove(bottomBar);
+		container.add(bottomBar);
+		
+		background.setBounds(0, 0, size.width,size.height);
+		background.repaint();
+		container.add(background);
+		
 		this.setContentPane(container);
 	}
 

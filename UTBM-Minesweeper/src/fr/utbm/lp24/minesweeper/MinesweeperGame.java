@@ -283,7 +283,10 @@ public class MinesweeperGame {
 	 */
 	public void restartGame(){
 		System.out.println("Restart game");
-
+		
+		boardTimer = new Timer(window);
+		(new Thread(boardTimer)).start();
+		this.updatePreferences();
 		this.playAgain = true;
 		myBoard.hideMines(); // Hide all mine
 		window.drawBoard(myBoard.displayBoard(),false); // Display the new board

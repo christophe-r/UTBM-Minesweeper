@@ -7,6 +7,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+/**
+ * This class draw the background on the window
+ * @author Vincent
+ */
 public class Background  extends JPanel{
 		 	private Image background = null;
 		 	private String theme = "";
@@ -17,10 +21,10 @@ public class Background  extends JPanel{
 	        @Override
 	        public void paintComponent(Graphics g) {
 	        	
-	        	System.out.println("load : ");
 	    		if(!theme.equals(userPreferences.getPref("theme", "win7_classic"))){ // Check the theme
 	    			this.theme = userPreferences.getPref("theme", "win7_classic");
 	    			try {
+	    					System.out.println("load background ");
 	    					String s = "/resources/themes/" + theme + "/background.jpg";
 	    					System.out.println("load : " + s);
 	    					background = ImageIO.read(getClass().getResourceAsStream(s));

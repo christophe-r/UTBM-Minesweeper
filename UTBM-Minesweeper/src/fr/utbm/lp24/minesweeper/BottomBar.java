@@ -1,8 +1,10 @@
 package fr.utbm.lp24.minesweeper;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -16,8 +18,10 @@ public class BottomBar extends JPanel{
 	private static final long serialVersionUID = 1L;
 	PreferencesManager userPreferences;
 	private String theme;
-	private Image image_Flag = null;
-	private Image image_clock = null;
+	private Image outlinecircle = null;
+	private Image outline_rect = null;
+	private Image mine = null;
+	private Image clock = null;
 	private int time = 0;
 	private int flags = 10;
 	private int size = 200;
@@ -27,7 +31,7 @@ public class BottomBar extends JPanel{
 	 * Main constructor
 	 * Get the preferences and load images for the first time
 	 */
-	BottomBar(){
+	public BottomBar(){
 		userPreferences = new PreferencesManager();
 		this.theme = userPreferences.getPref("theme", "win7_classic");
 		loadImages();
@@ -40,63 +44,74 @@ public class BottomBar extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		userPreferences = new PreferencesManager();
-		
+
 		if( !theme.equals(userPreferences.getPref("theme", "win7_classic")) ){ //check the theme
 			this.theme = userPreferences.getPref("theme", "win7_classic");
 			loadImages();
 		}
 		int margin = (size /2)-100;
-		g.drawImage(image_clock,margin + 10, 0,20,20, this);
 		
-		if( time > 0 ){
-			g.drawString(time + " seconds", margin + 30, 15);
-		} else {
-			g.drawString(time + " second", margin + 30, 15);
+		if( this.theme.equals("win98_classic")){
+			g.setColor(Color.BLACK);
 		}
-
-		g.drawImage(image_Flag,margin + 100, 0,20,20, this);
-		if( flags > 0 ){
-			g.drawString(flags +" remainings", margin + 120, 15); 
-		} else {
-			g.drawString( flags +" remaining", margin + 120, 15); 
+		else{
+			g.setColor(Color.WHITE);
 		}
+			
+
+		g.drawImage(outlinecircle,margin + 10,0, 30,30, this);
+		g.drawImage(clock,margin + 14, 4, 23,23, this);
+		g.drawImage(outline_rect,margin + 45, 5, 40,20, this);
+		g.drawString(time + "", margin + 55,20);
+
+		g.drawImage(outlinecircle,margin + 120, 0, 30,30, this);
+		g.drawImage(mine,margin + 124, 4, 23,23, this);
+		g.drawImage(outline_rect,margin + 155, 5, 40,20, this);
+		g.drawString( flags +"", margin + 165, 20);
+
+}
 
 
+/**
+ * Update parameters used to draw the SouthBar
+ */
+public void updateParameter(int value, String type){
+	if(type.equals("time"))
+		this.time = value;
+
+	if(type.equals("flags"))
+		this.flags = value;
+
+	if(type.equals("size"))
+		this.size = value;
+}
+
+
+/**
+ * Method used to load images
+ */
+public void loadImages() {
+	try {
+		String s = "/resources/themes/" + theme + "/outline_rect.png";
+		System.out.println("load : " + s);
+		outline_rect = ImageIO.read(getClass().getResourceAsStream(s));
+
+		s = "/resources/themes/" + theme + "/mine.png";
+		System.out.println("load : " + s);
+		mine = ImageIO.read(getClass().getResourceAsStream(s));			
+
+		s = "/resources/themes/" + theme + "/clock.png";
+		System.out.println("load : " + s);
+		clock = ImageIO.read(getClass().getResourceAsStream(s));
+
+		s = "/resources/outlinecircle.png";
+		System.out.println("load : " + s);
+		outlinecircle = ImageIO.read(getClass().getResourceAsStream(s));
+	}
+	catch(IOException exc) {
+		exc.printStackTrace();
 	}
 
-
-	/**
-	 * Update parameters used to draw the SouthBar
-	 */
-	public void updateParameter(int value, String type){
-		if(type.equals("time"))
-			this.time = value;
-
-		if(type.equals("flags"))
-			this.flags = value;
-
-		if(type.equals("size"))
-			this.size = value;
-	}
-
-
-	/**
-	 * Method used to load images
-	 */
-	public void loadImages() {
-		try {
-			String s = "/resources/themes/" + theme + "/flag.png";
-			System.out.println("load : " + s);
-			image_Flag = ImageIO.read(getClass().getResourceAsStream(s));
-
-			s = "/resources/Clock.png";
-			System.out.println("load : " + s);
-			image_clock = ImageIO.read(getClass().getResourceAsStream(s));
-		}
-		catch(IOException exc) {
-			exc.printStackTrace();
-		}
-
-	}  
+}  
 
 }
