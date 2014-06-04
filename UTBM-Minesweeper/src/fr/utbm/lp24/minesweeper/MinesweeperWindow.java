@@ -128,11 +128,8 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		boardDraw.setOpaque(false);
 		bottomBar.setOpaque(false);
 		background.setOpaque(false);
-		// TODO fix the bug when the background is not draw because we use a layout
 	
 		container.setLayout(null);
-		//container.add(background); // le background et present mais cacher pare les autres
-
 		
 		// Update view
 		this.setContentPane(container);

@@ -127,7 +127,7 @@ public class BoardController extends Board {
 			Tile myTile = this.getTile(x,y);
 			for( int i=-1; i<=1 ; i++ ){
 				for( int j=-1; j<=1 ; j++ ){
-					if(this.getTile(x+i,y-j) != null && this.getTile(x+i,y+j).getState() == TileState.FLAGGED){
+					if(this.getTile(x+i,y+j) != null && this.getTile(x+i,y+j).getState() == TileState.FLAGGED){
 						nbmines++;
 					}
 				}
@@ -135,7 +135,7 @@ public class BoardController extends Board {
 			if (myTile.toContent() == nbmines){
 				for( int i=-1; i<=1 ; i++ ){
 					for( int j=-1; j<=1 ; j++ ){
-						if(this.getTile(x+i,y-j) != null && this.getTile(x+i,y+j).getState() != TileState.FLAGGED){
+						if(this.getTile(x+i,y+j) != null && this.getTile(x+i,y+j).getState() != TileState.FLAGGED){
 							this.getTile(x+i,y+j).setState(TileState.DISCOVERED);
 							if(this.getTile(x+i,y+j).getContent() == TileContent.MINE ){
 								controleur.lostGame();

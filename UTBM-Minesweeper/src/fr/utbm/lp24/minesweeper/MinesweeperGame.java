@@ -222,8 +222,13 @@ public class MinesweeperGame {
 		y = ((y-1)/window.getSquareSize())-1;
 		if(myBoard.getTile(x, y) != null){
 			if(myBoard.getTile(x, y).getState() == TileState.DISCOVERED && myBoard.getTile(x, y).getContent() != TileContent.CLEAR0 && myBoard.getTile(x, y).getContent() != TileContent.MINE)
-			myBoard.revealsAllMinesWithFlagCount(x,y,this);
+				
+				System.out.println("action");
+				myBoard.revealsAllMinesWithFlagCount(x,y,this);
 		}
+		System.out.println("wheel click");
+		System.out.println("Coord X : " + x);
+		System.out.println("Coord Y : " + y);
 		
 	}
 

@@ -30,13 +30,6 @@ public class ScoreManager {
 	}
 
 
-	public static void main(String[] args){
-		ScoreManager sm = new ScoreManager();
-		System.out.println("get: "+sm.getScores());
-		//System.out.println("set: "+sm.setScore("Test", 4999));
-	}
-
-
 	private static String getValue(String tag, Element element) {
 		NodeList nodes = element.getElementsByTagName(tag).item(0).getChildNodes();
 		Node node = (Node) nodes.item(0);
@@ -48,7 +41,6 @@ public class ScoreManager {
 
 	public ArrayList<HashMap<String, String>> getScores(){
 		String result = this.getAddress("getScores", "");
-
 		if(result == null){
 			return null;
 		} else {
@@ -63,7 +55,9 @@ public class ScoreManager {
 				doc.getDocumentElement().normalize();
 
 				String responseCode = doc.getElementsByTagName("code").item(0).getTextContent();
-				if( responseCode != "1" ){
+				
+
+				if( responseCode.equals("1") == false){
 					return null;
 				}
 
@@ -111,8 +105,36 @@ public class ScoreManager {
 		String result = this.getAddress("setScore", data);
 		if(result == null){
 			return null;
-		}else {
-			return result;
+		} else {
+			try {
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+
+				DocumentBuilder db = dbFactory.newDocumentBuilder();
+				InputSource is = new InputSource();
+				is.setCharacterStream(new StringReader(result));
+				Document doc = db.parse(is);
+				doc.getDocumentElement().normalize();
+
+				String responseCode = doc.getElementsByTagName("code").item(0).getTextContent();
+				
+
+				if( responseCode.equals("1") == false){
+					return null;
+				}
+				
+				String rank = doc.getElementsByTagName("rank").item(0).getTextContent();
+				
+				/*System.out.println("code: "+responseCode);
+				System.out.println("rank: "+rank);*/
+				
+				return rank;
+				
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+
+			return null;
+
 		}
 	}
 
