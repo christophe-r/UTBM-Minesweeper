@@ -247,7 +247,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 			System.out.println("New game event");
 			controller.newGame();
 		} else if( event.getSource() == menuGameItem2 ){
-			System.out.println("Statistics event");
+			new StatisticsWindow();
 		} else if( event.getSource() == menuGameItem3 ){
 			new OptionsWindow(controller);
 		} else if( event.getSource() == menuGameItem4 ){

@@ -8,9 +8,8 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 
-import javax.swing.ImageIcon;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -30,7 +29,7 @@ public class AboutWindow extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	JButton boutonOk;
+	JButton buttonOk;
 
 	/**
 	 * Class to manage the "About" window accessible by the menu Help > About
@@ -45,23 +44,18 @@ public class AboutWindow extends JDialog {
 		this.setLocationRelativeTo(null);
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
 
-		URL iconURL = getClass().getResource("/resources/icon64.png");
-		ImageIcon icon = new ImageIcon(iconURL);
-		this.setIconImage(icon.getImage());
-
-
 		JPanel panel = new JPanel();
-		boutonOk = new JButton("OK");
-		boutonOk.addActionListener(new ActionListener() {
+		buttonOk = new JButton("OK");
+		buttonOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setVisible(false);
 			}
 		});
 
 
-		boutonOk.setBounds(264, 225, 80, 23);
+		buttonOk.setBounds(264, 225, 80, 23);
 		panel.setLayout(null);
-		panel.add(boutonOk);
+		panel.add(buttonOk);
 
 		getContentPane().add(panel);
 

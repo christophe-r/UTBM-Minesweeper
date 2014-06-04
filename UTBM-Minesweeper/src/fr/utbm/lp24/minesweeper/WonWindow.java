@@ -14,11 +14,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JTextField;
 
 public class WonWindow extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+	private JTextField textField;
 
 
 	/**
@@ -97,6 +99,19 @@ public class WonWindow extends JDialog {
 		System.out.println("score : " + score);
 		lblTScore.setText("Votre score est de " + score + " points");
 		contentPanel.add(lblTScore);
+		
+		JLabel label = new JLabel("Player name:");
+		label.setBounds(10, 148, 70, 14);
+		contentPanel.add(label);
+		
+		JButton button = new JButton("<html><center>Send your score<br>on Internet");
+		button.setBounds(14, 167, 149, 37);
+		contentPanel.add(button);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(76, 145, 86, 20);
+		contentPanel.add(textField);
 
 
 
