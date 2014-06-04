@@ -8,12 +8,14 @@ import javax.swing.JLayeredPane;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.awt.Font;
 
 public class StatisticsWindow extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	
+
 	/**
 	 * Create the dialog.
 	 */
@@ -21,9 +23,10 @@ public class StatisticsWindow extends JDialog {
 		setResizable(false);
 		setTitle("Statistics");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setBounds(100, 100, 233, 272);
-		
+		setBounds(100, 100, 270, 340);
+
 		getContentPane().setLayout(null);
 		{
 			JButton okButton = new JButton("OK");
@@ -33,65 +36,124 @@ public class StatisticsWindow extends JDialog {
 					setVisible(false);
 				}
 			});
-			okButton.setBounds(119, 199, 90, 23);
+			okButton.setBounds(127, 277, 90, 23);
 			getContentPane().add(okButton);
 			okButton.setActionCommand("OK");
 			getRootPane().setDefaultButton(okButton);
 		}
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 11, 199, 180);
+		tabbedPane.setBounds(10, 11, 244, 255);
 		getContentPane().add(tabbedPane);
-		
-		JLayeredPane layeredPane = new JLayeredPane();
-		tabbedPane.addTab("Local statistics", null, layeredPane, null);
-		layeredPane.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("Total time:");
-		lblNewLabel.setBounds(10, 11, 82, 14);
-		layeredPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Games played:");
-		lblNewLabel_1.setBounds(10, 29, 82, 14);
-		layeredPane.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("Games won:");
-		lblNewLabel_2.setBounds(10, 48, 82, 14);
-		layeredPane.add(lblNewLabel_2);
-		
-		JLabel lblWonPercentage = new JLabel("Win percentage:");
-		lblWonPercentage.setBounds(10, 68, 82, 14);
-		layeredPane.add(lblWonPercentage);
-		
-		JLabel lblNewLabel_3 = new JLabel("Best score:");
-		lblNewLabel_3.setBounds(10, 89, 82, 14);
-		layeredPane.add(lblNewLabel_3);
-		
-		JLabel label = new JLabel("0");
-		label.setBounds(97, 11, 46, 14);
-		layeredPane.add(label);
-		
-		JLabel label_1 = new JLabel("0");
-		label_1.setBounds(97, 29, 46, 14);
-		layeredPane.add(label_1);
-		
-		JLabel label_2 = new JLabel("0");
-		label_2.setBounds(97, 48, 46, 14);
-		layeredPane.add(label_2);
-		
-		JLabel label_3 = new JLabel("0");
-		label_3.setBounds(97, 68, 46, 14);
-		layeredPane.add(label_3);
-		
-		JLabel label_4 = new JLabel("0");
-		label_4.setBounds(97, 89, 46, 14);
-		layeredPane.add(label_4);
-		
-		JLayeredPane layeredPane_1 = new JLayeredPane();
-		tabbedPane.addTab("Global ranking", null, layeredPane_1, null);
-		layeredPane_1.setLayout(null);
-		
-		
+
+		JLayeredPane layeredPane_localStats = new JLayeredPane();
+		tabbedPane.addTab("Local statistics", null, layeredPane_localStats, null);
+		layeredPane_localStats.setLayout(null);
+
+		JLabel totalTime = new JLabel("Total time:");
+		totalTime.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		totalTime.setBounds(30, 30, 82, 20);
+		layeredPane_localStats.add(totalTime);
+
+		JLabel gamePlayed = new JLabel("Games played:");
+		gamePlayed.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		gamePlayed.setBounds(30, 61, 129, 20);
+		layeredPane_localStats.add(gamePlayed);
+
+		JLabel gamesWon = new JLabel("Games won:");
+		gamesWon.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		gamesWon.setBounds(30, 92, 115, 20);
+		layeredPane_localStats.add(gamesWon);
+
+		JLabel winPercentage = new JLabel("Win percentage:");
+		winPercentage.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		winPercentage.setBounds(30, 123, 115, 20);
+		layeredPane_localStats.add(winPercentage);
+
+		JLabel bestScore = new JLabel("Best score:");
+		bestScore.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		bestScore.setBounds(30, 154, 115, 20);
+		layeredPane_localStats.add(bestScore);
+
+		JLabel label_totalTime = new JLabel("0");
+		label_totalTime.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label_totalTime.setBounds(169, 30, 46, 20);
+		layeredPane_localStats.add(label_totalTime);
+
+		JLabel label_gamesPlayed = new JLabel("0");
+		label_gamesPlayed.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label_gamesPlayed.setBounds(169, 64, 46, 17);
+		layeredPane_localStats.add(label_gamesPlayed);
+
+		JLabel label_gamesWon = new JLabel("0");
+		label_gamesWon.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label_gamesWon.setBounds(169, 95, 46, 20);
+		layeredPane_localStats.add(label_gamesWon);
+
+		JLabel label_winPercentage = new JLabel("0");
+		label_winPercentage.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label_winPercentage.setBounds(169, 126, 46, 20);
+		layeredPane_localStats.add(label_winPercentage);
+
+		JLabel label_bestScore = new JLabel("0");
+		label_bestScore.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label_bestScore.setBounds(169, 157, 46, 17);
+		layeredPane_localStats.add(label_bestScore);
+
+		JLayeredPane layeredPane_globalRanking = new JLayeredPane();
+		tabbedPane.addTab("Global ranking", null, layeredPane_globalRanking, null);
+		layeredPane_globalRanking.setLayout(null);
+
+
+
+		JLabel rank = new JLabel("#");
+		rank.setFont(new Font("Tahoma", Font.BOLD, 11));
+		rank.setBounds(10, 10, 14, 14);
+		layeredPane_globalRanking.add(rank);
+
+		JLabel date = new JLabel("Date");
+		date.setFont(new Font("Tahoma", Font.BOLD, 11));
+		date.setBounds(30, 10, 37, 14);
+		layeredPane_globalRanking.add(date);
+
+		JLabel playername = new JLabel("Player name");
+		playername.setFont(new Font("Tahoma", Font.BOLD, 11));
+		playername.setBounds(105, 10, 82, 14);
+		layeredPane_globalRanking.add(playername);
+
+		JLabel score = new JLabel("Score");
+		score.setFont(new Font("Tahoma", Font.BOLD, 11));
+		score.setBounds(185, 10, 44, 14);
+		layeredPane_globalRanking.add(score);
+
+
+
+		ArrayList<ArrayList<String>> globalScore = new ScoreManager().getScores();
+
+		int y = 30;
+		for( ArrayList<String> line : globalScore ){
+			int x = 10;
+			int nbCol = 0;
+			for( String field : line ){
+				JLabel label = new JLabel(""+field);
+				label.setBounds(x, y, 60, 14);
+				layeredPane_globalRanking.add(label);
+
+
+				switch(nbCol){
+				case 0: x += 20; break;
+				case 1: x += 75; break;
+				case 2: x += 80; break;
+				}
+
+				nbCol++;
+			}
+
+			y += 20;
+		}
+
+
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 }

@@ -8,7 +8,6 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -39,7 +38,7 @@ public class ScoreManager {
 
 
 
-	public ArrayList<HashMap<String, String>> getScores(){
+	public ArrayList<ArrayList<String>> getScores(){
 		String result = this.getAddress("getScores", "");
 		if(result == null){
 			return null;
@@ -63,7 +62,7 @@ public class ScoreManager {
 
 				System.out.println("code: "+responseCode);
 
-				ArrayList<HashMap<String, String>> scores = new ArrayList<HashMap<String, String>>();
+				ArrayList<ArrayList<String>> scores = new ArrayList<ArrayList<String>>();
 
 				NodeList nodes = doc.getElementsByTagName("line");
 				for (int i = 0; i < nodes.getLength(); i++) {
@@ -72,12 +71,14 @@ public class ScoreManager {
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
 						Element element = (Element) node;
 
-						HashMap<String, String> score = new HashMap<String, String>();
-						score.put("rank", getValue("rank", element));
-						score.put("date", getValue("date", element));
-						score.put("playername", getValue("playername", element));
-						score.put("score", getValue("score", element));
+						ArrayList<String> score = new ArrayList<String>();
+						score.add(getValue("rank", element));
+						score.add(getValue("date", element));
+						score.add(getValue("playername", element));
+						score.add(getValue("score", element));
 
+						scores.add(score);
+						
 						/*System.out.println("rank: "+getValue("rank", element));
 						System.out.println("date: "+getValue("date", element));
 						System.out.println("playername: "+getValue("playername", element));
