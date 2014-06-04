@@ -10,6 +10,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -73,6 +76,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		this.setSize(300, 400);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.addWindowListener(exitListener);
 		this.setLocationRelativeTo(null);
 
 		URL iconURL = getClass().getResource("/resources/icon64.png");
@@ -268,6 +272,18 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		}
 
 	}
+
+	/**
+	 * Event handlers called when you quit the game
+	 */
+	WindowListener exitListener = new WindowAdapter() {
+        @Override
+        public void windowClosing(WindowEvent e) {
+        	controller.exit();
+        	 System.exit(0);
+        }
+    };
+   
 
 
 	/**

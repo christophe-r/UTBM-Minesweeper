@@ -18,6 +18,7 @@ public class MinesweeperGame {
 	private Score myScore = new Score();
 	private BoardController myBoard;
 	private MinesweeperWindow window;
+	private StatisticsManager statistic;
 	private static PreferencesManager userPreferences;
 
 	private boolean pixelCheatEnabled = false;
@@ -40,8 +41,9 @@ public class MinesweeperGame {
 		
 		
 		this.updatePreferences();
+		statistic = new StatisticsManager();
+		
 		// Launch the windows
-
 		window = new MinesweeperWindow(this);
 		this.newGame();
 		gameState = GameState.PAUSED;
@@ -148,9 +150,14 @@ public class MinesweeperGame {
 
 					if(myBoard.isWon()){
 						gameState = GameState.STOPPED;
-
-						boardTimer.stopTimer();
+						
 						int time = boardTimer.getTimer();
+						int score = myScore.getScore(nbMines, width, height, time, playAgain);
+						statistic.addTime(boardTimer.getTimer());
+						statistic.addGamePlayed();
+						statistic.addGameWon();
+						statistic.testBestScore(score);
+						boardTimer.stopTimer();
 						myBoard.revealsAllMines();
 						window.drawBoard(myBoard.displayBoard(),true);
 						new WonWindow(this,time,myScore.getScore(nbMines, width, height, time, playAgain));
@@ -305,6 +312,8 @@ public class MinesweeperGame {
 	public void lostGame(){
 		System.out.println("Game lost");
 		
+		statistic.addTime(boardTimer.getTimer());
+		statistic.addGamePlayed();
 		myBoard.revealsAllMines();
 		window.drawBoard(myBoard.displayBoard(), true);
 
@@ -312,6 +321,16 @@ public class MinesweeperGame {
 		int time = boardTimer.getTimer();
 		new LostWindow(this, time);
 	}
+
+	/**
+	 * Method call when you quit the game
+	 * @author vincent
+	 */
+	public void exit() {
+		if(boardTimer != null)
+				statistic.addTime(boardTimer.getTimer());
+		statistic.addGamePlayed();
+		}
 
 
 }
