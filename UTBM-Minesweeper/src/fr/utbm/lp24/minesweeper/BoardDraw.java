@@ -194,7 +194,7 @@ public class BoardDraw extends JPanel {
 
 
 		if(this.cheatPixelState){
-			g.fillRect(1, 0, 1, 1);
+			g.fillRect(0, 0, 2, 2);
 		}
 
 
