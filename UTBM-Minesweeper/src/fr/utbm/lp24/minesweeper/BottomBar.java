@@ -64,10 +64,10 @@ public class BottomBar extends JPanel{
 		g.drawImage(outline_rect,margin + 45, 5, 40,20, this);
 		g.drawString(time + "", margin + 55,20);
 
-		g.drawImage(outlinecircle,margin + 120, 0, 30,30, this);
-		g.drawImage(mine,margin + 124, 4, 23,23, this);
-		g.drawImage(outline_rect,margin + 155, 5, 40,20, this);
-		g.drawString( flags +"", margin + 165, 20);
+		g.drawImage(outlinecircle,margin + 164, 0, 30,30, this);
+		g.drawImage(mine,margin + 168, 4, 23,23, this);
+		g.drawImage(outline_rect,margin + 120, 5, 40,20, this);
+		g.drawString( flags +"", margin + 130, 20);
 
 }
 

@@ -284,6 +284,8 @@ public class MinesweeperGame {
 	public void newGame(){
 		System.out.println("New game");
 
+
+		statistic.addGamePlayed();
 		if(boardTimer != null)
 			boardTimer.stopTimer();
 		this.updatePreferences();
@@ -317,7 +319,6 @@ public class MinesweeperGame {
 		System.out.println("Game lost");
 
 		statistic.addTime(boardTimer.getTimer());
-		statistic.addGamePlayed();
 		myBoard.revealsAllMines();
 		window.drawBoard(myBoard.displayBoard(), true);
 
@@ -333,7 +334,6 @@ public class MinesweeperGame {
 	public void exit() {
 		if(boardTimer != null)
 			statistic.addTime(boardTimer.getTimer());
-		statistic.addGamePlayed();
 	}
 
 

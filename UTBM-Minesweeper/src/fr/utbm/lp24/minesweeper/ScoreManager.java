@@ -139,6 +139,7 @@ public class ScoreManager implements Runnable {
 	 * @return the rank of this new score
 	 */
 	public void setScore(String playerName, int score){	
+		System.out.println("Start add score on the Internet API");
 		String data = "s=" + score + "&pn=" + playerName;
 		String result = this.getAddress("setScore", data);
 		if(result == null){
@@ -167,9 +168,11 @@ public class ScoreManager implements Runnable {
 				rank = rank.replaceAll("[^0-9]", "");
 				int rankint =  rank.equals("")?0:Integer.parseInt(rank);*/
 				listeners.addScore(true);
+				System.out.println("Finish to add score on the Internet API");
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
+				System.out.println("Failed to add score on the Internet API");
 			}
 
 		}
