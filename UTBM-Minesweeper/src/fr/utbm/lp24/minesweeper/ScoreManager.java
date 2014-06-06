@@ -18,30 +18,62 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+/**
+ * interface to manage listener
+ * @author vincent
+ *
+ */
+interface ScoreListener { 
+	public void getScore(ArrayList<ArrayList<String>> globalScore);
+	public void addScore(Boolean check);
+	//public void getRank(Boolean check); 
+}
 
-public class ScoreManager {
+
+/**
+ * Class who get informations from the Internet API
+ * @author Vincent and Christophe
+ *
+ */
+public class ScoreManager implements Runnable {
 
 	private static String apiUrl = "http://lp24.christophe-ribot.fr/api/";
+	private ScoreListener listeners;
+	private String action;
+	private String name =null;
+	private int score=0;
 
-	public ScoreManager(){
-
-
+	/**
+	 * first main constructor
+	 * @param toAdd link the class with the this Score manager
+	 * @param action 
+	 */ 
+	public ScoreManager(ScoreListener toAdd, String action ){
+		this.action = action;
+		listeners = toAdd; // link listener
 	}
 
-
-	private static String getValue(String tag, Element element) {
-		NodeList nodes = element.getElementsByTagName(tag).item(0).getChildNodes();
-		Node node = (Node) nodes.item(0);
-		return node.getNodeValue();
+	/**
+	 * second main constructor
+	 * @param toAdd link the class with the this Score manager
+	 * @param action 
+	 */ 
+	public ScoreManager(ScoreListener toAdd, String action, String name, int score ){
+		this.action = action;
+		this.name = name;
+		this.score = score;
+		listeners = toAdd; // link listener
 	}
 
-
-
-
-	public ArrayList<ArrayList<String>> getScores(){
+	/**
+	 * Get the 10 first scores and return and array of this results
+	 */
+	public void getScores(){
+		System.out.println("Start loading internet scores");
 		String result = this.getAddress("getScores", "");
 		if(result == null){
-			return null;
+			listeners.getScore(null);
+			return;
 		} else {
 
 			try {
@@ -54,13 +86,13 @@ public class ScoreManager {
 				doc.getDocumentElement().normalize();
 
 				String responseCode = doc.getElementsByTagName("code").item(0).getTextContent();
-				
+
 
 				if( responseCode.equals("1") == false){
-					return null;
+					listeners.getScore(null); //  send a notification to the listener
+					return;
 				}
 
-				System.out.println("code: "+responseCode);
 
 				ArrayList<ArrayList<String>> scores = new ArrayList<ArrayList<String>>();
 
@@ -78,7 +110,7 @@ public class ScoreManager {
 						score.add(getValue("score", element));
 
 						scores.add(score);
-						
+
 						/*System.out.println("rank: "+getValue("rank", element));
 						System.out.println("date: "+getValue("date", element));
 						System.out.println("playername: "+getValue("playername", element));
@@ -87,25 +119,30 @@ public class ScoreManager {
 					}
 				}
 
-				return scores;
+				System.out.println("Loading internet scores complete");
+				listeners.getScore(scores); //  send a notification to the listener
+
 			} catch (Exception ex) {
 				ex.printStackTrace();
+				System.out.println("Loading internet scores failed");
 			}
 
-			return null;
-
+			//listeners.getScore(null);
 		}
 
 	}
 
-
-
-
-	public String setScore(String playerName, int score){
+	/**
+	 * Add a new score on the Internet API
+	 * @param playerName
+	 * @param score
+	 * @return the rank of this new score
+	 */
+	public void setScore(String playerName, int score){	
 		String data = "s=" + score + "&pn=" + playerName;
 		String result = this.getAddress("setScore", data);
 		if(result == null){
-			return null;
+			listeners.addScore(false);
 		} else {
 			try {
 				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -117,33 +154,46 @@ public class ScoreManager {
 				doc.getDocumentElement().normalize();
 
 				String responseCode = doc.getElementsByTagName("code").item(0).getTextContent();
-				
 
 				if( responseCode.equals("1") == false){
-					return null;
+					listeners.addScore(false);
+					return;
 				}
-				
-				String rank = doc.getElementsByTagName("rank").item(0).getTextContent();
-				
-				/*System.out.println("code: "+responseCode);
-				System.out.println("rank: "+rank);*/
-				
-				return rank;
-				
+				/*String rank = doc.getElementsByTagName("rank").item(0).getTextContent();// after code update this part is no longer used
+
+				System.out.println("code: "+responseCode);
+				System.out.println("rank: "+rank);
+
+				rank = rank.replaceAll("[^0-9]", "");
+				int rankint =  rank.equals("")?0:Integer.parseInt(rank);*/
+				listeners.addScore(true);
+
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 
-			return null;
-
 		}
 	}
 
+	/**
+	 * Get the value of a element in a document
+	 * @param tag
+	 * @param element
+	 * @return
+	 */
+	private static String getValue(String tag, Element element) {
+		NodeList nodes = element.getElementsByTagName(tag).item(0).getChildNodes();
+		Node node = (Node) nodes.item(0);
+		return node.getNodeValue();
+	}
 
 
-
-
-
+	/**
+	 * Send a request to the Internet API
+	 * @param action
+	 * @param urlParameters
+	 * @return A String contains the results of the request
+	 */
 	private String getAddress(String action, String urlParameters){
 
 		HttpURLConnection connection = null;  
@@ -197,5 +247,20 @@ public class ScoreManager {
 
 	}
 
+	/**
+	 * main method of the thread
+	 */
+	public void run() {		
+		if (action.equals("getScore"))
+		{
+			getScores();
+		}
+		if (action.equals("setScore"))
+		{
+			if (name != null || this.score != 0)
+				setScore(name,this.score);
+		}
+
+	}
 
 }

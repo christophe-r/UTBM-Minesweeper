@@ -28,7 +28,7 @@ public class LostWindow extends JDialog {
 		setTitle("Game Lost");
 		setResizable(false);
 		setModal(true);
-		setBounds(100, 100, 410, 260);
+		setBounds(100, 100, 340, 197);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
 		getContentPane().setLayout(new BorderLayout());
@@ -42,7 +42,7 @@ public class LostWindow extends JDialog {
 					System.exit(0);
 				}
 			});
-			exitButton.setBounds(10, 201, 120, 23);
+			exitButton.setBounds(274, 134, 51, 23);
 			contentPanel.add(exitButton);
 			exitButton.setActionCommand("Exit");
 			getRootPane().setDefaultButton(exitButton);
@@ -55,7 +55,7 @@ public class LostWindow extends JDialog {
 				}
 			});
 			playAgainButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
-			playAgainButton.setBounds(274, 201, 120, 23);
+			playAgainButton.setBounds(10, 134, 112, 23);
 			contentPanel.add(playAgainButton);
 			playAgainButton.setActionCommand("Play again");
 		}
@@ -68,28 +68,17 @@ public class LostWindow extends JDialog {
 		});
 
 
-		JLabel lblSorry = new JLabel("Sorry, you lost this game. Better luck next time!");
-		lblSorry.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JLabel lblSorry = new JLabel("<html><center>Sorry, you lost this game.<br> Better luck next time!<center></html>");
+		lblSorry.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblSorry.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSorry.setBounds(10, 21, 384, 23);
+		lblSorry.setBounds(10, 23, 315, 46);
 		contentPanel.add(lblSorry);
 
-		JLabel lblTime = new JLabel("Time:");
-		lblTime.setBounds(10, 78, 26, 14);
-		contentPanel.add(lblTime);
-
 		JLabel lblSeconds = new JLabel("");
-		lblSeconds.setBounds(40, 78, 89, 14);
+		lblSeconds.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblSeconds.setBounds(101, 90, 112, 23);
 		lblSeconds.setText(time+" seconds");
 		contentPanel.add(lblSeconds);
-
-		JLabel lblDate = new JLabel("Date:");
-		lblDate.setBounds(179, 78, 27, 14);
-		contentPanel.add(lblDate);
-
-		JLabel lblTDate = new JLabel("00-Mon-00");
-		lblTDate.setBounds(212, 78, 73, 14);
-		contentPanel.add(lblTDate);
 
 		JButton btnRestartThisGame = new JButton("Restart this game");
 		btnRestartThisGame.addActionListener(new ActionListener() {
@@ -97,8 +86,24 @@ public class LostWindow extends JDialog {
 				restartGame(controller);
 			}
 		});
-		btnRestartThisGame.setBounds(142, 201, 120, 23);
+		btnRestartThisGame.setBounds(144, 134, 120, 23);
 		contentPanel.add(btnRestartThisGame);
+
+		JLabel label = new JLabel("Your time :");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label.setBounds(10, 90, 89, 22);
+		contentPanel.add(label);
+
+		JButton statButton = new JButton("View statistics");
+		statButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		statButton.setBounds(212, 91, 112, 23);
+		statButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				viewStats();
+			}
+		});
+		contentPanel.add(statButton);
 
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -114,6 +119,9 @@ public class LostWindow extends JDialog {
 		// TODO
 		controller.restartGame();
 		this.dispose();
+	}
+	private void viewStats() {
+		new StatisticsWindow();
 	}
 
 }

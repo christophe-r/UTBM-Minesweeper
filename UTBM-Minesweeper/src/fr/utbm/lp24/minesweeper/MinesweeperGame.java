@@ -38,15 +38,19 @@ public class MinesweeperGame {
 		} catch (Exception e){
 			System.out.println("Unable to load Windows look and feel");
 		}
-		
-		
+
+
 		this.updatePreferences();
 		statistic = new StatisticsManager();
-		
+
 		// Launch the windows
 		window = new MinesweeperWindow(this);
 		this.newGame();
 		gameState = GameState.PAUSED;
+
+		// for test the new wonwindows
+		//new WonWindow(this,0,myScore.getScore(nbMines, width, height, 1, playAgain));
+
 	}
 
 
@@ -67,7 +71,7 @@ public class MinesweeperGame {
 				window.drawShadow(x, y, true);	
 			}			
 		}
-		
+
 
 
 	}
@@ -112,7 +116,7 @@ public class MinesweeperGame {
 	 * @author Vincent
 	 */
 	public void leftClickOnBoard(int x, int y){
-		
+
 		// Transform pixel coordinate in array coordinate
 		x = ((x-1)/window.getSquareSize())-1;
 		y = ((y-1)/window.getSquareSize())-1;
@@ -150,7 +154,7 @@ public class MinesweeperGame {
 
 					if(myBoard.isWon()){
 						gameState = GameState.STOPPED;
-						
+
 						int time = boardTimer.getTimer();
 						int score = myScore.getScore(nbMines, width, height, time, playAgain);
 						statistic.addTime(boardTimer.getTimer());
@@ -229,14 +233,14 @@ public class MinesweeperGame {
 		y = ((y-1)/window.getSquareSize())-1;
 		if(myBoard.getTile(x, y) != null){
 			if(myBoard.getTile(x, y).getState() == TileState.DISCOVERED && myBoard.getTile(x, y).getContent() != TileContent.CLEAR0 && myBoard.getTile(x, y).getContent() != TileContent.MINE)
-				
+
 				System.out.println("action");
-				myBoard.revealsAllMinesWithFlagCount(x,y,this);
+			myBoard.revealsAllMinesWithFlagCount(x,y,this);
 		}
 		System.out.println("wheel click");
 		System.out.println("Coord X : " + x);
 		System.out.println("Coord Y : " + y);
-		
+
 	}
 
 	/**
@@ -271,7 +275,7 @@ public class MinesweeperGame {
 		System.out.println("NbMines : " + nbMines);
 
 	}
-	
+
 
 	/**
 	 * Method to start a new the game
@@ -279,7 +283,7 @@ public class MinesweeperGame {
 	 */
 	public void newGame(){
 		System.out.println("New game");
-		
+
 		if(boardTimer != null)
 			boardTimer.stopTimer();
 		this.updatePreferences();
@@ -295,7 +299,7 @@ public class MinesweeperGame {
 	 */
 	public void restartGame(){
 		System.out.println("Restart game");
-		
+
 		boardTimer = new Timer(window);
 		(new Thread(boardTimer)).start();
 		this.updatePreferences();
@@ -304,14 +308,14 @@ public class MinesweeperGame {
 		window.drawBoard(myBoard.displayBoard(),false); // Display the new board
 		gameState = GameState.RUNNING;
 	}
-	
+
 	/**
 	 * Method call if you lose the game
 	 * @author vincent
 	 */
 	public void lostGame(){
 		System.out.println("Game lost");
-		
+
 		statistic.addTime(boardTimer.getTimer());
 		statistic.addGamePlayed();
 		myBoard.revealsAllMines();
@@ -328,9 +332,9 @@ public class MinesweeperGame {
 	 */
 	public void exit() {
 		if(boardTimer != null)
-				statistic.addTime(boardTimer.getTimer());
+			statistic.addTime(boardTimer.getTimer());
 		statistic.addGamePlayed();
-		}
+	}
 
 
 }

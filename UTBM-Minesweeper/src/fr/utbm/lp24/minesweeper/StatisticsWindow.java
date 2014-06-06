@@ -11,17 +11,22 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.Font;
 
-public class StatisticsWindow extends JDialog {
+import javax.swing.SwingConstants;
+
+public class StatisticsWindow extends JDialog implements ScoreListener{
 
 	private static final long serialVersionUID = 1L;
 
 	private JLayeredPane layeredPane_localStats;
+	private JLayeredPane layeredPane_globalRanking;
 
 	private JLabel label_totalTime;
 	private JLabel label_gamesPlayed;
 	private JLabel label_gamesWon;
 	private JLabel label_winPercentage;
 	private JLabel label_bestScore;
+
+	private JLabel lblInfoLoading;
 
 	public StatisticsWindow() {
 		setResizable(false);
@@ -125,7 +130,7 @@ public class StatisticsWindow extends JDialog {
 
 		/************** Ranking tab ***************/
 
-		JLayeredPane layeredPane_globalRanking = new JLayeredPane();
+		layeredPane_globalRanking = new JLayeredPane();
 		tabbedPane.addTab("Global ranking", null, layeredPane_globalRanking, null);
 		layeredPane_globalRanking.setLayout(null);
 
@@ -149,31 +154,17 @@ public class StatisticsWindow extends JDialog {
 		score.setBounds(185, 10, 44, 14);
 		layeredPane_globalRanking.add(score);
 
-		ArrayList<ArrayList<String>> globalScore = new ScoreManager().getScores();
+		lblInfoLoading = new JLabel("Loading Internet score ...");
+		lblInfoLoading.setHorizontalAlignment(SwingConstants.CENTER);
+		lblInfoLoading.setBounds(10, 97, 219, 14);
+		layeredPane_globalRanking.add(lblInfoLoading);
 
-		int y = 30;
-		for( ArrayList<String> line : globalScore ){
-			int x = 10;
-			int nbCol = 0;
-			for( String field : line ){
-				JLabel label = new JLabel(""+field);
-				label.setBounds(x, y, 60, 14);
-				layeredPane_globalRanking.add(label);
-
-				switch(nbCol){
-				case 0: x += 20; break;
-				case 1: x += 75; break;
-				case 2: x += 80; break;
-				}
-
-				nbCol++;
-			}
-
-			y += 20;
-		}
+		ScoreManager scoreManager = new ScoreManager(this,"getScore");
+		(new Thread(scoreManager)).start();
 
 		setLocationRelativeTo(null);
-		setVisible(true);
+		setVisible(true);	
+
 	}
 
 
@@ -199,5 +190,48 @@ public class StatisticsWindow extends JDialog {
 
 
 
+	/**
+	 * Call the array of scores results is returned
+	 */
+	@Override
+	public void getScore(ArrayList<ArrayList<String>> globalScore) {
+
+		if(globalScore != null){
+			lblInfoLoading.setText(" ");
+
+			int y = 30;
+			for( ArrayList<String> line : globalScore ){
+				int x = 10;
+				int nbCol = 0;
+				for( String field : line ){
+					JLabel label = new JLabel(""+field);
+					label.setBounds(x, y, 60, 14);
+					layeredPane_globalRanking.add(label);
+
+					switch(nbCol){
+					case 0: x += 20; break;
+					case 1: x += 75; break;
+					case 2: x += 80; break;
+					}
+
+					nbCol++;
+				}
+
+				y += 20;
+
+			}
+			repaint();
+
+		}else{
+			lblInfoLoading.setText("Failed to load Internet score");
+		}
+	}
+
+
+
+
+	@Override
+	public void addScore(Boolean check) {} // this class isn't used here 
+	// TODO may be create 3 interfaces ??
 
 }

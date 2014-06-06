@@ -1,12 +1,13 @@
 package fr.utbm.lp24.minesweeper;
 
+
 /**
  * Class to manage the statistics
  * @author Christophe and Vincent
  *
  */
 public class StatisticsManager extends PreferencesManager {
-
+	
 	/**
 	 * Add time to the total time counter
 	 * @param time
