@@ -25,7 +25,7 @@ import org.xml.sax.InputSource;
 interface ScoreListener { 
 	public void getScore(ArrayList<ArrayList<String>> globalScore);
 	public void addScore(Boolean check);
-	public void getRank(int rank); 
+	public void getRank(int rank, int total); 
 }
 
 
@@ -216,16 +216,17 @@ public class ScoreManager implements Runnable {
 
 				if( responseCode.equals("1") == false ){
 					System.out.println("Internet API: Failed to get rank.");
-					listeners.getRank(0);
+					listeners.getRank(0, 0);
 					return;
 				}
 
-				String rank = doc.getElementsByTagName("rank").item(0).getTextContent();
-
-				rank = rank.replaceAll("[^0-9]", "");
+				String rank = doc.getElementsByTagName("rank").item(0).getTextContent().replaceAll("[^0-9]", "");
 				int rankInt =  rank.equals("")?0:Integer.parseInt(rank);
+				
+				String total = doc.getElementsByTagName("total").item(0).getTextContent().replaceAll("[^0-9]", "");
+				int totalInt =  total.equals("")?0:Integer.parseInt(total);
 
-				listeners.getRank(rankInt);
+				listeners.getRank(rankInt, totalInt);
 
 				System.out.println("Internet API: Finished to get rank.");
 
