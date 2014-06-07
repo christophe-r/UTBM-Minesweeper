@@ -167,9 +167,6 @@ public class StatisticsWindow extends JDialog implements ScoreListener{
 
 	}
 
-
-
-
 	private void updateStatistics(){
 		StatisticsManager playerStats = new StatisticsManager();
 
@@ -204,6 +201,8 @@ public class StatisticsWindow extends JDialog implements ScoreListener{
 				int x = 10;
 				int nbCol = 0;
 				for( String field : line ){
+					if(field.length() > 13)
+						field= field.substring(0,7) + "...";
 					JLabel label = new JLabel(""+field);
 					label.setBounds(x, y, 60, 14);
 					layeredPane_globalRanking.add(label);
@@ -227,19 +226,9 @@ public class StatisticsWindow extends JDialog implements ScoreListener{
 		}
 	}
 
-
-
-
 	@Override
-	public void addScore(Boolean check) {} // this class isn't used here 
-	// TODO may be create 3 interfaces ??
-
-
-
-
+	public void addScore(Boolean check) {} // this method isn't used here 
 	@Override
-	public void getRank(int rank) {
-		// TODO Auto-generated method stub
-	}
+	public void getRank(int rank, int total) {}// this method isn't used here 
 
 }

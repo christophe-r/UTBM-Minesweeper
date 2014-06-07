@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
+
 import java.awt.Color;
 
 public class WonWindow extends JDialog implements ScoreListener {
@@ -32,6 +33,8 @@ public class WonWindow extends JDialog implements ScoreListener {
 	private JLabel lblInfoLoading;
 	private AbstractButton sendButton;
 	private Component lblPseudo;
+
+	private static PreferencesManager userPreferences;
 
 
 	/**
@@ -124,8 +127,12 @@ public class WonWindow extends JDialog implements ScoreListener {
 		contentPanel.add(sendButton);
 
 		textField = new JTextField();
+
 		textField.setColumns(10);
 		textField.setBounds(196, 189, 78, 21);
+		userPreferences = new PreferencesManager();
+		String pseudo = userPreferences.getPref("pseudo", "");
+		textField.setText(pseudo);
 		contentPanel.add(textField);
 
 		JLabel lblScore = new JLabel("0 points");
@@ -181,8 +188,8 @@ public class WonWindow extends JDialog implements ScoreListener {
 	}
 	private void sendPseudo(String text) {
 
-		// TODO Verify the user input
-
+		userPreferences = new PreferencesManager();
+		userPreferences.setPref("pseudo",text);
 		System.out.println("event triger");
 		ScoreManager scoreManager = new ScoreManager(this, "setScore", text, score);
 		(new Thread(scoreManager)).start();
@@ -223,6 +230,8 @@ public class WonWindow extends JDialog implements ScoreListener {
 				int x = 165;
 				int nbCol = 0;
 				for( String field : line ){
+					if(field.length() > 13)
+						field= field.substring(0,7) + "...";
 					JLabel label = new JLabel(""+field);
 					contentPanel.add(label);
 
@@ -280,14 +289,14 @@ public class WonWindow extends JDialog implements ScoreListener {
 	}
 
 	@Override
-	public void getRank(int rank) {
-		
+	public void getRank(int rank, int total) {
+
 		JLabel yourRank = new JLabel("Your rank : ");
 		yourRank.setFont(new Font("Tahoma",Font.BOLD, 12));
 		contentPanel.add(yourRank);
 		yourRank.setBounds(165, 145, 100, 14);
-		
-		JLabel lblScore = new JLabel(""+rank);
+
+		JLabel lblScore = new JLabel(""+rank + "/" + total);
 		contentPanel.add(lblScore);
 		lblScore.setBounds(235, 146, 60, 14);
 
