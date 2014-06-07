@@ -234,4 +234,12 @@ public class StatisticsWindow extends JDialog implements ScoreListener{
 	public void addScore(Boolean check) {} // this class isn't used here 
 	// TODO may be create 3 interfaces ??
 
+
+
+
+	@Override
+	public void getRank(int rank) {
+		// TODO Auto-generated method stub
+	}
+
 }

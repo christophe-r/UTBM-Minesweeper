@@ -22,9 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import java.awt.Color;
 
-public class WonWindow extends JDialog implements ScoreListener{
+public class WonWindow extends JDialog implements ScoreListener {
 
-	private int score =0;
+	private int score = 0;
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -164,7 +164,7 @@ public class WonWindow extends JDialog implements ScoreListener{
 		contentPanel.add(lblAddYourScore);
 
 
-		ScoreManager scoreManager = new ScoreManager(this,"getScore");
+		ScoreManager scoreManager = new ScoreManager(this, "getScore");
 		(new Thread(scoreManager)).start();
 
 
@@ -180,10 +180,10 @@ public class WonWindow extends JDialog implements ScoreListener{
 	}
 	private void sendPseudo(String text) {
 
-		// TODO Verify the user imput
+		// TODO Verify the user input
 
 		System.out.println("event triger");
-		ScoreManager scoreManager = new ScoreManager(this,"setScore",text,score);
+		ScoreManager scoreManager = new ScoreManager(this, "setScore", text, score);
 		(new Thread(scoreManager)).start();
 
 
@@ -276,6 +276,11 @@ public class WonWindow extends JDialog implements ScoreListener{
 			repaint();
 		}
 
+	}
+
+	@Override
+	public void getRank(int rank) {
+		// TODO Auto-generated method stub
 	}
 
 }
