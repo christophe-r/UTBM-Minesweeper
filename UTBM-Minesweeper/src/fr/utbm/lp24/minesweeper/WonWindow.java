@@ -166,7 +166,8 @@ public class WonWindow extends JDialog implements ScoreListener {
 
 		ScoreManager scoreManager = new ScoreManager(this, "getScore");
 		(new Thread(scoreManager)).start();
-
+		ScoreManager scoreManager2 = new ScoreManager(this, "getRank",score);
+		(new Thread(scoreManager2)).start();
 
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -280,8 +281,17 @@ public class WonWindow extends JDialog implements ScoreListener {
 
 	@Override
 	public void getRank(int rank) {
-		// TODO Auto-generated method stub
-	}
+		
+		JLabel yourRank = new JLabel("Your rank : ");
+		yourRank.setFont(new Font("Tahoma",Font.BOLD, 12));
+		contentPanel.add(yourRank);
+		yourRank.setBounds(165, 145, 100, 14);
+		
+		JLabel lblScore = new JLabel(""+rank);
+		contentPanel.add(lblScore);
+		lblScore.setBounds(235, 146, 60, 14);
 
+
+	}
 }
 

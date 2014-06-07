@@ -52,6 +52,17 @@ public class ScoreManager implements Runnable {
 		listeners = toAdd; // link listener
 	}
 
+	/**
+	 * Constructor
+	 * @param toAdd
+	 * @param action
+	 * @param score
+	 */
+	public ScoreManager(ScoreListener toAdd, String action, int score){
+		this.action = action;
+		this.score = score;
+		listeners = toAdd; // link listener
+	}
 
 	/**
 	 * Constructor
@@ -204,6 +215,7 @@ public class ScoreManager implements Runnable {
 				String responseCode = doc.getElementsByTagName("code").item(0).getTextContent();
 
 				if( responseCode.equals("1") == false ){
+					System.out.println("Internet API: Failed to get rank.");
 					listeners.getRank(0);
 					return;
 				}
@@ -311,7 +323,7 @@ public class ScoreManager implements Runnable {
 			if (name != null || this.score != 0)
 				setScore(name,this.score);
 		}
-		
+
 		if( action.equals("getRank") ){
 			getRank(this.score);
 		}

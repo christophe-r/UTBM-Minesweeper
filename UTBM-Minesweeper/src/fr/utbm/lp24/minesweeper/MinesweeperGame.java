@@ -49,7 +49,7 @@ public class MinesweeperGame {
 		gameState = GameState.PAUSED;
 
 		// for test the new wonwindows
-		//new WonWindow(this,0,myScore.getScore(nbMines, width, height, 1, playAgain));
+		// new WonWindow(this,0,myScore.getScore(nbMines, width, height, 1, playAgain));
 
 	}
 

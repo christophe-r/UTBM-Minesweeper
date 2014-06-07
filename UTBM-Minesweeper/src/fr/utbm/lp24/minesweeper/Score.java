@@ -24,7 +24,7 @@ public class Score {
 			cheat = 0;
 		}
 
-		float score = ( 1000 * cheat )/( (nbMines / (width*height)) + 1/time );
+		float score = ( 1000 * cheat )/( (nbMines / (width*height)) + (1-1/time) );
 
 
 		return Math.round(score);
