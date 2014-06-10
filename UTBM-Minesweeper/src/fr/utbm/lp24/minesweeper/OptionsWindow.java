@@ -109,7 +109,7 @@ public class OptionsWindow extends JDialog {
 		panel.setLayout(null);
 
 
-		rdbtn_beginner = new JRadioButton("<html>Beginner<br>\r\n10 mines<br>\r\n9 x 9 tile grid");
+		rdbtn_beginner = new JRadioButton("<html>Beginner<br>10 mines<br>9 x 9 tile grid");
 		rdbtn_beginner.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				radioButtonCustom();
@@ -120,7 +120,7 @@ public class OptionsWindow extends JDialog {
 		rdbtn_beginner.setBounds(12, 28, 109, 43);
 		panel.add(rdbtn_beginner);
 
-		rdbtn_intermediate = new JRadioButton("<html>Intermediate<br>\r\n40 mines<br>\r\n16 x 16 tile grid");
+		rdbtn_intermediate = new JRadioButton("<html>Intermediate<br>40 mines<br>16 x 16 tile grid");
 		rdbtn_intermediate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				radioButtonCustom();
@@ -130,7 +130,7 @@ public class OptionsWindow extends JDialog {
 		rdbtn_intermediate.setBounds(12, 80, 109, 43);
 		panel.add(rdbtn_intermediate);
 
-		rdbtn_advanced = new JRadioButton("<html>Advanced<br>\r\n99 mines<br>\r\n16 x 30 tile grid");
+		rdbtn_advanced = new JRadioButton("<html>Advanced<br>99 mines<br>16 x 30 tile grid");
 		rdbtn_advanced.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				radioButtonCustom();

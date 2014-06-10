@@ -5,7 +5,6 @@ import java.util.prefs.Preferences;
 /**
  * To manage the user preferences
  * @author Christophe
- *
  */
 public class PreferencesManager {
 

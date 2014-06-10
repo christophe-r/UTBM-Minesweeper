@@ -3,7 +3,6 @@ package fr.utbm.lp24.minesweeper;
 /**
  * Content of the tile: clear/x mines around/a mine
  * @author Christophe
- *
  */
 public enum TileContent {
 	CLEAR0, // Tile is empty

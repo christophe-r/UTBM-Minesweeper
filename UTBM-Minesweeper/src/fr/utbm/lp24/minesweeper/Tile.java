@@ -3,7 +3,6 @@ package fr.utbm.lp24.minesweeper;
 /**
  * A tile, a single square
  * @author Christophe
- *
  */
 public class Tile {
 
@@ -116,7 +115,7 @@ public class Tile {
 		return character;
 
 	}
-	
+
 	/**
 	 * Transform tile state to number
 	 * @author vincent

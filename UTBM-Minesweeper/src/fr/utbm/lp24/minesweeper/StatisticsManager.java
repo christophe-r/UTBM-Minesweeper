@@ -7,10 +7,10 @@ package fr.utbm.lp24.minesweeper;
  *
  */
 public class StatisticsManager extends PreferencesManager {
-	
+
 	/**
 	 * Add time to the total time counter
-	 * @param time
+	 * @param time Time to add
 	 */
 	public void addTime(int time){
 		int oldTime = Integer.parseInt(getPref("stats_total_time", "0"));
@@ -38,7 +38,7 @@ public class StatisticsManager extends PreferencesManager {
 
 	/**
 	 * Save the score if it's the best
-	 * @param score
+	 * @param score Score to test and save if it's the best
 	 */
 	public void testBestScore(int score){
 		if( Integer.parseInt(getPref("stats_best_score", "0")) < score ){
@@ -64,7 +64,7 @@ public class StatisticsManager extends PreferencesManager {
 
 	/**
 	 * Get the total games played
-	 * @return total games played
+	 * @return Total games played
 	 */
 	public int getGamesPlayed(){
 		return Integer.parseInt(getPref("stats_games_played", "0"));
@@ -72,7 +72,7 @@ public class StatisticsManager extends PreferencesManager {
 
 	/**
 	 * Get the total games won
-	 * @return total games won
+	 * @return Total games won
 	 */
 	public int getGamesWon(){
 		return Integer.parseInt(getPref("stats_games_won", "0"));
@@ -80,7 +80,7 @@ public class StatisticsManager extends PreferencesManager {
 
 	/**
 	 * Get the best score
-	 * @return best score
+	 * @return Best score
 	 */
 	public int getBestScore(){
 		return Integer.parseInt(getPref("stats_best_score", "0"));

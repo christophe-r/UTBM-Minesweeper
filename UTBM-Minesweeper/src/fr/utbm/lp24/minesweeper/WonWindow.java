@@ -32,7 +32,7 @@ public class WonWindow extends JDialog implements ScoreListener {
 	private JTextField textField;
 	private JLabel lblInfoLoading;
 	private AbstractButton sendButton;
-	private Component lblPseudo;
+	private Component lblPlayerName;
 
 	private static PreferencesManager userPreferences;
 
@@ -47,7 +47,7 @@ public class WonWindow extends JDialog implements ScoreListener {
 		setTitle("Game Won");
 		setResizable(false);
 		setModal(true);
-		setBounds(100, 100, 345, 297);
+		setBounds(100, 100, 345, 320);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
 		getContentPane().setLayout(new BorderLayout());
@@ -62,7 +62,7 @@ public class WonWindow extends JDialog implements ScoreListener {
 					System.exit(0);
 				}
 			});
-			exitButton.setBounds(196, 234, 89, 23);
+			exitButton.setBounds(212, 257, 78, 23);
 			contentPanel.add(exitButton);
 			getRootPane().setDefaultButton(exitButton);
 		}
@@ -74,7 +74,7 @@ public class WonWindow extends JDialog implements ScoreListener {
 				}
 			});
 			playAgainButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			playAgainButton.setBounds(30, 234, 89, 23);
+			playAgainButton.setBounds(30, 257, 104, 23);
 			contentPanel.add(playAgainButton);
 		}
 
@@ -86,41 +86,42 @@ public class WonWindow extends JDialog implements ScoreListener {
 		});
 
 
-		JLabel lblCongrats = new JLabel("<html><center>Congratulations !!<br> you won the game!</center></html>");
+		JLabel lblCongrats = new JLabel("<html><center>Congratulations!<br> You won the game!</center>");
 		lblCongrats.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblCongrats.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCongrats.setBounds(10, 0, 312, 46);
+		lblCongrats.setBounds(10, 8, 312, 46);
 		contentPanel.add(lblCongrats);
 
-		JLabel lblTime = new JLabel("Your time :");
-		lblTime.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel lblTime = new JLabel("Your time:");
+		lblTime.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTime.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblTime.setBounds(30, 57, 89, 22);
+		lblTime.setBounds(30, 66, 89, 22);
 		contentPanel.add(lblTime);
 
 		JLabel lblSeconds = new JLabel("");
 		lblSeconds.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblSeconds.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSeconds.setBounds(30, 90, 109, 25);
+		lblSeconds.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSeconds.setBounds(45, 90, 96, 25);
 		lblSeconds.setText(time+" seconds");
 		contentPanel.add(lblSeconds);
 
 
 		JLabel lblTScore = new JLabel("");
+		lblTScore.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTScore.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblTScore.setBounds(30, 126, 96, 23);
-		lblTScore.setText("Your score :");
+		lblTScore.setBounds(30, 130, 96, 23);
+		lblTScore.setText("Your score:");
 		contentPanel.add(lblTScore);
 
-		lblPseudo = new JLabel("Pseudo :");
-		lblPseudo.setBounds(152, 192, 44, 14);
-		contentPanel.add(lblPseudo);
+		lblPlayerName = new JLabel("Player name:");
+		lblPlayerName.setBounds(152, 192, 78, 14);
+		contentPanel.add(lblPlayerName);
 
 		sendButton = new JButton("Send");
-		sendButton.setBounds(278, 188, 57, 23);
+		sendButton.setBounds(272, 210, 57, 23);
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sendPseudo(textField.getText());
+				sendScore(textField.getText());
 				sendButton.setEnabled(false);
 			}
 		});
@@ -129,23 +130,22 @@ public class WonWindow extends JDialog implements ScoreListener {
 		textField = new JTextField();
 
 		textField.setColumns(10);
-		textField.setBounds(196, 189, 78, 21);
+		textField.setBounds(219, 189, 110, 21);
 		userPreferences = new PreferencesManager();
-		String pseudo = userPreferences.getPref("pseudo", "");
-		textField.setText(pseudo);
+		String playerName = userPreferences.getPref("playerName", "");
+		textField.setText(playerName);
 		contentPanel.add(textField);
 
 		JLabel lblScore = new JLabel("0 points");
 		lblScore.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
-		lblScore.setBounds(30, 150, 99, 20);
+		lblScore.setHorizontalAlignment(SwingConstants.LEFT);
+		lblScore.setBounds(45, 156, 99, 20);
 		System.out.println("score : " + score);
-		lblScore.setText(score + " Points");
 		contentPanel.add(lblScore);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
-		separator_1.setBounds(145, 57, 2, 152);
+		separator_1.setBounds(143, 65, 2, 165);
 		contentPanel.add(separator_1);
 
 		JButton statButton = new JButton("View statistics");
@@ -156,24 +156,24 @@ public class WonWindow extends JDialog implements ScoreListener {
 			}
 		});
 
-		statButton.setBounds(10, 183, 125, 23);
+		statButton.setBounds(10, 200, 125, 23);
 		contentPanel.add(statButton);
 
-		lblInfoLoading = new JLabel("Loading Internet score ...");
+		lblInfoLoading = new JLabel("<html><center>Loading global scores<br> from Internet...</center>");
 		lblInfoLoading.setHorizontalAlignment(SwingConstants.CENTER);
-		lblInfoLoading.setBounds(149, 101, 186, 14);
+		lblInfoLoading.setBounds(149, 101, 186, 25);
 		contentPanel.add(lblInfoLoading);
 
-		JLabel lblAddYourScore = new JLabel("Save your score");
-		lblAddYourScore.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel lblAddYourScore = new JLabel("Save your score:");
+		lblAddYourScore.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAddYourScore.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAddYourScore.setBounds(178, 167, 121, 14);
+		lblAddYourScore.setBounds(152, 167, 114, 23);
 		contentPanel.add(lblAddYourScore);
 
 
 		ScoreManager scoreManager = new ScoreManager(this, "getScore");
 		(new Thread(scoreManager)).start();
-		ScoreManager scoreManager2 = new ScoreManager(this, "getRank",score);
+		ScoreManager scoreManager2 = new ScoreManager(this, "getRank", score);
 		(new Thread(scoreManager2)).start();
 
 		setLocationRelativeTo(null);
@@ -181,22 +181,30 @@ public class WonWindow extends JDialog implements ScoreListener {
 
 	}
 
+	/**
+	 * This method handle the Play Again button
+	 * @param controller Controller
+	 */
 	private void playAgain(MinesweeperGame controller){
 		controller.newGame();
 		// Close the window
 		this.dispose();
 	}
-	private void sendPseudo(String text) {
-
+	
+	/**
+	 * Send the score on Internet
+	 * @param playerName Player name
+	 */
+	private void sendScore(String playerName) {
 		userPreferences = new PreferencesManager();
-		userPreferences.setPref("pseudo",text);
-		System.out.println("event triger");
-		ScoreManager scoreManager = new ScoreManager(this, "setScore", text, score);
+		userPreferences.setPref("playerName", playerName);
+		ScoreManager scoreManager = new ScoreManager(this, "setScore", playerName, score);
 		(new Thread(scoreManager)).start();
-
-
 	}
 
+	/**
+	 * Open Statistics Window
+	 */
 	private void viewStats() {
 		new StatisticsWindow();
 	}
@@ -232,7 +240,7 @@ public class WonWindow extends JDialog implements ScoreListener {
 				for( String field : line ){
 					if(field.length() > 13)
 						field= field.substring(0,7) + "...";
-					JLabel label = new JLabel(""+field);
+					JLabel label = new JLabel("" + field);
 					contentPanel.add(label);
 
 					switch(nbCol){
@@ -261,13 +269,13 @@ public class WonWindow extends JDialog implements ScoreListener {
 		}
 	}
 
+
 	@Override
 	public void addScore(Boolean check) {
-		System.out.println("event triger" + check);
-		if (check){
+		if( check ){
 			contentPanel.remove(textField);
 			contentPanel.remove(sendButton);
-			contentPanel.remove(lblPseudo);
+			contentPanel.remove(lblPlayerName);
 			JLabel label = new JLabel("Score saved");
 			contentPanel.add(label);
 			label.setForeground(Color.GREEN);
@@ -275,12 +283,12 @@ public class WonWindow extends JDialog implements ScoreListener {
 			label.setFont(new Font("Tahoma", Font.BOLD, 12));
 			label.setBounds(155, 192, 140, 14);
 			repaint();
-		}else{
+		} else {
 			JLabel label = new JLabel("Error score not saved");
 			contentPanel.add(label);
 			label.setForeground(Color.RED);
 			label.setHorizontalAlignment(SwingConstants.LEFT);
-			label.setFont(new Font("Tahoma",Font.PLAIN, 11));
+			label.setFont(new Font("Tahoma", Font.PLAIN, 11));
 			label.setBounds(160, 210, 140, 14);
 			sendButton.setEnabled(true);
 			repaint();
@@ -292,14 +300,13 @@ public class WonWindow extends JDialog implements ScoreListener {
 	public void getRank(int rank, int total) {
 
 		JLabel yourRank = new JLabel("Your rank : ");
-		yourRank.setFont(new Font("Tahoma",Font.BOLD, 12));
+		yourRank.setFont(new Font("Tahoma", Font.BOLD, 12));
 		contentPanel.add(yourRank);
 		yourRank.setBounds(165, 145, 100, 14);
 
-		JLabel lblScore = new JLabel(""+rank + "/" + total);
+		JLabel lblScore = new JLabel("" + rank + "/" + total);
 		contentPanel.add(lblScore);
 		lblScore.setBounds(235, 146, 60, 14);
-
 
 	}
 }

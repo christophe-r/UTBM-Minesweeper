@@ -159,7 +159,7 @@ public class StatisticsWindow extends JDialog implements ScoreListener{
 		lblInfoLoading.setBounds(10, 97, 219, 14);
 		layeredPane_globalRanking.add(lblInfoLoading);
 
-		ScoreManager scoreManager = new ScoreManager(this,"getScore");
+		ScoreManager scoreManager = new ScoreManager(this, "getScore");
 		(new Thread(scoreManager)).start();
 
 		setLocationRelativeTo(null);
@@ -202,7 +202,7 @@ public class StatisticsWindow extends JDialog implements ScoreListener{
 				int nbCol = 0;
 				for( String field : line ){
 					if(field.length() > 13)
-						field= field.substring(0,7) + "...";
+						field = field.substring(0,7) + "...";
 					JLabel label = new JLabel(""+field);
 					label.setBounds(x, y, 60, 14);
 					layeredPane_globalRanking.add(label);
@@ -221,7 +221,7 @@ public class StatisticsWindow extends JDialog implements ScoreListener{
 			}
 			repaint();
 
-		}else{
+		} else {
 			lblInfoLoading.setText("Failed to load Internet score");
 		}
 	}
@@ -229,6 +229,6 @@ public class StatisticsWindow extends JDialog implements ScoreListener{
 	@Override
 	public void addScore(Boolean check) {} // this method isn't used here 
 	@Override
-	public void getRank(int rank, int total) {}// this method isn't used here 
+	public void getRank(int rank, int total) {} // this method isn't used here 
 
 }
