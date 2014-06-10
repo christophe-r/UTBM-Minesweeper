@@ -21,7 +21,7 @@ public class MinesweeperGame {
 	private StatisticsManager statistic;
 	private static PreferencesManager userPreferences;
 	private boolean pixelCheatEnabled = false;
-	private Timer boardTimer ;
+	private Timer boardTimer;
 
 	/**
 	 * Main constructor
@@ -45,6 +45,7 @@ public class MinesweeperGame {
 		this.newGame();
 		gameState = GameState.PAUSED;
 
+		
 	}
 
 

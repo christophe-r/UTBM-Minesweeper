@@ -45,6 +45,7 @@ public class OptionsWindow extends JDialog {
 	private JRadioButton rdbtn_advanced;
 	private JRadioButton rdbtn_custom;
 
+	private boolean optionChanged = false;
 	private PreferencesManager userPreferences;
 
 
@@ -124,6 +125,7 @@ public class OptionsWindow extends JDialog {
 		rdbtn_intermediate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				radioButtonCustom();
+				optionChanged = true;
 			}
 		});
 		buttonGroup.add(rdbtn_intermediate);
@@ -134,6 +136,7 @@ public class OptionsWindow extends JDialog {
 		rdbtn_advanced.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				radioButtonCustom();
+				optionChanged = true;
 			}
 		});
 		buttonGroup.add(rdbtn_advanced);
@@ -144,6 +147,7 @@ public class OptionsWindow extends JDialog {
 		rdbtn_custom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				radioButtonCustom();
+				optionChanged = true;
 			}
 		});
 
@@ -163,6 +167,7 @@ public class OptionsWindow extends JDialog {
 				textFieldCustomIntInRange(textField_custom_height, 9, 24);
 				textFieldCustomIntInRangeMines();
 				updateLabelMaxMines();
+				optionChanged = true;
 			}
 		});
 		textField_custom_height.addKeyListener(new KeyAdapter() {
@@ -187,6 +192,7 @@ public class OptionsWindow extends JDialog {
 				textFieldCustomIntInRange(textField_custom_width, 9, 30);
 				textFieldCustomIntInRangeMines();
 				updateLabelMaxMines();
+				optionChanged = true;
 			}
 		});
 		textField_custom_width.addKeyListener(new KeyAdapter() {
@@ -210,6 +216,7 @@ public class OptionsWindow extends JDialog {
 			public void focusLost(FocusEvent arg0) {
 				textFieldCustomIntInRange(textField_custom_mines, 10, 710);
 				textFieldCustomIntInRangeMines();
+				optionChanged = true;
 			}
 		});
 		textField_custom_mines.addKeyListener(new KeyAdapter() {
@@ -311,7 +318,6 @@ public class OptionsWindow extends JDialog {
 	 */
 	private void radioButtonCustom(){
 		if( rdbtn_custom.isSelected() ){
-			System.out.println("selected");
 			textField_custom_height.setEnabled(true);
 			textField_custom_width.setEnabled(true);
 			textField_custom_mines.setEnabled(true);
@@ -391,8 +397,9 @@ public class OptionsWindow extends JDialog {
 		userPreferences.setPref("difficulty_custom_mines", "" + parseInt(textField_custom_mines.getText()));
 
 		setVisible(false);
-
-		controller.newGame();
+		System.out.println(optionChanged +"");
+		if(optionChanged)
+			controller.newGame();
 
 	}
 

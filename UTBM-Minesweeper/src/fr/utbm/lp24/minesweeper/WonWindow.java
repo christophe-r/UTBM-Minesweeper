@@ -140,6 +140,7 @@ public class WonWindow extends JDialog implements ScoreListener {
 		lblScore.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblScore.setHorizontalAlignment(SwingConstants.LEFT);
 		lblScore.setBounds(45, 156, 99, 20);
+		lblScore.setText(score + " points");
 		System.out.println("score : " + score);
 		contentPanel.add(lblScore);
 
