@@ -2,7 +2,7 @@ package fr.utbm.lp24.minesweeper;
 
 /**
  * The controller class of the board.
- * @author Christophe
+ * @author Christophe and Vincent
  *
  */
 public class BoardController extends Board {
@@ -94,7 +94,6 @@ public class BoardController extends Board {
 	 * The recursion stops when a non-blank (CLEAR0) tile is encountered.
 	 * @param x The X coordinate
 	 * @param y The Y coordinate
-	 * @author Vincent
 	 */
 	public void revealTilesRecursively(int x, int y){
 
@@ -119,7 +118,6 @@ public class BoardController extends Board {
 	 * This method revales all adjacent mines if the number of flag around is the same that the content in the mine
 	 * @param x The X coordinate 
 	 * @param y The Y coordinate
-	 * @author vincent
 	 */
 	public void revealsAllMinesWithFlagCount(int x, int y, MinesweeperGame controleur ){
 		int nbmines = 0;
@@ -151,7 +149,6 @@ public class BoardController extends Board {
 	/**
 	 * Get the tile board
 	 * @return the tile board
-	 * @author vincent
 	 */
 	public Tile[][] displayBoard(){
 		return super.board;
@@ -160,7 +157,6 @@ public class BoardController extends Board {
 
 	/**
 	 * Hide all mines
-	 * @author vincent
 	 */
 	public void hideMines(){
 		for( int i=0 ; i<super.width ; i++ ){
@@ -172,7 +168,6 @@ public class BoardController extends Board {
 
 	/**
 	 * Reveals all mines in the board
-	 * @author vincent
 	 */
 	public void revealsAllMines(){
 		for( int i=0 ; i<super.width ; i++ ){
@@ -198,10 +193,5 @@ public class BoardController extends Board {
 
 		return charBoard;
 	}
-
-
-
-
-
 
 }

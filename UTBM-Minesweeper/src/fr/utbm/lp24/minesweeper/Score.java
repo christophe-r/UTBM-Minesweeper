@@ -5,12 +5,13 @@ public class Score {
 	/**
 	 * Class used to manage the score
 	 * 
-	 * @param nbMines
-	 * @param width
-	 * @param height
-	 * @param time
-	 * @param playAgain
+	 * @param nbMines Number of mines 
+	 * @param width Width
+	 * @param height Height
+	 * @param time Time
+	 * @param playAgain Enable if the player click on play again
 	 * @return the computed score
+	 * @author Vincent
 	 */
 	public int getScore(float nbMines, float width, float height, float time, boolean playAgain){
 
@@ -25,8 +26,6 @@ public class Score {
 		}
 
 		float score = ( 1000 * cheat )/( (nbMines / (width*height)) + (1-1/time) );
-
-
 		return Math.round(score);
 	}
 }

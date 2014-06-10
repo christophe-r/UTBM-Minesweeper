@@ -78,8 +78,6 @@ public class BoardDraw extends JPanel {
 			background,
 	};
 
-
-
 	public BoardDraw(){
 		userPreferences = new PreferencesManager();
 		this.theme = userPreferences.getPref("theme", "win7_classic");
@@ -92,7 +90,6 @@ public class BoardDraw extends JPanel {
 	 * The board starts the generation at 21px,11px
 	 * and each box is a square of 10px
 	 * 
-	 * @author Vincent
 	 */
 	public void paintComponent(Graphics g){
 

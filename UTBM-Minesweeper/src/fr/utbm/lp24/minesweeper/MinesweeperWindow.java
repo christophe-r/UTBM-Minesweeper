@@ -64,7 +64,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 	/**
 	 * Initialize the main window and display the first view
-	 * @author Vincent
 	 */	
 	public MinesweeperWindow(final MinesweeperGame controller){ 
 
@@ -142,7 +141,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 		/**
 		 * Create a listener to draw the help shadow
-		 *  @author Vincent
 		 */
 		this.addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseMoved(MouseEvent e) {
@@ -154,7 +152,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 		/**
 		 * Key listener for cheat code
-		 * @author Christophe
 		 */
 		this.addKeyListener(new KeyListener(){
 			@Override
@@ -188,7 +185,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 		/**
 		 * Create a listener to call rightClickOnTile and leftClickOnTile methods
-		 * @author Vincent
 		 */
 		this.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
@@ -207,7 +203,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 	/**
 	 * This method redraw the board on the screen
-	 * @author Vincent
 	 */
 	public void drawBoard(Tile stateboard[][], boolean endgame){
 		
@@ -225,7 +220,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	/**
 	 * Updates the bottom bar
 	 * @param s the new message for the label
-	 * @author Vincent
 	 */
 	public void updateBottom(int value, String type){
 		Dimension size = this.getSize();
@@ -248,7 +242,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 
 		if( event.getSource() == menuGameItem1 ){
-			System.out.println("New game event");
+			System.out.println("New game");
 			controller.newGame();
 		} else if( event.getSource() == menuGameItem2 ){
 			new StatisticsWindow();
@@ -289,7 +283,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	/**
 	 * Get the square size
 	 * @return square size
-	 * @author vincent
 	 */
 	public int getSquareSize(){
 		return this.square_size;
@@ -298,10 +291,9 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 	/**
 	 * Draw the shadow on the board
-	 * @param x 
-	 * @param y 
+	 * @param x  X coordinate in px
+	 * @param y  Y coordinate in px
 	 * @param shadow
-	 * @author vincent
 	 */
 	public void drawShadow(int x, int y, boolean shadow){
 		boardDraw.repaint();
@@ -312,7 +304,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	/**
 	 * Draw the cheat pixel
 	 * @param pixelState true=there is a mine, false=no mine
-	 * @author Christophe
 	 */
 	public void drawCheatPixel(boolean pixelState){
 		boardDraw.repaint();

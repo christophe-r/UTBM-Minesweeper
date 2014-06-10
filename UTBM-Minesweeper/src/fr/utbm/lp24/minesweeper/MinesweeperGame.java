@@ -5,7 +5,7 @@ import javax.swing.UIManager;
 
 /**
  * Main Controller of the game 
- * @author Vincent
+ * @author Vincent and Christophe
  *
  */
 public class MinesweeperGame {
@@ -20,15 +20,13 @@ public class MinesweeperGame {
 	private MinesweeperWindow window;
 	private StatisticsManager statistic;
 	private static PreferencesManager userPreferences;
-
 	private boolean pixelCheatEnabled = false;
-
 	private Timer boardTimer ;
 
 	/**
 	 * Main constructor
 	 * Initialize all variables
-	 *  load the initial view
+	 * Load the initial view
 	 */ 
 	public MinesweeperGame(){
 
@@ -39,7 +37,6 @@ public class MinesweeperGame {
 			System.out.println("Unable to load Windows look and feel");
 		}
 
-
 		this.updatePreferences();
 		statistic = new StatisticsManager();
 
@@ -48,9 +45,6 @@ public class MinesweeperGame {
 		this.newGame();
 		gameState = GameState.PAUSED;
 
-		// for test the new wonwindows
-		// new WonWindow(this,0,myScore.getScore(nbMines, width, height, 1, playAgain));
-
 	}
 
 
@@ -58,12 +52,10 @@ public class MinesweeperGame {
 	 * manage the help shadows feature
 	 * @param x X coordinate in px
 	 * @param y Y coordinate in px
-	 * @author Vincent
 	 */
 	public void helpShadow(int x, int y){
 		x = ((x-1)/window.getSquareSize())-1;
 		y = ((y-1)/window.getSquareSize())-1;
-		/* Here, add functionality to enable or disable this feature */
 		userPreferences = new PreferencesManager();
 		String shadows = userPreferences.getPref("heplshadow", "true");
 		if(shadows.equals("true")){
@@ -78,9 +70,8 @@ public class MinesweeperGame {
 
 	/**
 	 * Cheat pixel cheat management
-	 * @param x
-	 * @param y
-	 * @author Christophe
+	 * @param x X coordinate in px
+	 * @param y Y coordinate in px
 	 */
 	public void cheatPixel(int x, int y){
 		x = ((x-1)/window.getSquareSize())-1;
@@ -101,7 +92,6 @@ public class MinesweeperGame {
 
 	/**
 	 * Enable the cheat pixel
-	 * @author Christophe
 	 */
 	public void enableCheatPixel(){
 		this.pixelCheatEnabled = true;
@@ -113,7 +103,6 @@ public class MinesweeperGame {
 	 * This method is called when a left-click happens.
 	 * @param x The X coordinate where the click happens
 	 * @param y The Y coordinate where the click happens
-	 * @author Vincent
 	 */
 	public void leftClickOnBoard(int x, int y){
 
@@ -163,7 +152,7 @@ public class MinesweeperGame {
 						statistic.testBestScore(score);
 						boardTimer.stopTimer();
 						myBoard.revealsAllMines();
-						window.drawBoard(myBoard.displayBoard(),true);
+						window.drawBoard(myBoard.displayBoard(), true);
 						new WonWindow(this,time,myScore.getScore(nbMines, width, height, time, playAgain));
 					}
 				}
@@ -186,7 +175,6 @@ public class MinesweeperGame {
 	 * This method is called when a right-click happens.
 	 * @param x The X coordinate where the click happens
 	 * @param y The Y coordinate where the click happens
-	 * @author Vincent
 	 */
 	public void rightClickOnBoard(int x, int y){
 		// Transform pixel coordinate in array coordinate
@@ -214,7 +202,7 @@ public class MinesweeperGame {
 			}
 		}	
 		window.updateBottom((this.nbMines - myBoard.nbFlags), "flags");
-		window.drawBoard(myBoard.displayBoard(),false);
+		window.drawBoard(myBoard.displayBoard(), false);
 		System.out.println("Right click");
 		System.out.println("Coord X : " + x);
 		System.out.println("Coord Y : " + y);
@@ -223,29 +211,25 @@ public class MinesweeperGame {
 
 	/**
 	 * manage the central button click
-	 * @param x
-	 * @param y
-	 * @author vincent
-	 * 
+	 * @param x  X coordinate in px
+	 * @param y  Y coordinate in px
 	 */
 	public void centralClickOnBoard(int x, int y) {
 		x = ((x-1)/window.getSquareSize())-1;
 		y = ((y-1)/window.getSquareSize())-1;
 		if(myBoard.getTile(x, y) != null){
 			if(myBoard.getTile(x, y).getState() == TileState.DISCOVERED && myBoard.getTile(x, y).getContent() != TileContent.CLEAR0 && myBoard.getTile(x, y).getContent() != TileContent.MINE)
-
-				System.out.println("action");
-			myBoard.revealsAllMinesWithFlagCount(x,y,this);
+				myBoard.revealsAllMinesWithFlagCount(x,y,this);
 		}
 		System.out.println("wheel click");
 		System.out.println("Coord X : " + x);
 		System.out.println("Coord Y : " + y);
-
+		System.out.println("");
+		
 	}
 
 	/**
 	 * Update the preferences
-	 * @author vincent
 	 */
 	public void updatePreferences(){
 		// Load the preferences values for the difficulty, the width, height and nb of mines.
@@ -279,7 +263,6 @@ public class MinesweeperGame {
 
 	/**
 	 * Method to start a new the game
-	 * @author vincent
 	 */
 	public void newGame(){
 		System.out.println("New game");
@@ -291,13 +274,12 @@ public class MinesweeperGame {
 		this.updatePreferences();
 		this.playAgain = false;
 		myBoard = new BoardController(width, height); // Generate a new board
-		window.drawBoard(myBoard.displayBoard(),false); // Display the new board
+		window.drawBoard(myBoard.displayBoard(), false); // Display the new board
 		gameState = GameState.PAUSED;
 	}
 
 	/**
 	 * Method to restart the same game
-	 * @author vincent
 	 */
 	public void restartGame(){
 		System.out.println("Restart game");
@@ -307,13 +289,12 @@ public class MinesweeperGame {
 		this.updatePreferences();
 		this.playAgain = true;
 		myBoard.hideMines(); // Hide all mine
-		window.drawBoard(myBoard.displayBoard(),false); // Display the new board
+		window.drawBoard(myBoard.displayBoard(), false); // Display the new board
 		gameState = GameState.RUNNING;
 	}
 
 	/**
 	 * Method call if you lose the game
-	 * @author vincent
 	 */
 	public void lostGame(){
 		System.out.println("Game lost");
@@ -329,7 +310,6 @@ public class MinesweeperGame {
 
 	/**
 	 * Method call when you quit the game
-	 * @author vincent
 	 */
 	public void exit() {
 		if(boardTimer != null)

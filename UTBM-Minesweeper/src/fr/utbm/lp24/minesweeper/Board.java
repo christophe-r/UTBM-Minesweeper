@@ -2,7 +2,7 @@ package fr.utbm.lp24.minesweeper;
 
 /**
  * The board : the grid of tiles
- * @author Christophe
+ * @author Christophe and Vincent
  *
  */
 public class Board {
