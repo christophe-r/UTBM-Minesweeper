@@ -97,14 +97,14 @@ public class BoardController extends Board {
 	 */
 	public void revealTilesRecursively(int x, int y){
 
-		if(this.getTile(x,y) != null){
-			if(this.getTile(x,y).getState() ==  TileState.UNDISCOVERED){ // Do nothing if state is : FLAGGED, QUESTION_MARK, DISCOVERED
-				this.getTile(x,y).setState(TileState.DISCOVERED);
-				if(this.getTile(x,y).getContent() == TileContent.CLEAR0 ){
+		if(this.getTile(x, y) != null){
+			if(this.getTile(x, y).getState() == TileState.UNDISCOVERED){ // Do nothing if state is : FLAGGED, QUESTION_MARK, DISCOVERED
+				this.getTile(x, y).setState(TileState.DISCOVERED);
+				if(this.getTile(x, y).getContent() == TileContent.CLEAR0 ){
 					for( int i=-1 ; i<=1 ; i++ ){
 						for( int j=-1 ; j<=1 ; j++ ){
 							if( i != 0 || j != 0 ){
-								revealTilesRecursively(x+i,y+j);
+								revealTilesRecursively(x+i, y+j);
 							}
 						}
 					}
@@ -119,24 +119,25 @@ public class BoardController extends Board {
 	 * @param x The X coordinate 
 	 * @param y The Y coordinate
 	 */
-	public void revealsAllMinesWithFlagCount(int x, int y, MinesweeperGame controleur ){
-		int nbmines = 0;
-		if(this.getTile(x,y) != null){
+	public void revealsAllMinesWithFlagCount(int x, int y, MinesweeperGame controller){
+		int nbMines = 0;
+		if( this.getTile(x,y) != null ){
 			Tile myTile = this.getTile(x,y);
 			for( int i=-1; i<=1 ; i++ ){
 				for( int j=-1; j<=1 ; j++ ){
-					if(this.getTile(x+i,y+j) != null && this.getTile(x+i,y+j).getState() == TileState.FLAGGED){
-						nbmines++;
+					if( this.getTile(x+i, y+j) != null && this.getTile(x+i, y+j).getState() == TileState.FLAGGED){
+						nbMines++;
 					}
 				}
 			}
-			if (myTile.toContent() == nbmines){
+
+			if( myTile.toContent() == nbMines ){
 				for( int i=-1; i<=1 ; i++ ){
 					for( int j=-1; j<=1 ; j++ ){
-						if(this.getTile(x+i,y+j) != null && this.getTile(x+i,y+j).getState() != TileState.FLAGGED){
-							this.getTile(x+i,y+j).setState(TileState.DISCOVERED);
-							if(this.getTile(x+i,y+j).getContent() == TileContent.MINE ){
-								controleur.lostGame();
+						if( this.getTile(x+i, y+j) != null && this.getTile(x+i, y+j).getState() != TileState.FLAGGED ){
+							this.getTile(x+i, y+j).setState(TileState.DISCOVERED);
+							if( this.getTile(x+i, y+j).getContent() == TileContent.MINE ){
+								controller.lostGame();
 							}
 						}
 					}
@@ -144,8 +145,8 @@ public class BoardController extends Board {
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * Get the tile board
 	 * @return the tile board
@@ -184,8 +185,8 @@ public class BoardController extends Board {
 
 		String charBoard = "";
 
-		for(Tile[] lineTile : this.board ){
-			for(Tile tile : lineTile ){
+		for( Tile[] lineTile : this.board ){
+			for( Tile tile : lineTile ){
 				charBoard += ""+tile;
 			}
 			charBoard += "\r\n";

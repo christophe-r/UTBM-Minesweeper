@@ -17,7 +17,7 @@ public class BoardDraw extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private PreferencesManager userPreferences; 
-	private Tile[][] stateboard; // temporary array to save the board
+	private Tile[][] stateBoard; // temporary array to save the board
 	private int square_size = 20;
 	private String theme;
 	private boolean endGame;
@@ -57,7 +57,7 @@ public class BoardDraw extends JPanel {
 	private Image image_clear7 = null;
 	private Image image_clear8 = null;
 	private Image cross = null;
-	private Image mask = null;
+	private Image help_shadow_mask = null;
 	private Image background = null;
 
 	private Image[] varImages = {
@@ -75,7 +75,7 @@ public class BoardDraw extends JPanel {
 			image_clear7,
 			image_clear8,
 			cross,
-			background,
+			background
 	};
 
 	public BoardDraw(){
@@ -94,76 +94,72 @@ public class BoardDraw extends JPanel {
 	public void paintComponent(Graphics g){
 
 		userPreferences = new PreferencesManager();
-		if(!theme.equals(userPreferences.getPref("theme", "win7_classic"))){ // Check the theme
+		if( !theme.equals(userPreferences.getPref("theme", "win7_classic")) ){ // Check the theme
 			this.theme = userPreferences.getPref("theme", "win7_classic");
 			loadImages();
 		}
 
 		super.paintComponent(g);
-		
-		//g.drawImage(varImages[14], 0, 0,690,580, this);
-		
-		for( int i=0; i<stateboard.length ; i++ ){
-			for( int j=0; j<stateboard[0].length ; j++ ){
-				int cordX =  1+(j+1)*square_size;
-				int cordY =  1+(i+1)*square_size;
+
+		for( int i=0; i<stateBoard.length; i++ ){
+			for( int j=0; j<stateBoard[0].length; j++ ){
+				int cordX = 1+(j+1)*square_size;
+				int cordY = 1+(i+1)*square_size;
 				g.setColor(Color.GRAY);
-				
-				
-				
-				switch( stateboard[i][j].getState() ){
+
+				switch( stateBoard[i][j].getState() ){
 				case UNDISCOVERED: 
-					g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this);
+					g.drawImage(varImages[0], cordX, cordY, square_size, square_size, this);
 					break;	
 
 				case FLAGGED: 
 					g.setColor(Color.BLACK);
-					g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this);
-					g.drawImage(varImages[3], cordX, cordY,square_size,square_size, this);
+					g.drawImage(varImages[0], cordX, cordY, square_size, square_size, this);
+					g.drawImage(varImages[3], cordX, cordY, square_size, square_size, this);
 					if(endGame){
-						g.drawImage(varImages[13], cordX, cordY,square_size,square_size, this);	
+						g.drawImage(varImages[13], cordX, cordY, square_size, square_size, this);	
 					}
 
 					break;	
 				case QUESTION_MARK:
 					g.setColor(Color.BLACK);
-					g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this);
-					g.drawImage(varImages[4], cordX, cordY,square_size,square_size, this);
+					g.drawImage(varImages[0], cordX, cordY, square_size, square_size, this);
+					g.drawImage(varImages[4], cordX, cordY, square_size, square_size, this);
 					break;	
 
 				case DISCOVERED: {
 					g.setColor(Color.blue);
-					g.drawImage(varImages[1], cordX, cordY,square_size,square_size, this);
+					g.drawImage(varImages[1], cordX, cordY, square_size, square_size, this);
 
-					switch( stateboard[i][j].getContent() ){
+					switch( stateBoard[i][j].getContent() ){
 					//case CLEAR0: break;			
 					case MINE:  
 						g.setColor(Color.red);
-						g.drawImage(varImages[2], cordX, cordY,square_size,square_size, this);
+						g.drawImage(varImages[2], cordX, cordY, square_size, square_size, this);
 						break;	
 					case CLEAR1:
-						g.drawImage(varImages[5], cordX, cordY,square_size,square_size, this);
+						g.drawImage(varImages[5], cordX, cordY, square_size, square_size, this);
 						break;	
 					case CLEAR2:
-						g.drawImage(varImages[6], cordX, cordY,square_size,square_size, this);
+						g.drawImage(varImages[6], cordX, cordY, square_size, square_size, this);
 						break;	
 					case CLEAR3:
-						g.drawImage(varImages[7], cordX, cordY,square_size,square_size, this);
+						g.drawImage(varImages[7], cordX, cordY, square_size, square_size, this);
 						break;	
 					case CLEAR4:
-						g.drawImage(varImages[8], cordX, cordY,square_size,square_size, this);
+						g.drawImage(varImages[8], cordX, cordY, square_size, square_size, this);
 						break;	
 					case CLEAR5:
-						g.drawImage(varImages[9], cordX, cordY,square_size,square_size, this);
+						g.drawImage(varImages[9], cordX, cordY, square_size, square_size, this);
 						break;	
 					case CLEAR6:
-						g.drawImage(varImages[10], cordX, cordY,square_size,square_size, this);
+						g.drawImage(varImages[10], cordX, cordY, square_size, square_size, this);
 						break;	
 					case CLEAR7:
-						g.drawImage(varImages[11], cordX, cordY,square_size,square_size, this);
+						g.drawImage(varImages[11], cordX, cordY, square_size, square_size, this);
 						break;	
 					case CLEAR8:
-						g.drawImage(varImages[12], cordX, cordY,square_size,square_size, this);
+						g.drawImage(varImages[12], cordX, cordY, square_size, square_size, this);
 						break;	
 					default: break;
 					}	
@@ -173,16 +169,17 @@ public class BoardDraw extends JPanel {
 			}
 		}
 
-		String shadow = userPreferences.getPref("heplshadow", "true");
-		if(activeShadow){
+		String shadow = userPreferences.getPref("help_shadow", "false");
+		if( activeShadow ){
 			for( int i=0 ; i<=2 ; i++ ){
 				for( int j=0 ; j<=2 ; j++ ){
 					if( i != 1 || j != 1 ){
-						if	((shadowX+i) > 0 && (shadowY+j) > 0){
-							if((shadowX+i) < stateboard[0].length+1 && (shadowY+j) <stateboard.length+1)
-								if(shadow.equals("true")){
-									g.drawImage(mask, (shadowX+i)*square_size, (shadowY+j)*square_size, square_size, square_size, this);
+						if( (shadowX+i) > 0 && (shadowY+j) > 0 ){
+							if( (shadowX+i) < stateBoard[0].length+1 && (shadowY+j) < stateBoard.length+1 ){
+								if( shadow.equals("true") ){
+									g.drawImage(help_shadow_mask, (shadowX+i)*square_size, (shadowY+j)*square_size, square_size, square_size, this);
 								}
+							}
 						}
 					}
 				}
@@ -190,10 +187,9 @@ public class BoardDraw extends JPanel {
 		}
 
 
-		if(this.cheatPixelState){
+		if( this.cheatPixelState ){
 			g.fillRect(0, 0, 2, 2);
 		}
-
 
 	}
 
@@ -203,9 +199,9 @@ public class BoardDraw extends JPanel {
 	 * 
 	 * @param stateboard
 	 */
-	public void setNewBoard(Tile[][] stateboard,int square_size, boolean endGame) {
+	public void setNewBoard(Tile[][] stateBoard, int square_size, boolean endGame) {
 		this.square_size = square_size;
-		this.stateboard = stateboard;
+		this.stateBoard = stateBoard;
 		this.endGame = endGame;
 	}     
 
@@ -221,11 +217,11 @@ public class BoardDraw extends JPanel {
 		try {
 			for( int i=0; i<images.length; i++ ){
 				String s = "/resources/themes/" + theme + "/" + images[i];
-				System.out.println("load : " + s);
+				System.out.println("Loading: " + s);
 				varImages[i] = ImageIO.read(getClass().getResourceAsStream(s));
 			}
 
-			mask = ImageIO.read(getClass().getResourceAsStream("/resources/mask.png"));
+			help_shadow_mask = ImageIO.read(getClass().getResourceAsStream("/resources/help_shadow_mask.png"));
 		}
 		catch(IOException exc) {
 			exc.printStackTrace();
@@ -253,7 +249,6 @@ public class BoardDraw extends JPanel {
 	public void cheatPixel(boolean pixelState) {
 		this.cheatPixelState = pixelState;
 	}
-
 
 
 }

@@ -42,7 +42,7 @@ public class BottomBar extends JPanel{
 	 * Draw the SouthBar
 	 */
 	public void paintComponent(Graphics g){
-		
+
 		super.paintComponent(g);
 		userPreferences = new PreferencesManager();
 
@@ -50,23 +50,24 @@ public class BottomBar extends JPanel{
 			this.theme = userPreferences.getPref("theme", "win7_classic");
 			loadImages();
 		}
-		int margin = (size /2)-100;	
+
+		int margin = (size/2)-100;	
+
 		if( this.theme.equals("win98_classic")){
 			g.setColor(Color.BLACK);
-		}
-		else{
+		} else {
 			g.setColor(Color.WHITE);
 		}
 
-		g.drawImage(outlineCircle,margin + 10,0, 30,30, this);
-		g.drawImage(clock, margin + 14, 4, 23,23, this);
-		g.drawImage(outlineRect, margin + 45, 5, 40,20, this);
-		g.drawString(time + "", margin + 55,20);
+		g.drawImage(outlineCircle, margin + 10, 0, 30, 30, this);
+		g.drawImage(clock, margin + 14, 4, 23, 23, this);
+		g.drawImage(outlineRect, margin + 45, 5, 40, 20, this);
+		g.drawString(time + "", margin + 55, 20);
 
-		g.drawImage(outlineCircle, margin + 164, 0, 30,30, this);
-		g.drawImage(mine, margin + 168, 4, 23,23, this);
-		g.drawImage(outlineRect, margin + 120, 5, 40,20, this);
-		g.drawString( flags +"", margin + 130, 20);
+		g.drawImage(outlineCircle, margin + 164, 0, 30, 30, this);
+		g.drawImage(mine, margin + 168, 4, 23, 23, this);
+		g.drawImage(outlineRect, margin + 120, 5, 40, 20, this);
+		g.drawString(flags+"", margin + 130, 20);
 
 	}
 
@@ -92,19 +93,19 @@ public class BottomBar extends JPanel{
 	public void loadImages() {
 		try {
 			String s = "/resources/themes/" + theme + "/outline_rect.png";
-			System.out.println("load : " + s);
+			System.out.println("Loading: " + s);
 			outlineRect = ImageIO.read(getClass().getResourceAsStream(s));
 
 			s = "/resources/themes/" + theme + "/mine.png";
-			System.out.println("load : " + s);
+			System.out.println("Loading: " + s);
 			mine = ImageIO.read(getClass().getResourceAsStream(s));			
 
 			s = "/resources/themes/" + theme + "/clock.png";
-			System.out.println("load : " + s);
+			System.out.println("Loading: " + s);
 			clock = ImageIO.read(getClass().getResourceAsStream(s));
 
-			s = "/resources/outlinecircle.png";
-			System.out.println("load : " + s);
+			s = "/resources/outline_circle.png";
+			System.out.println("Loading: " + s);
 			outlineCircle = ImageIO.read(getClass().getResourceAsStream(s));
 		}
 		catch(IOException exc) {

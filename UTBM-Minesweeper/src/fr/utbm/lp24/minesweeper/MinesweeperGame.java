@@ -45,7 +45,7 @@ public class MinesweeperGame {
 		this.newGame();
 		gameState = GameState.PAUSED;
 
-		
+
 	}
 
 
@@ -58,14 +58,12 @@ public class MinesweeperGame {
 		x = ((x-1)/window.getSquareSize())-1;
 		y = ((y-1)/window.getSquareSize())-1;
 		userPreferences = new PreferencesManager();
-		String shadows = userPreferences.getPref("heplshadow", "true");
-		if(shadows.equals("true")){
-			if( myBoard.getTile(x,y) != null ){
+		String shadow = userPreferences.getPref("help_shadow", "false");
+		if( shadow.equals("true") ){
+			if( myBoard.getTile(x, y) != null ){
 				window.drawShadow(x, y, true);	
 			}			
 		}
-
-
 
 	}
 
@@ -81,7 +79,7 @@ public class MinesweeperGame {
 
 		if( this.pixelCheatEnabled ){
 
-			if( myBoard.getTile(x,y) != null && myBoard.getTile(x, y).getContent() == TileContent.MINE ){
+			if( myBoard.getTile(x, y) != null && myBoard.getTile(x, y).getContent() == TileContent.MINE ){
 				window.drawCheatPixel(true); // true = Black pixel = mined
 			} else {
 				window.drawCheatPixel(false); // false = White pixel = not mined
@@ -96,7 +94,7 @@ public class MinesweeperGame {
 	 */
 	public void enableCheatPixel(){
 		this.pixelCheatEnabled = true;
-		System.out.println("cheat active");
+		System.out.println("Cheat code activated.");
 	}
 
 
@@ -111,7 +109,7 @@ public class MinesweeperGame {
 		x = ((x-1)/window.getSquareSize())-1;
 		y = ((y-1)/window.getSquareSize())-1;
 
-		if(myBoard.getTile(x,y) != null){
+		if(myBoard.getTile(x, y) != null){
 			switch(gameState){
 			case STOPPED: 
 				this.newGame(); // To restart the game
@@ -126,7 +124,7 @@ public class MinesweeperGame {
 				(new Thread(boardTimer)).start();
 
 				System.out.println("Generated board:\r\n"+myBoard);
-				myBoard.revealTilesRecursively(x,y);
+				myBoard.revealTilesRecursively(x, y);
 
 				window.drawBoard(myBoard.displayBoard(),false);
 				gameState = GameState.RUNNING;		
@@ -135,10 +133,10 @@ public class MinesweeperGame {
 			case RUNNING:
 				window.updateBottom((this.nbMines - myBoard.nbFlags), "flags");
 				if( myBoard.getTile(x, y).getState() == TileState.UNDISCOVERED ) {
-					myBoard.revealTilesRecursively(x,y);
+					myBoard.revealTilesRecursively(x, y);
 					window.drawBoard(myBoard.displayBoard(),false);
 
-					if(myBoard.getTile(x,y).getContent() == TileContent.MINE){
+					if(myBoard.getTile(x, y).getContent() == TileContent.MINE){
 						this.lostGame();
 					}
 
@@ -166,9 +164,7 @@ public class MinesweeperGame {
 		}
 
 		// Debug
-		System.out.println("Left click");
-		System.out.println("Coord X : " + x);
-		System.out.println("Coord Y : " + y+"\r\n");
+		System.out.println("Left click: X:"+x+", Y:"+y);
 	}
 
 
@@ -182,7 +178,7 @@ public class MinesweeperGame {
 		x = ((x-1)/window.getSquareSize())-1;
 		y = ((y-1)/window.getSquareSize())-1;
 
-		Tile tile = myBoard.getTile(x,y);
+		Tile tile = myBoard.getTile(x, y);
 		if(tile != null){
 			switch( tile.getState() ){
 			case UNDISCOVERED:
@@ -204,10 +200,7 @@ public class MinesweeperGame {
 		}	
 		window.updateBottom((this.nbMines - myBoard.nbFlags), "flags");
 		window.drawBoard(myBoard.displayBoard(), false);
-		System.out.println("Right click");
-		System.out.println("Coord X : " + x);
-		System.out.println("Coord Y : " + y);
-		System.out.println("Nb flags : " + myBoard.getNbFlags()+"\r\n");
+		System.out.println("Right click: X:"+x+", Y:"+y);
 	}
 
 	/**
@@ -220,13 +213,9 @@ public class MinesweeperGame {
 		y = ((y-1)/window.getSquareSize())-1;
 		if(myBoard.getTile(x, y) != null){
 			if(myBoard.getTile(x, y).getState() == TileState.DISCOVERED && myBoard.getTile(x, y).getContent() != TileContent.CLEAR0 && myBoard.getTile(x, y).getContent() != TileContent.MINE)
-				myBoard.revealsAllMinesWithFlagCount(x,y,this);
+				myBoard.revealsAllMinesWithFlagCount(x, y,this);
 		}
-		System.out.println("wheel click");
-		System.out.println("Coord X : " + x);
-		System.out.println("Coord Y : " + y);
-		System.out.println("");
-		
+		System.out.println("Wheel click: X:"+x+", Y:"+y);
 	}
 
 	/**
@@ -254,10 +243,10 @@ public class MinesweeperGame {
 			this.nbMines = 10;
 		}
 
-		System.out.println("Update preferences");
-		System.out.println("Height : " + height);
-		System.out.println("Width : " + width);
-		System.out.println("NbMines : " + nbMines);
+		System.out.println("Updating preferences:");
+		System.out.println(" Height: " + height);
+		System.out.println(" Width: " + width);
+		System.out.println(" NbMines: " + nbMines);
 
 	}
 
@@ -266,7 +255,7 @@ public class MinesweeperGame {
 	 * Method to start a new the game
 	 */
 	public void newGame(){
-		System.out.println("New game");
+		System.out.println("New game event.");
 
 
 		statistic.addGamePlayed();
@@ -283,7 +272,7 @@ public class MinesweeperGame {
 	 * Method to restart the same game
 	 */
 	public void restartGame(){
-		System.out.println("Restart game");
+		System.out.println("Restart game event.");
 
 		boardTimer = new Timer(window);
 		(new Thread(boardTimer)).start();
@@ -298,7 +287,7 @@ public class MinesweeperGame {
 	 * Method call if you lose the game
 	 */
 	public void lostGame(){
-		System.out.println("Game lost");
+		System.out.println("Game lost event.");
 
 		statistic.addTime(boardTimer.getTimer());
 		myBoard.revealsAllMines();
@@ -313,8 +302,9 @@ public class MinesweeperGame {
 	 * Method call when you quit the game
 	 */
 	public void exit() {
-		if(boardTimer != null)
+		if( boardTimer != null ){
 			statistic.addTime(boardTimer.getTimer());
+		}
 	}
 
 

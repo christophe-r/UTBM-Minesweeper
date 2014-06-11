@@ -103,10 +103,10 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		menuGameItem4.addActionListener(this);
 		menuGameItem4.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
 
-		
+
 		this.menuGame.add(menuGameItem6);
 		menuGameItem6.addActionListener(this);
-		
+
 		this.menuGame.addSeparator();
 
 		this.menuGame.add(menuGameItem5);
@@ -121,19 +121,19 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		this.setJMenuBar(menuBar);
 
 		PreferencesManager userPreferences = new PreferencesManager();
-		if(userPreferences.getPref("heplshadow", "true").equals("true")){
+		if( userPreferences.getPref("help_shadow", "false").equals("true") ){
 			menuGameItem6.setSelected(true);
 			menuGameItem6.setText("Disable help shadow");
-		}else{
+		} else {
 			menuGameItem6.setSelected(false);
 		}
-		
+
 		boardDraw.setOpaque(false);
 		bottomBar.setOpaque(false);
 		background.setOpaque(false);
-	
+
 		container.setLayout(null);
-		
+
 		// Update view
 		this.setContentPane(container);
 		this.setVisible(true);  
@@ -190,9 +190,9 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 			public void mousePressed(MouseEvent e){
 				Point containerlocate =  container.getLocation();
 				switch( e.getButton() ){
-				case 1: controller.leftClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
-				case 3: controller.rightClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
-				case 2: controller.centralClickOnBoard((e.getX() - containerlocate.x - 3 ),(e.getY() - containerlocate.y - 25)); break;
+				case 1: controller.leftClickOnBoard((e.getX() - containerlocate.x - 3 ), (e.getY() - containerlocate.y - 25)); break;
+				case 3: controller.rightClickOnBoard((e.getX() - containerlocate.x - 3 ), (e.getY() - containerlocate.y - 25)); break;
+				case 2: controller.centralClickOnBoard((e.getX() - containerlocate.x - 3 ), (e.getY() - containerlocate.y - 25)); break;
 				default: break;
 				}
 			}
@@ -204,17 +204,17 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	/**
 	 * This method redraw the board on the screen
 	 */
-	public void drawBoard(Tile stateboard[][], boolean endgame){
-		
+	public void drawBoard(Tile stateboard[][], boolean endGame){
+
 		this.setSize(stateboard[0].length*square_size + 50 , stateboard.length*square_size + 125);
-		boardDraw.setNewBoard(stateboard, square_size, endgame);
+		boardDraw.setNewBoard(stateboard, square_size, endGame);
 		boardDraw.setBounds(0, 0, stateboard[0].length*square_size + 50, stateboard.length*square_size + 125);
 		boardDraw.repaint();
 		container.remove(boardDraw);
 		container.add(boardDraw);	
 		this.updateBottom(stateboard[0].length*square_size + 40 , "size");
 		this.setContentPane(container);
-		}
+	}
 
 
 	/**
@@ -224,15 +224,15 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	public void updateBottom(int value, String type){
 		Dimension size = this.getSize();
 		bottomBar.updateParameter(value, type);
-		bottomBar.setBounds(0,size.height-85, size.width,size.height);
+		bottomBar.setBounds(0, size.height-85, size.width, size.height);
 		bottomBar.repaint();
 		container.remove(bottomBar);
 		container.add(bottomBar);
-		
-		background.setBounds(0, 0, size.width,size.height);
+
+		background.setBounds(0, 0, size.width, size.height);
 		background.repaint();
 		container.add(background);
-		
+
 		this.setContentPane(container);
 	}
 
@@ -257,7 +257,7 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 			new AboutWindow();
 		} else if( event.getSource() == menuGameItem6 ){
 			PreferencesManager userPreferences = new PreferencesManager();
-			userPreferences.setPref("heplshadow", ""+menuGameItem6.isSelected());
+			userPreferences.setPref("help_shadow", ""+menuGameItem6.isSelected());
 			if(menuGameItem6.isSelected()){
 				menuGameItem6.setText("Disable help shadow");
 			}else{
@@ -271,13 +271,13 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	 * Event handlers called when you quit the game
 	 */
 	WindowListener exitListener = new WindowAdapter() {
-        @Override
-        public void windowClosing(WindowEvent e) {
-        	controller.exit();
-        	 System.exit(0);
-        }
-    };
-   
+		@Override
+		public void windowClosing(WindowEvent e) {
+			controller.exit();
+			System.exit(0);
+		}
+	};
+
 
 
 	/**
@@ -310,8 +310,4 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		boardDraw.cheatPixel(pixelState);
 	}
 
-
 }
-
-
-
