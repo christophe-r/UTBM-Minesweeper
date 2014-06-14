@@ -295,6 +295,7 @@ public class WonWindow extends JDialog implements ScoreListener {
 		contentPanel.add(yourRank);
 		yourRank.setBounds(165, 145, 100, 14);
 
+		total = total + 1;
 		JLabel lblScore = new JLabel("" + rank + "/" + total);
 		contentPanel.add(lblScore);
 		lblScore.setBounds(235, 146, 60, 14);

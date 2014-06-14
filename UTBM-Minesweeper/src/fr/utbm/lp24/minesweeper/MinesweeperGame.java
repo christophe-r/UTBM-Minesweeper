@@ -44,8 +44,6 @@ public class MinesweeperGame {
 		window = new MinesweeperWindow(this);
 		this.newGame();
 		gameState = GameState.PAUSED;
-
-
 	}
 
 
