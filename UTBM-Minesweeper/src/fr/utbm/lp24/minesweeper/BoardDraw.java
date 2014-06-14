@@ -83,7 +83,6 @@ public class BoardDraw extends JPanel {
 		this.theme = userPreferences.getPref("theme", "win7_classic");
 	}
 
-
 	/**
 	 * Draw the board on the windows
 	 * 
@@ -98,20 +97,16 @@ public class BoardDraw extends JPanel {
 			this.theme = userPreferences.getPref("theme", "win7_classic");
 			loadImages();
 		}
-
 		super.paintComponent(g);
-		
-		//g.drawImage(varImages[14], 0, 0,690,580, this);
-		
+
 		for( int i=0; i<stateboard.length ; i++ ){
 			for( int j=0; j<stateboard[0].length ; j++ ){
 				int cordX =  1+(j+1)*square_size;
 				int cordY =  1+(i+1)*square_size;
 				g.setColor(Color.GRAY);
-				
-				
-				
+
 				switch( stateboard[i][j].getState() ){
+
 				case UNDISCOVERED: 
 					g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this);
 					break;	
@@ -123,8 +118,8 @@ public class BoardDraw extends JPanel {
 					if(endGame){
 						g.drawImage(varImages[13], cordX, cordY,square_size,square_size, this);	
 					}
-
 					break;	
+
 				case QUESTION_MARK:
 					g.setColor(Color.BLACK);
 					g.drawImage(varImages[0], cordX, cordY,square_size,square_size, this);
@@ -136,7 +131,7 @@ public class BoardDraw extends JPanel {
 					g.drawImage(varImages[1], cordX, cordY,square_size,square_size, this);
 
 					switch( stateboard[i][j].getContent() ){
-					//case CLEAR0: break;			
+
 					case MINE:  
 						g.setColor(Color.red);
 						g.drawImage(varImages[2], cordX, cordY,square_size,square_size, this);
@@ -166,7 +161,7 @@ public class BoardDraw extends JPanel {
 						g.drawImage(varImages[12], cordX, cordY,square_size,square_size, this);
 						break;	
 					default: break;
-					}	
+					}
 				}
 				default: break;
 				}
@@ -189,14 +184,10 @@ public class BoardDraw extends JPanel {
 			}
 		}
 
-
 		if(this.cheatPixelState){
 			g.fillRect(0, 0, 2, 2);
 		}
-
-
 	}
-
 
 	/**
 	 * Update the stateboard
@@ -208,7 +199,6 @@ public class BoardDraw extends JPanel {
 		this.stateboard = stateboard;
 		this.endGame = endGame;
 	}     
-
 
 	/**
 	 * Loads an image
@@ -224,13 +214,11 @@ public class BoardDraw extends JPanel {
 				System.out.println("load : " + s);
 				varImages[i] = ImageIO.read(getClass().getResourceAsStream(s));
 			}
-
 			mask = ImageIO.read(getClass().getResourceAsStream("/resources/mask.png"));
 		}
 		catch(IOException exc) {
 			exc.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -245,7 +233,6 @@ public class BoardDraw extends JPanel {
 		this.shadowY = y;
 	}
 
-
 	/**
 	 * Set the pixel state
 	 * @param pixelState pixel state
@@ -253,7 +240,4 @@ public class BoardDraw extends JPanel {
 	public void cheatPixel(boolean pixelState) {
 		this.cheatPixelState = pixelState;
 	}
-
-
-
 }

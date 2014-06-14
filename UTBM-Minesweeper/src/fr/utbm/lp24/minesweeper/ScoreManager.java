@@ -41,7 +41,6 @@ public class ScoreManager implements Runnable {
 	private String playerName = null;
 	private int score = 0;
 
-
 	/**
 	 * Constructor
 	 * @param toAdd Link the class with the ScoreManager
@@ -87,10 +86,8 @@ public class ScoreManager implements Runnable {
 			this.listeners.getScore(null);
 			return;
 		} else {
-
 			try {
 				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-
 				DocumentBuilder db = dbFactory.newDocumentBuilder();
 				InputSource is = new InputSource();
 				is.setCharacterStream(new StringReader(result));
@@ -99,12 +96,10 @@ public class ScoreManager implements Runnable {
 
 				String responseCode = doc.getElementsByTagName("code").item(0).getTextContent();
 
-
 				if( responseCode.equals("1") == false){
 					listeners.getScore(null); //  send a notification to the listener
 					return;
 				}
-
 
 				ArrayList<ArrayList<String>> scores = new ArrayList<ArrayList<String>>();
 
@@ -120,9 +115,7 @@ public class ScoreManager implements Runnable {
 						score.add(getValue("date", element));
 						score.add(getValue("playername", element));
 						score.add(getValue("score", element));
-
 						scores.add(score);
-
 					}
 				}
 
@@ -167,7 +160,6 @@ public class ScoreManager implements Runnable {
 					this.listeners.addScore(false);
 					return;
 				}
-
 				this.listeners.addScore(true);
 				System.out.println("Internet API: Finished to add score.");
 
@@ -222,7 +214,6 @@ public class ScoreManager implements Runnable {
 				ex.printStackTrace();
 				System.out.println("Internet API: Failed to get rank.");
 			}
-
 		}
 	}
 
@@ -254,7 +245,6 @@ public class ScoreManager implements Runnable {
 			URL obj = new URL(apiUrl+action);
 			connection = (HttpURLConnection) obj.openConnection();
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("User-Agent", "UTBM Minesweeper");
 

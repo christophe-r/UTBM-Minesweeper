@@ -2,7 +2,7 @@ package fr.utbm.lp24.minesweeper;
 
 /**
  * This class handles the timer
- * @author Christophe
+ * @author Christophe and Vincent
  */
 public class Timer implements Runnable {
 
@@ -26,20 +26,15 @@ public class Timer implements Runnable {
 	public void run(){
 
 		while (this.runnable) {
-
 			timer++;
 			window.updateBottom(timer, "time");
-
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
 		}
-
 	}
-
 
 	/**
 	 * This method gets the timer value
@@ -49,7 +44,6 @@ public class Timer implements Runnable {
 		return this.timer;	
 	}
 
-
 	/**
 	 * This method stops the timer
 	 */
@@ -57,6 +51,5 @@ public class Timer implements Runnable {
 		window.updateBottom(0, "time");
 		this.runnable = false;
 	}
-
 
 }

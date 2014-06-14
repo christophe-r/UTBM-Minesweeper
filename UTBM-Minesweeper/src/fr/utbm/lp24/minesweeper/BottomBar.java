@@ -70,7 +70,6 @@ public class BottomBar extends JPanel{
 
 	}
 
-
 	/**
 	 * Update parameters used to draw the SouthBar
 	 */
@@ -84,7 +83,6 @@ public class BottomBar extends JPanel{
 		if(type.equals("size"))
 			this.size = value;
 	}
-
 
 	/**
 	 * Method used to load images
@@ -110,7 +108,5 @@ public class BottomBar extends JPanel{
 		catch(IOException exc) {
 			exc.printStackTrace();
 		}
-
 	}  
-
 }

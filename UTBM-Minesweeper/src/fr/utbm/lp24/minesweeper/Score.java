@@ -1,9 +1,15 @@
 package fr.utbm.lp24.minesweeper;
 
+
+/**
+ * Class used to manage the score
+ * @author vincent
+ *
+ */
 public class Score {
 
 	/**
-	 * Class used to manage the score
+	 * Calculates the score
 	 * 
 	 * @param nbMines Number of mines 
 	 * @param width Width
@@ -11,15 +17,14 @@ public class Score {
 	 * @param time Time
 	 * @param playAgain Enable if the player click on play again
 	 * @return the computed score
-	 * @author Vincent
 	 */
 	public int getScore(float nbMines, float width, float height, float time, boolean playAgain){
 
 		int cheat = 1 ;
+
 		if( playAgain ){
 			cheat = 0;
 		}
-
 		if( time == 0 ){
 			time = 1;
 			cheat = 0;

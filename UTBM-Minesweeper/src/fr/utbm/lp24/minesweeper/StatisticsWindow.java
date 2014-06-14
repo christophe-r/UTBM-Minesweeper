@@ -19,13 +19,11 @@ public class StatisticsWindow extends JDialog implements ScoreListener{
 
 	private JLayeredPane layeredPane_localStats;
 	private JLayeredPane layeredPane_globalRanking;
-
 	private JLabel label_totalTime;
 	private JLabel label_gamesPlayed;
 	private JLabel label_gamesWon;
 	private JLabel label_winPercentage;
 	private JLabel label_bestScore;
-
 	private JLabel lblInfoLoading;
 
 	public StatisticsWindow() {
@@ -127,7 +125,6 @@ public class StatisticsWindow extends JDialog implements ScoreListener{
 		btnReset.setBounds(88, 193, 61, 23);
 		layeredPane_localStats.add(btnReset);
 
-
 		/************** Ranking tab ***************/
 
 		layeredPane_globalRanking = new JLayeredPane();
@@ -164,7 +161,6 @@ public class StatisticsWindow extends JDialog implements ScoreListener{
 
 		setLocationRelativeTo(null);
 		setVisible(true);	
-
 	}
 
 	private void updateStatistics(){
@@ -175,11 +171,9 @@ public class StatisticsWindow extends JDialog implements ScoreListener{
 		label_gamesWon.setText(playerStats.getGamesWon()+"");
 
 		float winPercentage_value = 0;
-
 		if( playerStats.getGamesPlayed() != 0 ){
 			winPercentage_value = (float)Math.round((float)playerStats.getGamesWon()/playerStats.getGamesPlayed()*100*10)/10;
 		}
-
 		label_winPercentage.setText(winPercentage_value+" %");
 		label_bestScore.setText(playerStats.getBestScore()+"");
 
@@ -195,7 +189,6 @@ public class StatisticsWindow extends JDialog implements ScoreListener{
 
 		if(globalScore != null){
 			lblInfoLoading.setText(" ");
-
 			int y = 30;
 			for( ArrayList<String> line : globalScore ){
 				int x = 10;
@@ -212,15 +205,11 @@ public class StatisticsWindow extends JDialog implements ScoreListener{
 					case 1: x += 75; break;
 					case 2: x += 80; break;
 					}
-
 					nbCol++;
 				}
-
 				y += 20;
-
 			}
 			repaint();
-
 		} else {
 			lblInfoLoading.setText("Failed to load Internet score");
 		}

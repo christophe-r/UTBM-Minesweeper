@@ -27,11 +27,10 @@ public class BoardController extends Board {
 	 */
 	public void populateMines(int nbMines, int excludeX, int excludeY){
 		if( nbMines <= super.width*super.height-9 ){
-			while( super.nbMines < nbMines ){
+			while( super.nbMines < nbMines){
 
 				int randomX = (int)(Math.random() * (super.width)) ;
 				int randomY = (int)(Math.random() * (super.height));
-
 
 				if( !(randomX>=excludeX-1 && randomX<=excludeX+1 &&
 						randomY>=excludeY-1 && randomY<=excludeY+1) &&
@@ -39,16 +38,12 @@ public class BoardController extends Board {
 
 					this.getTile(randomX, randomY).setContent(TileContent.MINE);
 					this.incrementNbMinesAround(randomX, randomY);
-
 					super.nbMines++;
 				}
-
-
 			}
 		} else {
 			System.out.println("Error: The amount of mines is too high.");
 		}
-
 	}
 
 	/**
@@ -58,15 +53,13 @@ public class BoardController extends Board {
 	 */
 	public void incrementNbMinesAround(int x, int y){
 		for( int i=-1; i<=1 ; i++ ){
-			for( int j=-1; j<=1 ; j++ ){
+			for( int j=-1; j<=1 ; j++){
 				Tile adjacentTile = super.getAdjacentTile(x, y, i, j);
-				if( adjacentTile != null && adjacentTile.getContent() != TileContent.MINE ){
+				if( adjacentTile != null && adjacentTile.getContent() != TileContent.MINE){
 					adjacentTile.setContentIncrement();
 				}
 			}
-
 		}	
-
 	}
 
 
@@ -75,17 +68,16 @@ public class BoardController extends Board {
 	 * @return True if the player won. False if the game is not finished yet.
 	 */
 	public boolean isWon(){
-		boolean won = true;
 
-		for( Tile[] lineTile : super.board ){
+		boolean won = true;
+		for( Tile[] lineTile : super.board){
 			for( Tile tile : lineTile ){
 				// If a tile appeared to be undiscovered (undiscovered, flagged or question mark), and not mined, the player has not still won 
-				if( tile.getState() != TileState.DISCOVERED && tile.getContent() != TileContent.MINE ){
+				if( tile.getState() != TileState.DISCOVERED && tile.getContent() != TileContent.MINE){
 					won = false;
 				}
 			}
 		}
-
 		return won;
 	}
 
@@ -100,11 +92,11 @@ public class BoardController extends Board {
 		if(this.getTile(x,y) != null){
 			if(this.getTile(x,y).getState() ==  TileState.UNDISCOVERED){ // Do nothing if state is : FLAGGED, QUESTION_MARK, DISCOVERED
 				this.getTile(x,y).setState(TileState.DISCOVERED);
-				if(this.getTile(x,y).getContent() == TileContent.CLEAR0 ){
-					for( int i=-1 ; i<=1 ; i++ ){
+				if(this.getTile(x,y).getContent() == TileContent.CLEAR0){
+					for( int i=-1; i<=1; i++){
 						for( int j=-1 ; j<=1 ; j++ ){
 							if( i != 0 || j != 0 ){
-								revealTilesRecursively(x+i,y+j);
+								revealTilesRecursively(x+i, y+j);
 							}
 						}
 					}
@@ -122,10 +114,10 @@ public class BoardController extends Board {
 	public void revealsAllMinesWithFlagCount(int x, int y, MinesweeperGame controleur ){
 		int nbmines = 0;
 		if(this.getTile(x,y) != null){
-			Tile myTile = this.getTile(x,y);
+			Tile myTile = this.getTile(x, y);
 			for( int i=-1; i<=1 ; i++ ){
 				for( int j=-1; j<=1 ; j++ ){
-					if(this.getTile(x+i,y+j) != null && this.getTile(x+i,y+j).getState() == TileState.FLAGGED){
+					if(this.getTile(x+i, y+j) != null && this.getTile(x+i, y+j).getState() == TileState.FLAGGED){
 						nbmines++;
 					}
 				}
@@ -144,8 +136,8 @@ public class BoardController extends Board {
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * Get the tile board
 	 * @return the tile board
@@ -159,8 +151,8 @@ public class BoardController extends Board {
 	 * Hide all mines
 	 */
 	public void hideMines(){
-		for( int i=0 ; i<super.width ; i++ ){
-			for( int j=0 ; j<super.height ; j++ ){
+		for( int i=0 ; i<super.width ; i++){
+			for( int j=0 ; j<super.height ; j++){
 				this.setTile(i, j, this.getTile(i, j).getContent(), TileState.UNDISCOVERED);
 			}
 		}
@@ -170,28 +162,24 @@ public class BoardController extends Board {
 	 * Reveals all mines in the board
 	 */
 	public void revealsAllMines(){
-		for( int i=0 ; i<super.width ; i++ ){
-			for( int j=0 ; j<super.height ; j++ ){
-				if( this.getTile(i, j).getContent() == TileContent.MINE ){
+		for( int i=0 ; i<super.width ; i++){
+			for( int j=0 ; j<super.height ; j++){
+				if( this.getTile(i, j).getContent() == TileContent.MINE){
 					this.setTile(i, j, this.getTile(i, j).getContent(), TileState.DISCOVERED);
 				}
 			}
 		}
 	}
 
-
 	public String toString(){
 
 		String charBoard = "";
-
 		for(Tile[] lineTile : this.board ){
 			for(Tile tile : lineTile ){
 				charBoard += ""+tile;
 			}
 			charBoard += "\r\n";
 		}
-
 		return charBoard;
 	}
-
 }

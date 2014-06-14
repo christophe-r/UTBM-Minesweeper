@@ -26,14 +26,12 @@ import java.awt.Color;
 public class WonWindow extends JDialog implements ScoreListener {
 
 	private int score = 0;
-
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
 	private JLabel lblInfoLoading;
 	private AbstractButton sendButton;
 	private Component lblPlayerName;
-
 	private static PreferencesManager userPreferences;
 
 
@@ -78,13 +76,11 @@ public class WonWindow extends JDialog implements ScoreListener {
 			contentPanel.add(playAgainButton);
 		}
 
-
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
 				playAgain(controller);
 			}
 		});
-
 
 		JLabel lblCongrats = new JLabel("<html><center>Congratulations!<br> You won the game!</center>");
 		lblCongrats.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -104,7 +100,6 @@ public class WonWindow extends JDialog implements ScoreListener {
 		lblSeconds.setBounds(45, 90, 96, 25);
 		lblSeconds.setText(time+" seconds");
 		contentPanel.add(lblSeconds);
-
 
 		JLabel lblTScore = new JLabel("");
 		lblTScore.setHorizontalAlignment(SwingConstants.LEFT);
@@ -171,7 +166,6 @@ public class WonWindow extends JDialog implements ScoreListener {
 		lblAddYourScore.setBounds(152, 167, 114, 23);
 		contentPanel.add(lblAddYourScore);
 
-
 		ScoreManager scoreManager = new ScoreManager(this, "getScore");
 		(new Thread(scoreManager)).start();
 		ScoreManager scoreManager2 = new ScoreManager(this, "getRank", score);
@@ -179,7 +173,6 @@ public class WonWindow extends JDialog implements ScoreListener {
 
 		setLocationRelativeTo(null);
 		setVisible(true);
-
 	}
 
 	/**
@@ -191,7 +184,7 @@ public class WonWindow extends JDialog implements ScoreListener {
 		// Close the window
 		this.dispose();
 	}
-	
+
 	/**
 	 * Send the score on Internet
 	 * @param playerName Player name
@@ -257,10 +250,8 @@ public class WonWindow extends JDialog implements ScoreListener {
 						label.setBounds(x, y, 60, 14);
 						break;
 					}
-
 					nbCol++;
 				}
-
 				y += 20;
 				if(y >= 140 ) break;
 			}
@@ -294,7 +285,6 @@ public class WonWindow extends JDialog implements ScoreListener {
 			sendButton.setEnabled(true);
 			repaint();
 		}
-
 	}
 
 	@Override
@@ -308,7 +298,6 @@ public class WonWindow extends JDialog implements ScoreListener {
 		JLabel lblScore = new JLabel("" + rank + "/" + total);
 		contentPanel.add(lblScore);
 		lblScore.setBounds(235, 146, 60, 14);
-
 	}
 }
 

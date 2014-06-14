@@ -41,6 +41,7 @@ public class StatisticsManager extends PreferencesManager {
 	 * @param score Score to test and save if it's the best
 	 */
 	public void testBestScore(int score){
+
 		if( Integer.parseInt(getPref("stats_best_score", "0")) < score ){
 			setPref("stats_best_score", score + "");
 		}

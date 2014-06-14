@@ -51,15 +51,12 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 
 	// Main container
 	private JPanel container = new JPanel();
-
 	private Background background = new Background();
 	private BoardDraw boardDraw = new BoardDraw();
 	private BottomBar bottomBar = new BottomBar();
+	
 	private int square_size = 20;
-
-
 	private MinesweeperGame controller;
-
 	private ArrayList<Integer> cheatCodePressedKeys;
 
 	/**

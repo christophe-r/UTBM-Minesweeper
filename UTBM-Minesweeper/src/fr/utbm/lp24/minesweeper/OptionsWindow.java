@@ -114,6 +114,7 @@ public class OptionsWindow extends JDialog {
 		rdbtn_beginner.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				radioButtonCustom();
+				optionChanged = true;
 			}
 		});
 

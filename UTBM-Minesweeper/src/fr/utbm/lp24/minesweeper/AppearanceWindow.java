@@ -225,7 +225,6 @@ public class AppearanceWindow extends JDialog {
 		} else if( rdbtnWin8Classic.isSelected() ){
 			theme = "win8_classic";
 		}
-
 		userPreferences.setPref("theme", theme);
 
 		setVisible(false);
