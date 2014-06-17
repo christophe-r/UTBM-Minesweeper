@@ -141,8 +141,8 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		 */
 		this.addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseMoved(MouseEvent e) {
-				controller.helpShadow((e.getX()-2), (e.getY()-45));// warning the y an x axes are invert in other function
-				controller.cheatPixel((e.getX())-2, (e.getY()-45));
+				controller.helpShadow((e.getX()-2), (e.getY()-46));// warning the y an x axes are invert in other function
+				controller.cheatPixel((e.getX())-2, (e.getY()-46));
 			}
 		});
 

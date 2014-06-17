@@ -255,7 +255,6 @@ public class MinesweeperGame {
 	public void newGame(){
 		System.out.println("New game event.");
 
-
 		statistic.addGamePlayed();
 		if(boardTimer != null)
 			boardTimer.stopTimer();
@@ -263,6 +262,7 @@ public class MinesweeperGame {
 		this.playAgain = false;
 		myBoard = new BoardController(width, height); // Generate a new board
 		window.drawBoard(myBoard.displayBoard(), false); // Display the new board
+		window.updateBottom((this.nbMines - myBoard.nbFlags), "flags");
 		gameState = GameState.PAUSED;
 	}
 
