@@ -141,8 +141,8 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 		 */
 		this.addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseMoved(MouseEvent e) {
-				controller.helpShadow((e.getX()-2), (e.getY()-46));// warning the y an x axes are invert in other function
-				controller.cheatPixel((e.getX())-2, (e.getY()-46));
+				controller.helpShadow((e.getX()-3), (e.getY()-46));
+				controller.cheatPixel((e.getX()-3), (e.getY()-46));
 			}
 		});
 
@@ -201,15 +201,15 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	/**
 	 * This method redraw the board on the screen
 	 */
-	public void drawBoard(Tile stateboard[][], boolean endGame){
+	public void drawBoard(Tile stateBoard[][], boolean endGame){
 
-		this.setSize(stateboard[0].length*square_size + 50 , stateboard.length*square_size + 125);
-		boardDraw.setNewBoard(stateboard, square_size, endGame);
-		boardDraw.setBounds(0, 0, stateboard[0].length*square_size + 50, stateboard.length*square_size + 125);
+		this.setSize(stateBoard[0].length*square_size + 50 , stateBoard.length*square_size + 125);
+		boardDraw.setNewBoard(stateBoard, square_size, endGame);
+		boardDraw.setBounds(0, 0, stateBoard[0].length*square_size + 50, stateBoard.length*square_size + 125);
 		boardDraw.repaint();
 		container.remove(boardDraw);
 		container.add(boardDraw);	
-		this.updateBottom(stateboard[0].length*square_size + 40 , "size");
+		this.updateBottom(stateBoard[0].length*square_size + 40 , "size");
 		this.setContentPane(container);
 	}
 
@@ -239,7 +239,6 @@ public class MinesweeperWindow extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 
 		if( event.getSource() == menuGameItem1 ){
-			System.out.println("New game");
 			controller.newGame();
 		} else if( event.getSource() == menuGameItem2 ){
 			new StatisticsWindow();
